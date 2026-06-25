@@ -9,10 +9,8 @@
       <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(94, 196, 230, 0.1) 3px, rgba(94, 196, 230, 0.1) 6px);"></div>
       <!-- Scanline Overlay -->
       <div class="absolute inset-0 pointer-events-none opacity-10 animate-scanline bg-[linear-gradient(to_bottom,transparent,rgba(94,196,230,0.5),transparent)] bg-[length:100%_4px]"></div>
-      <!-- Data Particles -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div v-for="i in 8" :key="'p'+i" class="data-particle" :style="{ left: (10 + i * 11) + '%', animationDelay: (i * 0.7) + 's', animationDuration: (3 + i * 0.5) + 's' }"></div>
-      </div>
+      <!-- Data Stream Canvas -->
+      <canvas ref="dataCanvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
 
       <!-- Header -->
       <header class="relative z-10 flex justify-between items-center px-5 py-3.5 bg-gradient-to-r from-[#174257]/60 to-transparent border-b border-[#174257] cursor-pointer hover:from-[#174257]/80 transition-colors" @click="isCollapsed = !isCollapsed">
@@ -420,6 +418,113 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue';
 import _ from 'lodash';
+
+const dataCanvas = ref<HTMLCanvasElement | null>(null);
+const SCANLINE_PERIOD = 8000;
+const DATA_CHARS = '01ABCDEF012345678901';
+
+interface DataStream {
+  x: number;
+  y: number;
+  speed: number;
+  chars: string[];
+  headIndex: number;
+  baseAlpha: number;
+  colOffset: number;
+}
+
+let streams: DataStream[] = [];
+let canvasAnimId = 0;
+
+const initDataStreams = (w: number, h: number) => {
+  streams = [];
+  const colW = 14;
+  const cols = Math.floor(w / colW);
+  const step = Math.max(1, Math.floor(cols / 18));
+  for (let c = 0; c < cols; c += step) {
+    const len = 4 + Math.floor(Math.random() * 8);
+    const chars: string[] = [];
+    for (let j = 0; j < len; j++) {
+      chars.push(DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)]);
+    }
+    streams.push({
+      x: c * colW + colW / 2,
+      y: -Math.random() * h,
+      speed: 0.3 + Math.random() * 0.5,
+      chars,
+      headIndex: 0,
+      baseAlpha: 0.12 + Math.random() * 0.18,
+      colOffset: c / cols,
+    });
+  }
+};
+
+const drawDataStreams = (canvas: HTMLCanvasElement) => {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const w = rect.width;
+  const h = rect.height;
+
+  if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.scale(dpr, dpr);
+    initDataStreams(w, h);
+  }
+
+  ctx.clearRect(0, 0, w, h);
+
+  const scanProgress = (Date.now() % SCANLINE_PERIOD) / SCANLINE_PERIOD;
+  const scanY = scanProgress * h;
+  const scanBand = h * 0.15;
+
+  ctx.font = '10px Rajdhani, Consolas, monospace';
+  ctx.textAlign = 'center';
+
+  for (const s of streams) {
+    s.y += s.speed;
+    if (s.y - s.chars.length * 14 > h) {
+      s.y = -s.chars.length * 14 - Math.random() * h * 0.5;
+      for (let j = 0; j < s.chars.length; j++) {
+        s.chars[j] = DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)];
+      }
+    }
+
+    const distToScan = Math.abs(((s.y % h) + h) % h - scanY);
+    const scanBoost = distToScan < scanBand ? (1 - distToScan / scanBand) * 0.6 : 0;
+
+    for (let j = 0; j < s.chars.length; j++) {
+      const cy = s.y + j * 14;
+      if (cy < -14 || cy > h + 14) continue;
+
+      const isHead = j === s.chars.length - 1;
+      const fadeRatio = j / s.chars.length;
+      let alpha = s.baseAlpha + fadeRatio * 0.35 + scanBoost;
+
+      if (isHead) {
+        alpha = Math.min(1, 0.7 + scanBoost);
+        ctx.fillStyle = `rgba(180,240,255,${alpha})`;
+        ctx.shadowColor = 'rgba(94,196,230,0.8)';
+        ctx.shadowBlur = 8;
+      } else {
+        ctx.fillStyle = `rgba(94,196,230,${alpha})`;
+        ctx.shadowColor = 'rgba(94,196,230,0.3)';
+        ctx.shadowBlur = 3;
+      }
+
+      if (Math.random() < 0.005) {
+        s.chars[j] = DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)];
+      }
+
+      ctx.fillText(s.chars[j], s.x, cy);
+    }
+  }
+  ctx.shadowBlur = 0;
+  canvasAnimId = requestAnimationFrame(() => drawDataStreams(canvas));
+};
 
 // Collapsible states
 const isCollapsed = ref(false);
@@ -880,6 +985,7 @@ onMounted(() => {
   ecgTimer = window.setInterval(updateEcg, 80);
   updateDeco();
   glitchTimer = window.setTimeout(triggerGlitch, 10000 + Math.random() * 15000);
+  if (dataCanvas.value) drawDataStreams(dataCanvas.value);
 });
 
 onUnmounted(() => {
@@ -887,6 +993,7 @@ onUnmounted(() => {
   clearInterval(decoTimer);
   clearInterval(ecgTimer);
   clearTimeout(glitchTimer);
+  cancelAnimationFrame(canvasAnimId);
 });
 </script>
 
@@ -983,23 +1090,6 @@ onUnmounted(() => {
   border-right: 1px solid rgba(94, 196, 230, 0.5);
 }
 
-/* ═══════ Data Particles ═══════ */
-.data-particle {
-  position: absolute;
-  top: -4px;
-  width: 2px;
-  height: 2px;
-  background: rgba(94, 196, 230, 0.6);
-  border-radius: 50%;
-  box-shadow: 0 0 4px rgba(94, 196, 230, 0.8);
-  animation: particle-fall linear infinite;
-}
-@keyframes particle-fall {
-  0% { transform: translateY(-4px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(calc(100vh - 200px)); opacity: 0; }
-}
 
 /* ═══════ Blink Animations ═══════ */
 .animate-blink {
