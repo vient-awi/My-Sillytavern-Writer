@@ -1,51 +1,102 @@
 <template>
   <div class="lh-terminal select-none text-[#7cb3c7] font-sans antialiased overflow-hidden p-2 md:p-4">
-    <div class="relative mx-auto w-full max-w-[620px] bg-[#0a1018]/90 backdrop-blur-md border border-[#174257] rounded-md shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_12px_rgba(94,196,230,0.2)] flex flex-col">
-      
+    <div class="relative mx-auto w-full max-w-[760px] bg-[#0a1018]/90 backdrop-blur-md border border-[#174257] rounded-md shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_12px_rgba(94,196,230,0.2)] flex flex-col hud-corners">
+
       <!-- Top Decorative Line with Breath -->
       <div class="absolute top-0 left-0 right-0 h-[3px] bg-[#5ec4e6] z-10 animate-top-breath"></div>
-      
+
       <!-- Grid Background Pattern Overlay -->
       <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(94, 196, 230, 0.1) 3px, rgba(94, 196, 230, 0.1) 6px);"></div>
+      <!-- Scanline Overlay -->
+      <div class="absolute inset-0 pointer-events-none opacity-10 animate-scanline bg-[linear-gradient(to_bottom,transparent,rgba(94,196,230,0.5),transparent)] bg-[length:100%_4px]"></div>
+      <!-- Data Particles -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div v-for="i in 8" :key="'p'+i" class="data-particle" :style="{ left: (10 + i * 11) + '%', animationDelay: (i * 0.7) + 's', animationDuration: (3 + i * 0.5) + 's' }"></div>
+      </div>
 
       <!-- Header -->
       <header class="relative z-10 flex justify-between items-center px-5 py-3.5 bg-gradient-to-r from-[#174257]/60 to-transparent border-b border-[#174257] cursor-pointer hover:from-[#174257]/80 transition-colors" @click="isCollapsed = !isCollapsed">
         <div class="flex items-center gap-3">
-          <div class="flex items-center justify-center w-[22px] h-[22px] border border-[#5ec4e6] bg-[#5ec4e6]/10 rounded-sm text-[#5ec4e6] text-[12px] shadow-[0_0_8px_rgba(94,196,230,0.3)]">
-            <i class="fas fa-satellite-dish text-[10px]"></i>
+          <div class="flex items-center justify-center w-[22px] h-[22px] border border-[#5ec4e6] bg-[#5ec4e6]/10 rounded-sm text-[#5ec4e6] text-[12px] shadow-[0_0_8px_rgba(94,196,230,0.3)] relative overflow-hidden">
+            <div class="absolute inset-0 bg-[#5ec4e6]/20 animate-radar-spin"></div>
+            <i class="fas fa-satellite-dish text-[10px] relative z-10"></i>
           </div>
-          <span class="text-[#5ec4e6] font-bold text-base tracking-[2px] drop-shadow-[0_0_10px_rgba(94,196,230,0.4)] uppercase">
+          <span class="text-[#5ec4e6] font-bold text-base tracking-[2px] drop-shadow-[0_0_10px_rgba(94,196,230,0.4)] uppercase terminal-title" :class="{ 'animate-glitch': glitchTrigger }">
             战术体能监控终端 <span class="text-xs text-[#5ec4e6]/60 tracking-widest ml-1 font-mono">v3.0</span>
           </span>
+          <div class="hidden sm:flex items-center gap-2 ml-4">
+            <span class="px-1.5 py-0.5 bg-[#5ec4e6]/20 border border-[#5ec4e6]/40 text-[#5ec4e6] text-[9px] font-mono tracking-widest rounded-sm">SYS.ON</span>
+            <span class="px-1.5 py-0.5 bg-[#4cd47a]/20 border border-[#4cd47a]/40 text-[#4cd47a] text-[9px] font-mono tracking-widest rounded-sm animate-pulse">LINK.STABLE</span>
+          </div>
         </div>
-        <div class="text-[#5ec4e6] text-sm transition-transform duration-300" :class="{ 'rotate-[-90deg]': isCollapsed }">
-          <i class="fas fa-chevron-down"></i>
+        <div class="flex items-center gap-4">
+          <!-- Signal Strength -->
+          <div class="hidden md:flex items-center gap-[2px]">
+            <div v-for="i in 4" :key="'sig'+i" class="w-[3px] rounded-[1px] transition-all duration-300" :class="i <= signalBars ? 'bg-[#5ec4e6] shadow-[0_0_4px_#5ec4e6]' : 'bg-[#174257]'" :style="{ height: (4 + i * 3) + 'px' }"></div>
+          </div>
+          <!-- Encryption Badge -->
+          <span class="hidden lg:block text-[#3d6f82] text-[9px] font-mono tracking-widest bg-[#174257]/30 px-1.5 py-0.5 rounded-sm border border-[#174257]/50">{{ cipherText }}</span>
+          <!-- Live Clock -->
+          <span class="hidden sm:block font-mono text-[#5ec4e6] text-[12px] tracking-widest drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ liveClock }}<span class="animate-blink">:</span><span class="text-[#7cb3c7]">{{ liveSeconds }}</span></span>
+          <div class="text-[#5ec4e6] text-sm transition-transform duration-300 flex items-center gap-3" :class="{ 'rotate-[-90deg]': isCollapsed }">
+            <div class="hidden sm:flex flex-col gap-[2px] items-end opacity-60">
+              <div class="w-8 h-[2px] bg-[#5ec4e6]"></div>
+              <div class="w-4 h-[2px] bg-[#5ec4e6]"></div>
+              <div class="w-6 h-[2px] bg-[#5ec4e6]"></div>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
         </div>
       </header>
 
+      <!-- System Status Ribbon -->
+      <div v-show="!isCollapsed" class="relative z-10 flex items-center justify-between px-5 py-1.5 bg-[#06090e]/80 border-b border-[#174257]/50 text-[10px] font-mono tracking-widest">
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5" :class="sysStatus.class">
+            <span class="w-[6px] h-[6px] rounded-full" :class="sysStatus.dot"></span>
+            {{ sysStatus.label }}
+          </span>
+          <span class="text-[#3d6f82]">|</span>
+          <span class="text-[#3d6f82]">SYNC <span class="text-[#5ec4e6]">{{ syncTimestamp }}</span></span>
+          <span class="text-[#3d6f82]">|</span>
+          <span class="text-[#3d6f82]">BUF <span class="text-[#5ec4e6]">{{ dataBuffer }}%</span></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-[#3d6f82]">THREAT</span>
+          <span class="font-bold" :class="threatLevel.class">{{ threatLevel.label }}</span>
+        </div>
+      </div>
+
       <!-- Main Content -->
       <div v-show="!isCollapsed" class="relative z-10 flex flex-col bg-transparent">
-        
+
         <div class="p-5 pb-4">
-          <!-- Sections Grid: Core Metrics & Container Load -->
-          <div class="grid grid-cols-1 gap-6">
-            
-            <!-- Core Metrics -->
+          <div class="flex gap-6">
+
+            <!-- Left Side: Bars (Flex-1) -->
+            <div class="flex-1 flex flex-col gap-6 min-w-0">
+              <!-- Core Metrics -->
             <div class="space-y-4">
               <div class="flex items-center gap-3 mb-4">
                 <div class="h-[1px] w-4 bg-[#5ec4e6] shadow-[0_0_5px_#5ec4e6]"></div>
                 <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">核心读数 [CORE]</span>
                 <div class="flex-1 h-px bg-gradient-to-r from-[#5ec4e6]/40 to-transparent"></div>
+                <!-- Mini ECG Waveform -->
+                <div class="ecg-waveform shrink-0" :class="ecgClass">
+                  <svg viewBox="0 0 80 24" class="w-[80px] h-[24px]">
+                    <polyline :points="ecgPoints" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="ecg-line"/>
+                  </svg>
+                </div>
               </div>
-              
+
               <div class="space-y-3.5">
                 <div v-for="bar in coreBars" :key="bar.id" class="flex items-center gap-3 group">
-                  <div class="w-7 h-7 flex items-center justify-center border rounded-[3px] shrink-0 transition-colors" 
+                  <div class="w-7 h-7 flex items-center justify-center border rounded-[3px] shrink-0 transition-colors"
                        :class="bar.isDanger ? 'border-[#e04060]/60 bg-[#e04060]/15 text-[#e04060] shadow-[0_0_10px_rgba(224,64,96,0.3)]' : 'border-[#5ec4e6]/30 bg-[#5ec4e6]/5 text-[#5ec4e6] shadow-[0_0_10px_rgba(94,196,230,0.1)]'">
                     <i :class="bar.icon" class="text-[13px]"></i>
                   </div>
                   <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-10 shrink-0">{{ bar.label }}</span>
-                  
+
                   <div class="flex-1 h-[14px] bg-[#06090e] border border-[#174257] p-[2px] flex relative group-hover:border-[#5ec4e6]/50 transition-colors overflow-hidden">
                     <div class="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_10%,rgba(94,196,230,0.05)_10%,rgba(94,196,230,0.05)_10.5%)] pointer-events-none"></div>
                     <div class="h-full relative transition-all duration-500 overflow-hidden bg-gradient-to-r"
@@ -55,7 +106,7 @@
                       <div class="absolute right-0 top-0 bottom-0 w-[2px] bg-white animate-bar-breath"></div>
                     </div>
                   </div>
-                  
+
                   <span class="font-mono text-[15px] font-bold w-12 text-right shrink-0 transition-colors duration-300"
                         :class="bar.isDanger ? 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' : bar.glow">
                     {{ bar.value }}
@@ -71,15 +122,15 @@
                 <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">容器载荷 [LOAD]</span>
                 <div class="flex-1 h-px bg-gradient-to-r from-[#5ec4e6]/40 to-transparent"></div>
               </div>
-              
+
               <div class="space-y-3.5">
                 <div v-for="bar in containerBars" :key="bar.id" class="flex items-center gap-3 group">
-                  <div class="w-7 h-7 flex items-center justify-center border rounded-[3px] shrink-0 transition-colors" 
+                  <div class="w-7 h-7 flex items-center justify-center border rounded-[3px] shrink-0 transition-colors"
                        :class="bar.isDanger ? 'border-[#e04060]/60 bg-[#e04060]/15 text-[#e04060] shadow-[0_0_10px_rgba(224,64,96,0.3)]' : 'border-[#5ec4e6]/30 bg-[#5ec4e6]/5 text-[#5ec4e6] shadow-[0_0_10px_rgba(94,196,230,0.1)]'">
                     <i :class="bar.icon" class="text-[13px]"></i>
                   </div>
                   <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-10 shrink-0">{{ bar.label }}</span>
-                  
+
                   <div class="flex-1 h-[14px] bg-[#06090e] border border-[#174257] p-[2px] flex relative group-hover:border-[#5ec4e6]/50 transition-colors overflow-hidden">
                     <div class="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_10%,rgba(94,196,230,0.05)_10%,rgba(94,196,230,0.05)_10.5%)] pointer-events-none"></div>
                     <div class="h-full relative transition-all duration-500 overflow-hidden bg-gradient-to-r"
@@ -89,7 +140,7 @@
                       <div class="absolute right-0 top-0 bottom-0 w-[2px] bg-white animate-bar-breath"></div>
                     </div>
                   </div>
-                  
+
                   <span class="font-mono text-[15px] font-bold w-12 text-right shrink-0 transition-colors duration-300"
                         :class="bar.isDanger ? 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' : bar.glow">
                     {{ bar.value }}
@@ -97,18 +148,20 @@
                 </div>
               </div>
             </div>
-          </div>
-          
-          <!-- System Status Panels (Replaces Old Stacked Tags) -->
-          <div class="pt-7 pb-1">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="h-[1px] w-4 bg-[#5ec4e6] shadow-[0_0_5px_#5ec4e6]"></div>
-              <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">状态监控 [STATUS]</span>
-              <div class="flex-1 h-px bg-gradient-to-r from-[#5ec4e6]/40 to-transparent"></div>
             </div>
-            
-            <div class="grid grid-cols-3 gap-2.5">
-              <!-- Mental Wall Card -->
+
+            <!-- Right Side: Status Monitoring (Sidebar) -->
+            <div class="w-[200px] shrink-0 border-l border-[#174257]/60 pl-5 flex flex-col gap-4 relative">
+              <div class="absolute -left-[1px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#5ec4e6]/60 via-transparent to-transparent"></div>
+
+              <div class="flex items-center gap-3 mb-1">
+                <div class="h-[1px] w-4 bg-[#5ec4e6] shadow-[0_0_5px_#5ec4e6]"></div>
+                <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">状态监控</span>
+                <div class="flex-1 h-px bg-gradient-to-r from-[#5ec4e6]/40 to-transparent"></div>
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <!-- Mental Wall Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
                   <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">Mental</span>
@@ -119,7 +172,7 @@
                   <span class="text-[11px] font-bold tracking-wider truncate" :class="mentalTag.text">{{ state.mentalWall }}</span>
                 </div>
               </div>
-              
+
               <!-- Heat Stage Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
@@ -131,7 +184,7 @@
                   <span class="text-[11px] font-bold tracking-wider truncate" :class="heatTag.text">{{ heatTag.name }}</span>
                 </div>
               </div>
-              
+
               <!-- Absorb Rate Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
@@ -144,13 +197,13 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Active Physio Flags -->
-            <div class="bg-[#06090e] border border-[#174257] rounded-[3px] mt-2.5 flex flex-col relative group overflow-hidden">
+            <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col relative group overflow-hidden">
               <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#174257] group-hover:bg-[#5ec4e6]/60 transition-colors z-10"></div>
               <div class="px-3 py-1.5 bg-[#174257]/15 flex items-center gap-2 border-b border-[#174257]/50">
                 <i class="fas fa-heartbeat text-[#3d6f82] text-[11px] animate-pulse"></i>
-                <span class="text-[#5ec4e6] text-[10px] font-mono uppercase tracking-widest">Active Signs / 异常体征</span>
+                <span class="text-[#5ec4e6] text-[10px] font-mono uppercase tracking-widest">Active Signs</span>
               </div>
               <div class="p-2.5 flex flex-wrap gap-2 min-h-[44px] items-center">
                 <div v-for="(p, i) in physioTags" :key="i" class="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold rounded-[2px] border" :class="p.classes">
@@ -163,11 +216,12 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="h-px bg-gradient-to-r from-transparent via-[#5ec4e6]/15 to-transparent mb-0"></div>
+      <div class="h-px bg-gradient-to-r from-transparent via-[#5ec4e6]/15 to-transparent mb-0"></div>
 
         <!-- Accordions -->
-        
+
         <!-- Contact Records -->
         <div class="border-b border-[#5ec4e6]/15">
           <div class="flex justify-between items-center px-5 py-3 cursor-pointer bg-black/25 hover:bg-[#5ec4e6]/10 transition-colors" @click="isRecCollapsed = !isRecCollapsed">
@@ -176,19 +230,19 @@
             </span>
             <span class="text-[#7cb3c7] text-sm transition-transform duration-200" :class="{ 'rotate-[-90deg]': isRecCollapsed }">▼</span>
           </div>
-          
+
           <div v-show="!isRecCollapsed" class="bg-black/15 p-5 pb-6 border-t border-[#5ec4e6]/10">
             <!-- Recent Event -->
             <div class="mb-4">
               <div class="text-[#7cb3c7] text-[11px] font-bold tracking-[2px] uppercase mb-3 flex items-center gap-1.5">
                 <span class="text-[12px] text-[#5ec4e6]">▸</span> 近期事件报告
               </div>
-              
+
               <div class="flex items-center gap-3 bg-black/35 border border-[#5ec4e6]/15 border-l-[3px] border-l-[#5ec4e6] px-3 py-2 rounded-[3px] mb-2">
                 <span class="text-[#3d6f82] text-[11px] tracking-wide min-w-[64px]">交互对象</span>
                 <span class="text-white text-[13px] font-bold drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{{ record.last.target }} ({{ record.last.targetType }})</span>
               </div>
-              
+
               <div class="grid grid-cols-2 gap-2 mb-2">
                 <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
                   <span class="text-[#3d6f82] text-[11px] tracking-wide">同步时间</span>
@@ -215,7 +269,7 @@
                   <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.intensity }}</span>
                 </div>
               </div>
-              
+
               <div class="flex items-center gap-3 bg-black/35 border border-[#5ec4e6]/15 px-3 py-2 rounded-[3px] mb-2">
                 <span class="text-[#3d6f82] text-[11px] tracking-wide min-w-[64px]">主控倾向</span>
                 <span class="text-[#dbeef5] text-[13px] font-mono font-bold flex-1 text-right">{{ record.last.active }}</span>
@@ -228,13 +282,13 @@
                 <span class="text-[#e07040] text-[11px] tracking-wide min-w-[64px]">异常生理</span>
                 <span class="text-[#e07040] text-[13px] font-mono font-bold flex-1 text-right">{{ specialsText }}</span>
               </div>
-              
+
               <div class="flex items-baseline gap-3 mt-3">
                 <span class="text-[#3d6f82] text-[12px] min-w-[64px] text-right shrink-0">单位自检</span>
                 <span class="text-[#5ab8a0] text-[12px] italic leading-relaxed border-l-2 border-[#5ab8a0]/50 bg-[#5ab8a0]/5 px-2.5 py-1.5 rounded-r-[3px]">"{{ record.last.comment }}"</span>
               </div>
             </div>
-            
+
             <!-- Global Stats -->
             <div class="pt-4 border-t border-black/30">
               <div class="text-[#7cb3c7] text-[11px] font-bold tracking-[2px] uppercase mb-3 flex items-center gap-1.5">
@@ -274,14 +328,14 @@
         <div class="border-b border-[#5ec4e6]/15">
           <div class="flex justify-between items-center px-5 py-3 cursor-pointer bg-black/25 hover:bg-[#5ec4e6]/10 transition-colors" @click="isPregCollapsed = !isPregCollapsed">
             <span class="text-[#5ec4e6] text-[13px] font-bold tracking-wide flex items-center gap-2">
-              <i class="fas fa-microscope text-[13px]"></i> 生物寄宿侦测 
+              <i class="fas fa-microscope text-[13px]"></i> 生物寄宿侦测
               <span class="text-[#7cb3c7] text-[12px] ml-1 font-mono tracking-widest bg-[#5ec4e6]/10 px-1.5 py-0.5 rounded border border-[#5ec4e6]/30">{{ preg.count }} / {{ preg.cap }}</span>
             </span>
             <span class="text-[#7cb3c7] text-sm transition-transform duration-200" :class="{ 'rotate-[-90deg]': isPregCollapsed }">▼</span>
           </div>
-          
+
           <div v-show="!isPregCollapsed" class="bg-black/10 py-4 border-t border-[#5ec4e6]/10">
-            
+
             <div class="px-5 space-y-3">
               <template v-if="pregnancyEntries.length > 0">
                 <div v-for="entry in pregnancyEntries" :key="entry.id" class="bg-black/30 border border-[#5ec4e6]/15 border-l-[3px] border-l-[#e07040] rounded-[3px] p-3.5">
@@ -326,23 +380,40 @@
                 <div class="flex justify-between"><span class="text-[#3d6f82] text-[11px]">神经负荷</span><span class="text-[#e04060] text-[12px] font-bold">{{ preg.lastBirth.exp }}</span></div>
               </div>
             </div>
-            
+
           </div>
         </div>
 
       </div>
 
       <!-- Environment Footer -->
-      <div class="relative z-10 bg-[#06090e]/90 border-t border-[#174257] px-5 py-3 flex flex-wrap justify-between items-center gap-2">
-        <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">
-          <span class="w-[7px] h-[7px] rounded-full shadow-[0_0_6px_currentColor] animate-pulse" :class="envTag.dot"></span>
-          诱导浓度: <span class="text-[#5ec4e6] font-mono text-[13px] font-bold ml-0.5">{{ state.pheromone }}%</span>
+      <div class="relative z-10 bg-[#06090e]/90 border-t border-[#174257]">
+        <!-- System Log Ticker -->
+        <div class="px-5 py-1.5 border-b border-[#174257]/40 overflow-hidden">
+          <div class="syslog-track flex gap-8 whitespace-nowrap">
+            <span v-for="(log, i) in sysLogs" :key="i" class="text-[#3d6f82] text-[10px] font-mono tracking-wide shrink-0">
+              <span class="text-[#174257]">[{{ log.time }}]</span> {{ log.msg }}
+            </span>
+          </div>
         </div>
-        <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">战区: <span class="text-[#5ec4e6] font-bold text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.combat }}</span></div>
-        <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">时间: <span class="text-[#5ec4e6] font-bold font-mono text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.time }}</span></div>
-        <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">位置: <span class="text-[#5ec4e6] font-bold text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.location }}</span></div>
+        <!-- Terminal Prompt -->
+        <div class="px-5 py-1 border-b border-[#174257]/40 flex items-center gap-2">
+          <span class="text-[#5ec4e6] text-[10px] font-mono tracking-widest">H.U.D.F://TAC-TERM&gt;</span>
+          <span class="text-[#7cb3c7] text-[10px] font-mono tracking-wide">{{ cmdText }}</span>
+          <span class="w-[6px] h-[12px] bg-[#5ec4e6] animate-blink-cursor"></span>
+        </div>
+        <!-- Env Data -->
+        <div class="px-5 py-3 flex flex-wrap justify-between items-center gap-2">
+          <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">
+            <span class="w-[7px] h-[7px] rounded-full shadow-[0_0_6px_currentColor] animate-pulse" :class="envTag.dot"></span>
+            诱导浓度: <span class="text-[#5ec4e6] font-mono text-[13px] font-bold ml-0.5">{{ state.pheromone }}%</span>
+          </div>
+          <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">战区: <span class="text-[#5ec4e6] font-bold text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.combat }}</span></div>
+          <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">时间: <span class="text-[#5ec4e6] font-bold font-mono text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.time }}</span></div>
+          <div class="text-[#3d6f82] text-[11px] flex items-center gap-1.5 tracking-wide">位置: <span class="text-[#5ec4e6] font-bold text-[12px] drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ state.location }}</span></div>
+        </div>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -355,6 +426,40 @@ import _ from 'lodash';
 const isCollapsed = ref(false);
 const isRecCollapsed = ref(true);
 const isPregCollapsed = ref(true);
+
+// UI decorative state
+const liveClock = ref('--:--');
+const liveSeconds = ref('--');
+const signalBars = ref(3);
+const cipherIndex = ref(0);
+const cipherText = ref('AES-256-GCM');
+const glitchTrigger = ref(false);
+const syncTimestamp = ref('--:--:--');
+const dataBuffer = ref(100);
+const cmdIndex = ref(0);
+const cmdText = ref('monitor --pid=LINHAO --continuous');
+const ecgPhase = ref(0);
+
+const ciphers = ['AES-256-GCM', 'QUANTUM-KEY', 'GHOST-PROTO', 'CHACHA20', 'ECDH-P521', 'HMAC-SHA3'];
+const commands = [
+  'monitor --pid=LINHAO --continuous',
+  'trace --signal=bio-feedback --live',
+  'sync --target=H.U.D.F://TAC-TERM --interval=2s',
+  'watch --var=sanity,heat,lewd,orgasm',
+  'log --level=ALL --output=buffer',
+  'ping --host=GHOST-PROTO://PRIMARCH',
+  'scan --range=pheromone --threshold=20%',
+  'report --format=TAC-BRIEF --auto',
+];
+
+const sysLogs = ref([
+  { time: '00:00', msg: '终端初始化完成 · 加密握手成功' },
+  { time: '00:00', msg: '生物传感器阵列在线 · 6/6 通道活跃' },
+  { time: '00:00', msg: '幽灵协议链路确认 · PRIMARCH 锚点已同步' },
+  { time: '00:00', msg: 'H.U.D.F 战术网络接入 · 延迟 12ms' },
+  { time: '00:00', msg: '环境诱导液传感器校准完成' },
+  { time: '00:00', msg: '孕育监测子系统待命中 · 容量 5/5' },
+]);
 
 // Mock/Global state fallback
 const state = reactive({
@@ -376,7 +481,7 @@ const state = reactive({
 // Records state
 const record = reactive({
   last: {
-    target: '—', targetType: '—', time: '无记录', parts: '—', duration: '—', 
+    target: '—', targetType: '—', time: '无记录', parts: '—', duration: '—',
     orgasmCount: 0, intensity: '—', active: '强制随动', inject: 0, comment: '无评价'
   },
   impact: {
@@ -389,7 +494,7 @@ const record = reactive({
 
 // Pregnancy state
 const preg = reactive({
-  count: 0, cap: 5, records: {} as Record<string, any>, 
+  count: 0, cap: 5, records: {} as Record<string, any>,
   birthTotal: 0, birthOffspring: 0, lastBirth: null as any
 });
 
@@ -457,11 +562,11 @@ const syncData = () => {
   preg.count = _.get(p, '当前怀孕数', 0);
   preg.cap = _.get(p, '总孕育容量', 5);
   preg.records = _.get(p, '孕育记录', {});
-  
+
   const birthHistory = _.get(p, '生产历史', {});
   preg.birthTotal = _.get(birthHistory, '总生产次数', 0);
   preg.birthOffspring = _.get(birthHistory, '总产出数量', 0);
-  
+
   const lb = _.get(birthHistory, '最近一次生产', {});
   if (preg.birthTotal > 0) {
     preg.lastBirth = {
@@ -476,23 +581,14 @@ const syncData = () => {
   }
 };
 
-onMounted(() => {
-  syncData();
-  timer = window.setInterval(syncData, 2000);
-});
-onUnmounted(() => {
-  clearInterval(timer);
-});
-
 // Computed Mappings
 
 const calcPercent = (val: number, max: number) => Math.min(100, Math.max(0, (val / max) * 100));
 
-// Base uniform frame for all bars (Cyan), with a breathing gradient fill mapping to the accent theme
 const coreBars = computed(() => [
   { id: 'sanity', icon: 'fas fa-brain', label: '理智', value: state.sanity, percent: calcPercent(state.sanity, 100), color: 'from-[#5ec4e6]/20 to-[#5ec4e6] shadow-[0_0_12px_rgba(94,196,230,0.5)]', glow: 'text-[#dbeef5] drop-shadow-[0_0_6px_#5ec4e6]', isDanger: state.sanity <= 30 },
   { id: 'heat', icon: 'fas fa-temperature-high', label: '情热', value: state.heat, percent: calcPercent(state.heat, 100), color: 'from-[#e8754a]/20 to-[#e8754a] shadow-[0_0_12px_rgba(232,117,74,0.5)]', glow: 'text-[#ffebd9] drop-shadow-[0_0_6px_#e8754a]', isDanger: state.heat >= 60 },
-  { id: 'lewd', icon: 'fas fa-dna', label: '淫荡', value: state.lewd, percent: calcPercent(state.lewd, 999), color: 'from-[#b85ce6]/20 to-[#b85ce6] shadow-[0_0_12px_rgba(184,92,230,0.5)]', glow: 'text-[#f4d9ff] drop-shadow-[0_0_6px_#b85ce6]', isDanger: false },
+  { id: 'lewd', icon: 'fas fa-dna', label: '淫荡', value: state.lewd, percent: calcPercent(state.lewd, 100), color: 'from-[#b85ce6]/20 to-[#b85ce6] shadow-[0_0_12px_rgba(184,92,230,0.5)]', glow: 'text-[#f4d9ff] drop-shadow-[0_0_6px_#b85ce6]', isDanger: false },
   { id: 'orgasm', icon: 'fas fa-bolt', label: '高潮', value: state.orgasm, percent: calcPercent(state.orgasm, 999), color: 'from-[#e6c45e]/20 to-[#e6c45e] shadow-[0_0_12px_rgba(230,196,94,0.5)]', glow: 'text-[#fff8d9] drop-shadow-[0_0_6px_#e6c45e]', isDanger: false }
 ]);
 
@@ -501,7 +597,6 @@ const containerBars = computed(() => [
   { id: 'fluid', icon: 'fas fa-tint', label: '积液', value: state.fluid, percent: calcPercent(state.fluid, 100), color: 'from-[#5a9ae8]/20 to-[#5a9ae8] shadow-[0_0_12px_rgba(90,154,232,0.5)]', glow: 'text-[#d9edff] drop-shadow-[0_0_6px_#5a9ae8]', isDanger: state.fluid >= 60 }
 ]);
 
-// Tags & State Panels
 const absorbRateShort = computed(() => state.absorbRate.replace(/（最优）|（次优）|（低效）/g, ''));
 
 const mentalTag = computed(() => {
@@ -521,20 +616,20 @@ const heatTag = computed(() => {
   let name = '性器休眠';
   let text = 'text-[#5ec4e6]';
   let dot = 'bg-[#5ec4e6] shadow-[0_0_4px_#5ec4e6]';
-  
+
   if (state.heat < 20) { name = '性器休眠'; }
   else if (state.heat < 40) { name = '体温微升'; text = 'text-[#e8754a]'; dot = 'bg-[#e8754a] shadow-[0_0_4px_#e8754a]'; }
   else if (state.heat < 60) { name = '肉体叛离'; text = 'text-[#e07040]'; dot = 'bg-[#e07040] shadow-[0_0_5px_#e07040]'; }
   else if (state.heat < 80) { name = '强制发情'; text = 'text-[#ff6b8b]'; dot = 'bg-[#ff6b8b] shadow-[0_0_6px_#ff6b8b] animate-pulse'; }
   else { name = '失控淫热'; text = 'text-[#ff6b8b]'; dot = 'bg-[#ff6b8b] shadow-[0_0_6px_#ff6b8b] animate-pulse'; }
-  
+
   return { name, text, dot };
 });
 
 const physioTags = computed(() => {
   const alertStates = ['强制发情', '失控发情', '源质饥渴', '源质饥渴待机', '诱导液中毒', '强制昏睡', '生产中'];
   const criticalStates = ['失控发情', '诱导液中毒', '强制昏睡'];
-  
+
   return (Array.isArray(state.physioStates) ? state.physioStates : []).map(s => {
     let classes = 'bg-[#4cd47a]/10 text-[#4cd47a] border-[#4cd47a]/30';
     let dot = 'bg-[#4cd47a] shadow-[0_0_4px_#4cd47a]';
@@ -600,6 +695,105 @@ const pregnancyEntries = computed(() => {
     };
   });
 });
+
+// ── UI Decorative Computed ──
+
+const sysStatus = computed(() => {
+  const critical = state.sanity <= 20 || state.heat >= 80 || state.energy <= 20;
+  const warn = state.sanity <= 50 || state.heat >= 60 || state.energy <= 40;
+  if (critical) return { label: 'SYS.ALERT', class: 'text-[#e04060]', dot: 'bg-[#e04060] shadow-[0_0_6px_#e04060] animate-pulse' };
+  if (warn) return { label: 'SYS.CAUTION', class: 'text-[#d4b438]', dot: 'bg-[#d4b438] shadow-[0_0_4px_#d4b438]' };
+  return { label: 'SYS.NOMINAL', class: 'text-[#4cd47a]', dot: 'bg-[#4cd47a] shadow-[0_0_4px_#4cd47a]' };
+});
+
+const threatLevel = computed(() => {
+  const p = state.pheromone;
+  if (p >= 80) return { label: 'CODE:BLACK', class: 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' };
+  if (p >= 50) return { label: 'CODE:CRIMSON', class: 'text-[#e07040] drop-shadow-[0_0_4px_#e07040]' };
+  if (p >= 20) return { label: 'CODE:AMBER', class: 'text-[#d4b438]' };
+  return { label: 'CODE:GREEN', class: 'text-[#4cd47a]' };
+});
+
+const ecgClass = computed(() => {
+  if (state.sanity <= 0) return 'text-[#e04060] ecg-flatline';
+  if (state.sanity <= 30) return 'text-[#e04060]';
+  if (state.sanity <= 60) return 'text-[#d4b438]';
+  return 'text-[#5ec4e6]';
+});
+
+const ecgPoints = computed(() => {
+  const phase = ecgPhase.value;
+  const pts: string[] = [];
+  for (let x = 0; x <= 80; x += 2) {
+    let y = 12;
+    const t = (x + phase) % 80;
+    if (t < 8) y = 12 - (t / 8) * 4;
+    else if (t < 10) y = 8 + (t - 8) * 4;
+    else if (t < 12) y = 16 - (t - 10) * 8;
+    else if (t < 14) y = 0 + (t - 12) * 8;
+    else if (t < 16) y = 16 - (t - 14) * 4;
+    else if (t < 20) y = 12 + Math.sin((t - 16) * 2) * 1.5;
+    else y = 12 + Math.sin(t * 0.3) * 1.5;
+    pts.push(`${x},${Math.round(y)}`);
+  }
+  return pts.join(' ');
+});
+
+// ── Decorative Timers ──
+
+let decoTimer: number;
+let ecgTimer: number;
+let glitchTimer: number;
+
+const updateDeco = () => {
+  const now = new Date();
+  liveClock.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  liveSeconds.value = now.getSeconds().toString().padStart(2, '0');
+  syncTimestamp.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+
+  signalBars.value = Math.random() > 0.3 ? 4 : (Math.random() > 0.5 ? 3 : 2);
+  dataBuffer.value = Math.floor(85 + Math.random() * 15);
+
+  if (Math.random() < 0.08) {
+    cipherIndex.value = (cipherIndex.value + 1) % ciphers.length;
+    cipherText.value = ciphers[cipherIndex.value];
+  }
+
+  if (Math.random() < 0.15) {
+    cmdIndex.value = (cmdIndex.value + 1) % commands.length;
+    cmdText.value = commands[cmdIndex.value];
+  }
+
+  const h = now.getHours().toString().padStart(2, '0');
+  const m = now.getMinutes().toString().padStart(2, '0');
+  sysLogs.value.forEach(log => { log.time = h + ':' + m; });
+};
+
+const updateEcg = () => {
+  ecgPhase.value = (ecgPhase.value + 1) % 80;
+};
+
+const triggerGlitch = () => {
+  glitchTrigger.value = true;
+  setTimeout(() => { glitchTrigger.value = false; }, 150);
+  glitchTimer = window.setTimeout(triggerGlitch, 8000 + Math.random() * 12000);
+};
+
+onMounted(() => {
+  syncData();
+  timer = window.setInterval(syncData, 2000);
+  decoTimer = window.setInterval(updateDeco, 1000);
+  ecgTimer = window.setInterval(updateEcg, 80);
+  updateDeco();
+  glitchTimer = window.setTimeout(triggerGlitch, 10000 + Math.random() * 15000);
+});
+
+onUnmounted(() => {
+  clearInterval(timer);
+  clearInterval(decoTimer);
+  clearInterval(ecgTimer);
+  clearTimeout(glitchTimer);
+});
 </script>
 
 <style scoped>
@@ -638,6 +832,25 @@ const pregnancyEntries = computed(() => {
   50% { opacity: 1; box-shadow: 0 0 14px #5ec4e6; }
 }
 
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes radar-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-radar-spin {
+  animation: radar-spin 4s linear infinite;
+  background: conic-gradient(from 0deg, transparent 70%, rgba(94,196,230,0.6) 100%);
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -651,5 +864,97 @@ const pregnancyEntries = computed(() => {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(94, 196, 230, 0.5);
+}
+
+/* ═══════ HUD Corner Brackets ═══════ */
+.hud-corners::before,
+.hud-corners::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  z-index: 20;
+  pointer-events: none;
+}
+.hud-corners::before {
+  top: 5px;
+  left: 5px;
+  border-top: 1px solid rgba(94, 196, 230, 0.5);
+  border-left: 1px solid rgba(94, 196, 230, 0.5);
+}
+.hud-corners::after {
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 1px solid rgba(94, 196, 230, 0.5);
+  border-right: 1px solid rgba(94, 196, 230, 0.5);
+}
+
+/* ═══════ Data Particles ═══════ */
+.data-particle {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 2px;
+  background: rgba(94, 196, 230, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(94, 196, 230, 0.8);
+  animation: particle-fall linear infinite;
+}
+@keyframes particle-fall {
+  0% { transform: translateY(-4px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(calc(100vh - 200px)); opacity: 0; }
+}
+
+/* ═══════ Blink Animations ═══════ */
+.animate-blink {
+  animation: blink-cursor 1s step-end infinite;
+}
+.animate-blink-cursor {
+  animation: blink-cursor 0.8s step-end infinite;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ═══════ Glitch Effect ═══════ */
+.animate-glitch {
+  animation: glitch-skew 0.15s ease-in-out;
+}
+@keyframes glitch-skew {
+  0% { transform: translate(0); text-shadow: 0 0 10px rgba(94,196,230,0.4); }
+  20% { transform: translate(-2px, 1px); text-shadow: -2px 0 #e04060, 2px 0 #5ec4e6; }
+  40% { transform: translate(2px, -1px); text-shadow: 2px 0 #5ec4e6, -2px 0 #e04060; }
+  60% { transform: translate(-1px, 0); text-shadow: 0 0 10px rgba(94,196,230,0.4); }
+  80% { transform: translate(1px, 1px); text-shadow: 1px 0 #e04060; }
+  100% { transform: translate(0); text-shadow: 0 0 10px rgba(94,196,230,0.4); }
+}
+
+/* ═══════ Syslog Ticker ═══════ */
+.syslog-track {
+  display: inline-flex;
+  animation: ticker-scroll 40s linear infinite;
+}
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════ ECG Waveform ═══════ */
+.ecg-waveform {
+  opacity: 0.8;
+}
+.ecg-waveform .ecg-line {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+.ecg-flatline .ecg-line {
+  animation: ecg-flat 0.5s ease-in-out;
+}
+@keyframes ecg-flat {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
 }
 </style>
