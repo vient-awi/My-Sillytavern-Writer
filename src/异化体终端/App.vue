@@ -57,12 +57,12 @@
             {{ sysStatus.label }}
           </span>
           <span class="text-[#3d6f82]">|</span>
-          <span class="text-[#3d6f82]">SYNC <span class="text-[#5ec4e6]">{{ syncTimestamp }}</span></span>
+          <span class="text-[#3d6f82]">同步 <span class="text-[#5ec4e6]">{{ syncTimestamp }}</span></span>
           <span class="text-[#3d6f82]">|</span>
-          <span class="text-[#3d6f82]">BUF <span class="text-[#5ec4e6]">{{ dataBuffer }}%</span></span>
+          <span class="text-[#3d6f82]">缓冲 <span class="text-[#5ec4e6]">{{ dataBuffer }}%</span></span>
         </div>
         <div class="flex items-center gap-4">
-          <span class="text-[#3d6f82]">THREAT</span>
+          <span class="text-[#3d6f82]">威胁评估</span>
           <span class="font-bold" :class="threatLevel.class">{{ threatLevel.label }}</span>
         </div>
       </div>
@@ -95,7 +95,7 @@
                        :class="bar.isDanger ? 'border-[#e04060]/60 bg-[#e04060]/15 text-[#e04060] shadow-[0_0_10px_rgba(224,64,96,0.3)]' : 'border-[#5ec4e6]/30 bg-[#5ec4e6]/5 text-[#5ec4e6] shadow-[0_0_10px_rgba(94,196,230,0.1)]'">
                     <i :class="bar.icon" class="text-[13px]"></i>
                   </div>
-                  <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-10 shrink-0">{{ bar.label }}</span>
+                  <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-9 shrink-0">{{ bar.label }}</span>
 
                   <div class="flex-1 h-[14px] bg-[#06090e] border border-[#174257] p-[2px] flex relative group-hover:border-[#5ec4e6]/50 transition-colors overflow-hidden">
                     <div class="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_10%,rgba(94,196,230,0.05)_10%,rgba(94,196,230,0.05)_10.5%)] pointer-events-none"></div>
@@ -107,7 +107,7 @@
                     </div>
                   </div>
 
-                  <span class="font-mono text-[15px] font-bold w-12 text-right shrink-0 transition-colors duration-300"
+                  <span class="font-mono text-[15px] font-bold w-8 text-right shrink-0 transition-colors duration-300"
                         :class="bar.isDanger ? 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' : bar.glow">
                     {{ bar.value }}
                   </span>
@@ -129,7 +129,7 @@
                        :class="bar.isDanger ? 'border-[#e04060]/60 bg-[#e04060]/15 text-[#e04060] shadow-[0_0_10px_rgba(224,64,96,0.3)]' : 'border-[#5ec4e6]/30 bg-[#5ec4e6]/5 text-[#5ec4e6] shadow-[0_0_10px_rgba(94,196,230,0.1)]'">
                     <i :class="bar.icon" class="text-[13px]"></i>
                   </div>
-                  <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-10 shrink-0">{{ bar.label }}</span>
+                  <span class="text-[#7cb3c7] text-[12px] font-bold tracking-[2px] w-9 shrink-0">{{ bar.label }}</span>
 
                   <div class="flex-1 h-[14px] bg-[#06090e] border border-[#174257] p-[2px] flex relative group-hover:border-[#5ec4e6]/50 transition-colors overflow-hidden">
                     <div class="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_10%,rgba(94,196,230,0.05)_10%,rgba(94,196,230,0.05)_10.5%)] pointer-events-none"></div>
@@ -141,7 +141,7 @@
                     </div>
                   </div>
 
-                  <span class="font-mono text-[15px] font-bold w-12 text-right shrink-0 transition-colors duration-300"
+                  <span class="font-mono text-[15px] font-bold w-8 text-right shrink-0 transition-colors duration-300"
                         :class="bar.isDanger ? 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' : bar.glow">
                     {{ bar.value }}
                   </span>
@@ -164,7 +164,7 @@
                 <!-- Mental Wall Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
-                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">Mental</span>
+                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">心理防线</span>
                   <i class="fas fa-brain text-[#3d6f82] text-[10px]"></i>
                 </div>
                 <div class="px-2.5 py-2 flex items-center gap-2">
@@ -176,7 +176,7 @@
               <!-- Heat Stage Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
-                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">Heat</span>
+                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">情热阶段</span>
                   <i class="fas fa-fire text-[#3d6f82] text-[10px]"></i>
                 </div>
                 <div class="px-2.5 py-2 flex items-center gap-2">
@@ -188,7 +188,7 @@
               <!-- Absorb Rate Card -->
               <div class="bg-[#06090e] border border-[#174257] rounded-[3px] flex flex-col overflow-hidden hover:border-[#5ec4e6]/50 transition-colors">
                 <div class="px-2 py-1 bg-[#174257]/30 border-b border-[#174257] flex justify-between items-center">
-                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">Absorb</span>
+                  <span class="text-[#3d6f82] text-[9px] font-mono uppercase tracking-widest">源质吸收</span>
                   <i class="fas fa-tint text-[#3d6f82] text-[10px]"></i>
                 </div>
                 <div class="px-2.5 py-2 flex items-center gap-2">
@@ -203,15 +203,14 @@
               <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#174257] group-hover:bg-[#5ec4e6]/60 transition-colors z-10"></div>
               <div class="px-3 py-1.5 bg-[#174257]/15 flex items-center gap-2 border-b border-[#174257]/50">
                 <i class="fas fa-heartbeat text-[#3d6f82] text-[11px] animate-pulse"></i>
-                <span class="text-[#5ec4e6] text-[10px] font-mono uppercase tracking-widest">Active Signs</span>
+                <span class="text-[#5ec4e6] text-[10px] font-mono uppercase tracking-widest">生理体征</span>
               </div>
               <div class="p-2.5 flex flex-wrap gap-2 min-h-[44px] items-center">
                 <div v-for="(p, i) in physioTags" :key="i" class="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold rounded-[2px] border" :class="p.classes">
                   <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="p.dot"></span>
                   {{ p.name }}
                 </div>
-                <!-- Fallback if array is empty -->
-                <span v-if="physioTags.length === 0" class="text-[#3d6f82] text-[11px] font-mono pl-1">NO ABNORMALITIES DETECTED</span>
+                <span v-if="physioTags.length === 0" class="text-[#3d6f82] text-[11px] font-mono pl-1">未检测到异常体征</span>
               </div>
             </div>
           </div>
@@ -284,7 +283,7 @@
               </div>
 
               <div class="flex items-baseline gap-3 mt-3">
-                <span class="text-[#3d6f82] text-[12px] min-w-[64px] text-right shrink-0">单位自检</span>
+                <span class="text-[#3d6f82] text-[12px] min-w-[64px] text-right shrink-0">自检评估</span>
                 <span class="text-[#5ab8a0] text-[12px] italic leading-relaxed border-l-2 border-[#5ab8a0]/50 bg-[#5ab8a0]/5 px-2.5 py-1.5 rounded-r-[3px]">"{{ record.last.comment }}"</span>
               </div>
             </div>
@@ -452,15 +451,6 @@ const commands = [
   'report --format=TAC-BRIEF --auto',
 ];
 
-const sysLogs = ref([
-  { time: '00:00', msg: '终端初始化完成 · 加密握手成功' },
-  { time: '00:00', msg: '生物传感器阵列在线 · 6/6 通道活跃' },
-  { time: '00:00', msg: '幽灵协议链路确认 · PRIMARCH 锚点已同步' },
-  { time: '00:00', msg: 'H.U.D.F 战术网络接入 · 延迟 12ms' },
-  { time: '00:00', msg: '环境诱导液传感器校准完成' },
-  { time: '00:00', msg: '孕育监测子系统待命中 · 容量 5/5' },
-]);
-
 // Mock/Global state fallback
 const state = reactive({
   sanity: 100,
@@ -599,6 +589,22 @@ const containerBars = computed(() => [
 
 const absorbRateShort = computed(() => state.absorbRate.replace(/（最优）|（次优）|（低效）/g, ''));
 
+const heatStageLabel = computed(() => {
+  if (state.heat < 20) return '性器休眠';
+  if (state.heat < 40) return '体温微升';
+  if (state.heat < 60) return '肉体叛离';
+  if (state.heat < 80) return '强制发情';
+  return '失控淫热';
+});
+
+const sanityStageLabel = computed(() => {
+  if (state.sanity >= 80) return '铁壁封锁';
+  if (state.sanity >= 60) return '战术性松动';
+  if (state.sanity >= 40) return '裂缝蔓延';
+  if (state.sanity >= 20) return '摇摇欲坠';
+  return '彻底沦陷';
+});
+
 const mentalTag = computed(() => {
   let text = 'text-[#5ec4e6]';
   let dot = 'bg-[#5ec4e6] shadow-[0_0_4px_#5ec4e6]';
@@ -701,17 +707,17 @@ const pregnancyEntries = computed(() => {
 const sysStatus = computed(() => {
   const critical = state.sanity <= 20 || state.heat >= 80 || state.energy <= 20;
   const warn = state.sanity <= 50 || state.heat >= 60 || state.energy <= 40;
-  if (critical) return { label: 'SYS.ALERT', class: 'text-[#e04060]', dot: 'bg-[#e04060] shadow-[0_0_6px_#e04060] animate-pulse' };
-  if (warn) return { label: 'SYS.CAUTION', class: 'text-[#d4b438]', dot: 'bg-[#d4b438] shadow-[0_0_4px_#d4b438]' };
-  return { label: 'SYS.NOMINAL', class: 'text-[#4cd47a]', dot: 'bg-[#4cd47a] shadow-[0_0_4px_#4cd47a]' };
+  if (critical) return { label: '系统·告警', class: 'text-[#e04060]', dot: 'bg-[#e04060] shadow-[0_0_6px_#e04060] animate-pulse' };
+  if (warn) return { label: '系统·警戒', class: 'text-[#d4b438]', dot: 'bg-[#d4b438] shadow-[0_0_4px_#d4b438]' };
+  return { label: '系统·正常', class: 'text-[#4cd47a]', dot: 'bg-[#4cd47a] shadow-[0_0_4px_#4cd47a]' };
 });
 
 const threatLevel = computed(() => {
   const p = state.pheromone;
-  if (p >= 80) return { label: 'CODE:BLACK', class: 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' };
-  if (p >= 50) return { label: 'CODE:CRIMSON', class: 'text-[#e07040] drop-shadow-[0_0_4px_#e07040]' };
-  if (p >= 20) return { label: 'CODE:AMBER', class: 'text-[#d4b438]' };
-  return { label: 'CODE:GREEN', class: 'text-[#4cd47a]' };
+  if (p >= 80) return { label: 'CODE:BLACK · 致命', class: 'text-[#e04060] drop-shadow-[0_0_6px_#e04060] animate-pulse' };
+  if (p >= 50) return { label: 'CODE:CRIMSON · 高危', class: 'text-[#e07040] drop-shadow-[0_0_4px_#e07040]' };
+  if (p >= 20) return { label: 'CODE:AMBER · 警戒', class: 'text-[#d4b438]' };
+  return { label: 'CODE:GREEN · 安全', class: 'text-[#4cd47a]' };
 });
 
 const ecgClass = computed(() => {
@@ -739,6 +745,98 @@ const ecgPoints = computed(() => {
   return pts.join(' ');
 });
 
+// ── Dynamic System Logs ──
+
+const sysLogs = computed(() => {
+  const now = syncTimestamp.value.slice(0, 5);
+  const logs: { time: string; msg: string }[] = [];
+
+  // 固定条目：系统基础状态
+  logs.push({ time: now, msg: '终端初始化完成 · 加密握手成功，安全通道已建立' });
+  logs.push({ time: now, msg: '生物传感器阵列在线 · 六条信号通道活跃，延迟处于正常范围' });
+
+  // 理智驱动
+  const s = state.sanity;
+  if (s >= 80) {
+    logs.push({ time: now, msg: '心理防线固若金汤 · 外部干扰无法穿透意志壁垒，战术判断精准如手术刀' });
+  } else if (s >= 60) {
+    logs.push({ time: now, msg: '心理防线出现细微松动 · 偶有杂念渗入，但主体仍能迅速回正，不影响核心作战能力' });
+  } else if (s >= 40) {
+    logs.push({ time: now, msg: '防线持续剥落中 · 语言开始夹杂非战术性词汇，身体不自觉流露出被改造的记忆痕迹' });
+  } else if (s >= 20) {
+    logs.push({ time: now, msg: '意识大面积失焦 · 仅靠肌肉记忆维持基础反射，已无法完成复杂指令，需要外部引导' });
+  } else {
+    logs.push({ time: now, msg: '防线完全崩解 · 自主意识丧失，躯体回归纯粹的生理反射模式，进入保护性昏迷倒数' });
+  }
+
+  // 情热驱动
+  const h = state.heat;
+  if (h < 20) {
+    logs.push({ time: now, msg: '身体沉寂如封存的兵器 · 无任何发情征兆，战斗专注度维持满负荷运转' });
+  } else if (h < 40) {
+    logs.push({ time: now, msg: '体温轻微攀升 · 润滑液微量渗出，尚可通过束腰收紧和冷水冲洗勉强压制' });
+  } else if (h < 60) {
+    logs.push({ time: now, msg: '身体开始背离意志 · 裆部湿痕逐渐蔓延，生殖腔不自主收缩，瞄准稳定性出现可察觉下降' });
+  } else if (h < 80) {
+    logs.push({ time: now, msg: '全面进入强制发情 · 费洛蒙信号正向环境广播，任何外部接触都可能引爆连锁生理反应' });
+  } else {
+    logs.push({ time: now, msg: '失控级淫热 · 身体每一寸皮肤沦为敏感带，战斗能力完全丧失，须立即触发高潮清除情热' });
+  }
+
+  // 环境诱导液
+  const ph = state.pheromone;
+  if (ph >= 80) {
+    logs.push({ time: now, msg: '巢穴核心区 · 空气中弥漫着改写神经信号的因子，蓝管抑制剂在此环境下等同于生理盐水' });
+  } else if (ph >= 50) {
+    logs.push({ time: now, msg: '巢穴外围 · 每一次呼吸都在侵蚀压制力，身体正被缓慢推向发情边界，建议缩短暴露时间' });
+  } else if (ph >= 20) {
+    logs.push({ time: now, msg: '污染区 · 空气中残留甜腥的诱导痕迹，对长期暴露者已构成可感知的生理影响' });
+  } else {
+    logs.push({ time: now, msg: '环境空气洁净 · 诱导液浓度处于基线水平，无额外生理负担，可正常行动' });
+  }
+
+  // 幽灵协议
+  logs.push({ time: now, msg: '幽灵协议链路确认 · PRIMARCH 锚点与天枢量子终端握手正常，存档点状态稳定' });
+
+  // 能量系统
+  const e = state.energy;
+  if (e <= 20) {
+    logs.push({ time: now, msg: '源质储备濒临枯竭 · 体温持续下滑，伤口不再愈合，四肢末端已开始失温，须立即补给' });
+  } else if (e <= 40) {
+    logs.push({ time: now, msg: '能量储备处于警戒线以下 · 反应速度明显迟钝，射击精度和移动效率均有折损' });
+  } else {
+    logs.push({ time: now, msg: '能量供给稳定 · 腹腔积液池持续转化输出，可维持常规作战续航' });
+  }
+
+  // 孕育监测
+  if (preg.count > 0) {
+    const hasLabor = Object.values(preg.records).some((r: any) =>
+      _.get(r, '_当前发育阶段') === '生产中' || _.get(r, '_当前发育阶段') === '临产期'
+    );
+    if (hasLabor) {
+      logs.push({ time: now, msg: '产程信号已触发 · 检测到临产级孕体，分娩窗口即将开启，建议就近寻找掩体' });
+    } else {
+      logs.push({ time: now, msg: '体内检测到活跃孕体 · 胚胎正在释放源质反哺宿主，形成一种暂时的共生关系' });
+    }
+  } else {
+    logs.push({ time: now, msg: '孕育区空置 · 无活体寄宿，能量补给需依赖外部环境或存量体液转化' });
+  }
+
+  // 全周期统计
+  logs.push({
+    time: now,
+    msg: `全周期数据更新 · 服役次数已达 ${record.stats.total}，其中异化体接触 ${record.stats.alien} 次`,
+  });
+
+  // 战术定位
+  logs.push({
+    time: now,
+    msg: `当前位置 ${state.location} · 战况 ${state.combat} · 时间 ${state.time}`,
+  });
+
+  return logs;
+});
+
 // ── Decorative Timers ──
 
 let decoTimer: number;
@@ -763,10 +861,6 @@ const updateDeco = () => {
     cmdIndex.value = (cmdIndex.value + 1) % commands.length;
     cmdText.value = commands[cmdIndex.value];
   }
-
-  const h = now.getHours().toString().padStart(2, '0');
-  const m = now.getMinutes().toString().padStart(2, '0');
-  sysLogs.value.forEach(log => { log.time = h + ':' + m; });
 };
 
 const updateEcg = () => {
@@ -935,7 +1029,7 @@ onUnmounted(() => {
 /* ═══════ Syslog Ticker ═══════ */
 .syslog-track {
   display: inline-flex;
-  animation: ticker-scroll 40s linear infinite;
+  animation: ticker-scroll 30s linear infinite;
 }
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
