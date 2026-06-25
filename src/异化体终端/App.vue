@@ -751,48 +751,48 @@ const sysLogs = computed(() => {
   const now = syncTimestamp.value.slice(0, 5);
   const logs: { time: string; msg: string }[] = [];
 
-  // 固定条目：系统基础状态
+  // 固定条目
   logs.push({ time: now, msg: '终端初始化完成 · 加密握手成功，安全通道已建立' });
   logs.push({ time: now, msg: '生物传感器阵列在线 · 六条信号通道活跃，延迟处于正常范围' });
 
-  // 理智驱动
+  // 理智 · 仅描述，不显示数值
   const s = state.sanity;
   if (s >= 80) {
-    logs.push({ time: now, msg: '心理防线固若金汤 · 外部干扰无法穿透意志壁垒，战术判断精准如手术刀' });
+    logs.push({ time: now, msg: '心理防线完整 · 认知功能正常，情绪干扰指数处于低位' });
   } else if (s >= 60) {
-    logs.push({ time: now, msg: '心理防线出现细微松动 · 偶有杂念渗入，但主体仍能迅速回正，不影响核心作战能力' });
+    logs.push({ time: now, msg: '心理防线轻度磨损 · 注意力偶有偏移，战术判断维持基线水平' });
   } else if (s >= 40) {
-    logs.push({ time: now, msg: '防线持续剥落中 · 语言开始夹杂非战术性词汇，身体不自觉流露出被改造的记忆痕迹' });
+    logs.push({ time: now, msg: '心理防线中度受损 · 语言输出出现非标准词汇，生理记忆回响呈上升趋势' });
   } else if (s >= 20) {
-    logs.push({ time: now, msg: '意识大面积失焦 · 仅靠肌肉记忆维持基础反射，已无法完成复杂指令，需要外部引导' });
+    logs.push({ time: now, msg: '心理防线严重退化 · 复杂指令执行失败，仅保留条件反射' });
   } else {
-    logs.push({ time: now, msg: '防线完全崩解 · 自主意识丧失，躯体回归纯粹的生理反射模式，进入保护性昏迷倒数' });
+    logs.push({ time: now, msg: '心理防线完全失效 · 自主意识中止，系统进入保护性待机' });
   }
 
-  // 情热驱动
+  // 情热 · 仅描述，不显示数值
   const h = state.heat;
   if (h < 20) {
-    logs.push({ time: now, msg: '身体沉寂如封存的兵器 · 无任何发情征兆，战斗专注度维持满负荷运转' });
+    logs.push({ time: now, msg: '生理指标正常 · 无发情相关体征，作战效能处于基准区间' });
   } else if (h < 40) {
-    logs.push({ time: now, msg: '体温轻微攀升 · 润滑液微量渗出，尚可通过束腰收紧和冷水冲洗勉强压制' });
+    logs.push({ time: now, msg: '体温轻微上升 · 润滑液微量分泌，可通过常规降温措施暂时抑制' });
   } else if (h < 60) {
-    logs.push({ time: now, msg: '身体开始背离意志 · 裆部湿痕逐渐蔓延，生殖腔不自主收缩，瞄准稳定性出现可察觉下降' });
+    logs.push({ time: now, msg: '生理自主反应增强 · 生殖腔出现不自主收缩，瞄准精度轻微下降' });
   } else if (h < 80) {
-    logs.push({ time: now, msg: '全面进入强制发情 · 费洛蒙信号正向环境广播，任何外部接触都可能引爆连锁生理反应' });
+    logs.push({ time: now, msg: '强制发情确认 · 费洛蒙向外扩散，环境吸引力场已激活' });
   } else {
-    logs.push({ time: now, msg: '失控级淫热 · 身体每一寸皮肤沦为敏感带，战斗能力完全丧失，须立即触发高潮清除情热' });
+    logs.push({ time: now, msg: '失控级生理反应 · 全身敏感度最大化，作战能力丧失，须执行情热清零程序' });
   }
 
   // 环境诱导液
   const ph = state.pheromone;
   if (ph >= 80) {
-    logs.push({ time: now, msg: '巢穴核心区 · 空气中弥漫着改写神经信号的因子，蓝管抑制剂在此环境下等同于生理盐水' });
+    logs.push({ time: now, msg: `巢穴核心污染 · 浓度 ${ph}%，已达神经干扰阈值，蓝管抑制剂有效性极低` });
   } else if (ph >= 50) {
-    logs.push({ time: now, msg: '巢穴外围 · 每一次呼吸都在侵蚀压制力，身体正被缓慢推向发情边界，建议缩短暴露时间' });
+    logs.push({ time: now, msg: `巢穴外围污染 · 浓度 ${ph}%，情热上升速率持续加快，建议缩短滞留时间` });
   } else if (ph >= 20) {
-    logs.push({ time: now, msg: '污染区 · 空气中残留甜腥的诱导痕迹，对长期暴露者已构成可感知的生理影响' });
+    logs.push({ time: now, msg: `中度污染 · 浓度 ${ph}%，对长期暴露者已构成持续生理影响` });
   } else {
-    logs.push({ time: now, msg: '环境空气洁净 · 诱导液浓度处于基线水平，无额外生理负担，可正常行动' });
+    logs.push({ time: now, msg: `环境洁净 · 浓度 ${ph}%，处于安全基线以下` });
   }
 
   // 幽灵协议
@@ -801,11 +801,11 @@ const sysLogs = computed(() => {
   // 能量系统
   const e = state.energy;
   if (e <= 20) {
-    logs.push({ time: now, msg: '源质储备濒临枯竭 · 体温持续下滑，伤口不再愈合，四肢末端已开始失温，须立即补给' });
+    logs.push({ time: now, msg: `源质储备临界 · 饱食度 ${e}%，体温下降，再生机能停滞，建议立即执行补给` });
   } else if (e <= 40) {
-    logs.push({ time: now, msg: '能量储备处于警戒线以下 · 反应速度明显迟钝，射击精度和移动效率均有折损' });
+    logs.push({ time: now, msg: `能量储备不足 · 饱食度 ${e}%，反应速度和射击精度出现可测量下降` });
   } else {
-    logs.push({ time: now, msg: '能量供给稳定 · 腹腔积液池持续转化输出，可维持常规作战续航' });
+    logs.push({ time: now, msg: `能量供给稳定 · 饱食度 ${e}%，腹腔积液池持续转化，维持常规作战续航` });
   }
 
   // 孕育监测
@@ -814,18 +814,18 @@ const sysLogs = computed(() => {
       _.get(r, '_当前发育阶段') === '生产中' || _.get(r, '_当前发育阶段') === '临产期'
     );
     if (hasLabor) {
-      logs.push({ time: now, msg: '产程信号已触发 · 检测到临产级孕体，分娩窗口即将开启，建议就近寻找掩体' });
+      logs.push({ time: now, msg: '产程信号触发 · 检测到临产级孕体，分娩窗口即将开启' });
     } else {
-      logs.push({ time: now, msg: '体内检测到活跃孕体 · 胚胎正在释放源质反哺宿主，形成一种暂时的共生关系' });
+      logs.push({ time: now, msg: `检测到 ${preg.count}/${preg.cap} 活跃孕体 · 胚胎源质持续注入腹腔` });
     }
   } else {
-    logs.push({ time: now, msg: '孕育区空置 · 无活体寄宿，能量补给需依赖外部环境或存量体液转化' });
+    logs.push({ time: now, msg: '孕育区空置 · 无活跃孕体，能量补给依赖外部源质摄入' });
   }
 
   // 全周期统计
   logs.push({
     time: now,
-    msg: `全周期数据更新 · 服役次数已达 ${record.stats.total}，其中异化体接触 ${record.stats.alien} 次`,
+    msg: `全周期数据更新 · 累计服役 ${record.stats.total} 次，异化体接触 ${record.stats.alien} 次`,
   });
 
   // 战术定位
