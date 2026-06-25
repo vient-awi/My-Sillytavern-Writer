@@ -6,11 +6,24 @@
       <div class="absolute top-0 left-0 right-0 h-[3px] bg-[#5ec4e6] z-10 animate-top-breath"></div>
 
       <!-- Grid Background Pattern Overlay -->
-      <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(94, 196, 230, 0.1) 3px, rgba(94, 196, 230, 0.1) 6px);"></div>
+      <div class="absolute inset-0 pointer-events-none opacity-25 z-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(94, 196, 230, 0.14) 3px, rgba(94, 196, 230, 0.14) 6px);"></div>
+
+      <!-- Ambient Particle Field -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+        <div v-for="p in ambientParticles" :key="p.id" class="ambient-dot"
+             :style="{ left: p.x + '%', width: p.size + 'px', height: p.size + 'px', animationDelay: p.delay + 's', animationDuration: p.duration + 's' }">
+        </div>
+      </div>
+
       <!-- Scanline Overlay -->
-      <div class="absolute inset-0 pointer-events-none opacity-10 animate-scanline bg-[linear-gradient(to_bottom,transparent,rgba(94,196,230,0.5),transparent)] bg-[length:100%_4px]"></div>
-      <!-- Data Stream Canvas -->
-      <canvas ref="dataCanvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
+      <div class="absolute inset-0 pointer-events-none opacity-10 animate-scanline bg-[linear-gradient(to_bottom,transparent,rgba(94,196,230,0.5),transparent)] bg-[length:100%_4px] z-[2]"></div>
+
+      <!-- Data Fragments -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden z-[3]">
+        <div v-for="f in fragments" :key="f.id" class="data-fragment" :style="{ left: f.x + '%', top: f.y + '%', animationDelay: f.delay + 's' }">
+          {{ f.text }}
+        </div>
+      </div>
 
       <!-- Header -->
       <header class="relative z-10 flex justify-between items-center px-5 py-3.5 bg-gradient-to-r from-[#174257]/60 to-transparent border-b border-[#174257] cursor-pointer hover:from-[#174257]/80 transition-colors" @click="isCollapsed = !isCollapsed">
@@ -229,60 +242,65 @@
           </div>
 
           <div v-show="!isRecCollapsed" class="bg-black/15 p-5 pb-6 border-t border-[#5ec4e6]/10">
-            <!-- Recent Event -->
+            <!-- Recent Event Report -->
             <div class="mb-4">
-              <div class="text-[#7cb3c7] text-[11px] font-bold tracking-[2px] uppercase mb-3 flex items-center gap-1.5">
-                <span class="text-[12px] text-[#5ec4e6]">▸</span> 近期事件报告
-              </div>
+              <div class="bg-[#0a121e]/80 border border-[#1a3a4f] rounded-[3px] overflow-hidden">
 
-              <div class="flex items-center gap-3 bg-black/35 border border-[#5ec4e6]/15 border-l-[3px] border-l-[#5ec4e6] px-3 py-2 rounded-[3px] mb-2">
-                <span class="text-[#3d6f82] text-[11px] tracking-wide min-w-[64px]">交互对象</span>
-                <span class="text-white text-[13px] font-bold drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">{{ record.last.target }} ({{ record.last.targetType }})</span>
-              </div>
+                <!-- Header -->
+                <div class="flex justify-between items-center bg-[#0d1826] border-b border-[#1a3a4f] px-4 py-2">
+                  <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">INCIDENT ANALYSIS REPORT</span>
+                  <span class="text-[#3d6f82] text-[9px] font-mono tracking-widest">REF: RPT-{{ reportRef }}</span>
+                </div>
 
-              <div class="grid grid-cols-2 gap-2 mb-2">
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">同步时间</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.time }}</span>
+                <!-- Primary Row: 目标 | 刺激等级 | 数值波动 (highest priority) -->
+                <div class="flex items-center gap-3 flex-wrap px-4 py-2.5 border-b border-[#174257]/20 bg-[#0a1018]/40">
+                  <span class="text-[#3d6f82] text-[10px] tracking-wide">目标</span>
+                  <span class="text-[#dbeef5] text-[15px] font-bold">{{ record.last.target }}</span>
+                  <span class="text-[#5ec4e6]/50 text-[11px]">({{ record.last.targetType }})</span>
+                  <span class="text-[#174257] mx-2">|</span>
+                  <span class="text-[#3d6f82] text-[10px] tracking-wide">刺激等级</span>
+                  <span class="font-mono text-[14px] font-bold" :class="record.last.intensity === '极危' || record.last.intensity === '致命' ? 'text-[#e04060]' : record.last.intensity === '高强度' ? 'text-[#e07040]' : 'text-[#dbeef5]'">{{ record.last.intensity }}</span>
+                  <span class="text-[#174257] mx-2">|</span>
+                  <span class="text-[#3d6f82] text-[10px] tracking-wide">波动</span>
+                  <span class="text-[#dbeef5] text-[13px] font-mono">{{ impactText }}</span>
                 </div>
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">接触时长</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.duration }}</span>
-                </div>
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">侵入部位</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.parts }}</span>
-                </div>
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">源质注入</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.inject }}</span>
-                </div>
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">高潮激增</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.orgasmCount }}</span>
-                </div>
-                <div class="flex justify-between items-center bg-black/35 border border-[#5ec4e6]/15 px-3 py-1.5 rounded-[3px]">
-                  <span class="text-[#3d6f82] text-[11px] tracking-wide">刺激等级</span>
-                  <span class="text-[#dbeef5] text-[13px] font-mono font-bold">{{ record.last.intensity }}</span>
-                </div>
-              </div>
 
-              <div class="flex items-center gap-3 bg-black/35 border border-[#5ec4e6]/15 px-3 py-2 rounded-[3px] mb-2">
-                <span class="text-[#3d6f82] text-[11px] tracking-wide min-w-[64px]">主控倾向</span>
-                <span class="text-[#dbeef5] text-[13px] font-mono font-bold flex-1 text-right">{{ record.last.active }}</span>
-              </div>
-              <div class="flex items-center gap-3 bg-black/35 border border-[#5ec4e6]/15 px-3 py-2 rounded-[3px] mb-2">
-                <span class="text-[#3d6f82] text-[11px] tracking-wide min-w-[64px]">数值波动</span>
-                <span class="text-[#dbeef5] text-[13px] font-mono font-bold flex-1 text-right">{{ impactText }}</span>
-              </div>
-              <div v-if="specialsText" class="flex items-center gap-3 bg-[#e07040]/5 border border-[#e07040]/35 border-l-[3px] border-l-[#e07040] px-3 py-2 rounded-[3px] mb-2">
-                <span class="text-[#e07040] text-[11px] tracking-wide min-w-[64px]">异常生理</span>
-                <span class="text-[#e07040] text-[13px] font-mono font-bold flex-1 text-right">{{ specialsText }}</span>
-              </div>
+                <!-- Anomaly Alert (conditional, prominent) -->
+                <div v-if="specialsText" class="flex items-center gap-2.5 px-4 py-2 bg-[#e07040]/5 border-b border-[#e07040]/15">
+                  <span class="text-[#e04060] text-[10px] font-mono font-bold tracking-wider">⚠ 异常标记</span>
+                  <span class="text-[#e07040] text-[12px] font-mono font-bold">{{ specialsText }}</span>
+                </div>
 
-              <div class="flex items-baseline gap-3 mt-3">
-                <span class="text-[#3d6f82] text-[12px] min-w-[64px] text-right shrink-0">自检评估</span>
-                <span class="text-[#5ab8a0] text-[12px] italic leading-relaxed border-l-2 border-[#5ab8a0]/50 bg-[#5ab8a0]/5 px-2.5 py-1.5 rounded-r-[3px]">"{{ record.last.comment }}"</span>
+                <!-- Secondary Row: detail fields -->
+                <div class="flex items-center gap-x-5 gap-y-1 flex-wrap px-4 py-2 border-b border-[#174257]/15 text-[10px]">
+                  <span><span class="text-[#3d6f82]">时间</span> <span class="text-[#7cb3c7] font-mono ml-1">{{ record.last.time }}</span></span>
+                  <span class="text-[#174257]">|</span>
+                  <span><span class="text-[#3d6f82]">时长</span> <span class="text-[#7cb3c7] font-mono ml-1">{{ record.last.duration }}</span></span>
+                  <span class="text-[#174257]">|</span>
+                  <span><span class="text-[#3d6f82]">部位</span> <span class="text-[#7cb3c7] font-mono ml-1">{{ record.last.parts }}</span></span>
+                  <span class="text-[#174257]">|</span>
+                  <span><span class="text-[#3d6f82]">注入</span> <span class="text-[#7cb3c7] font-mono ml-1">{{ record.last.inject }}</span></span>
+                  <span class="text-[#174257]">|</span>
+                  <span><span class="text-[#3d6f82]">高潮</span> <span class="text-[#7cb3c7] font-mono ml-1">{{ record.last.orgasmCount }}</span></span>
+                  <span class="text-[#174257]">|</span>
+                  <span><span class="text-[#3d6f82]">主控</span> <span class="font-mono ml-1" :class="record.last.active === '强制随动' ? 'text-[#e07040]' : 'text-[#7cb3c7]'">{{ record.last.active }}</span></span>
+                </div>
+
+                <!-- Self-Assessment -->
+                <div class="flex items-baseline px-4 py-2 border-b border-[#174257]/15 text-[10px]">
+                  <span class="text-[#3d6f82] tracking-wide shrink-0 mr-2">自检陈述</span>
+                  <span v-if="record.last.comment && record.last.comment !== '无评价'" class="text-[#5ab8a0] italic leading-relaxed">"{{ record.last.comment }}"</span>
+                  <span v-else class="text-[#3d6f82]/50 italic">未录入</span>
+                </div>
+
+                <!-- System Remark (annotation-style) -->
+                <div class="mx-3 my-2 border border-[#1a3a4f]/50 border-l-[3px] border-l-[#5ec4e6]/40 bg-[#0d1520]/80 px-3 py-2 rounded-r-[3px]">
+                  <div class="flex items-start gap-2">
+                    <span class="text-[#5ec4e6]/50 text-[9px] font-mono tracking-widest shrink-0 mt-[1px]">ANALYST NOTE</span>
+                    <span class="text-[#7cb3c7] text-[10px] leading-relaxed">{{ reportAssessment }}</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -419,111 +437,51 @@
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue';
 import _ from 'lodash';
 
-const dataCanvas = ref<HTMLCanvasElement | null>(null);
-const SCANLINE_PERIOD = 8000;
-const DATA_CHARS = '01ABCDEF012345678901';
+const dataFragments = ['0xA7F3', '0x3B2E', '0xF19C', '0x5D48', '0xE6A1', '0x8C0B'];
 
-interface DataStream {
+interface AmbientParticle {
+  id: number;
   x: number;
-  y: number;
-  speed: number;
-  chars: string[];
-  headIndex: number;
-  baseAlpha: number;
-  colOffset: number;
+  size: number;
+  delay: number;
+  duration: number;
 }
 
-let streams: DataStream[] = [];
-let canvasAnimId = 0;
+interface FragmentItem {
+  id: number;
+  x: number;
+  y: number;
+  delay: number;
+  text: string;
+}
 
-const initDataStreams = (w: number, h: number) => {
-  streams = [];
-  const colW = 14;
-  const cols = Math.floor(w / colW);
-  const step = Math.max(1, Math.floor(cols / 18));
-  for (let c = 0; c < cols; c += step) {
-    const len = 4 + Math.floor(Math.random() * 8);
-    const chars: string[] = [];
-    for (let j = 0; j < len; j++) {
-      chars.push(DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)]);
-    }
-    streams.push({
-      x: c * colW + colW / 2,
-      y: -Math.random() * h,
-      speed: 0.3 + Math.random() * 0.5,
-      chars,
-      headIndex: 0,
-      baseAlpha: 0.12 + Math.random() * 0.18,
-      colOffset: c / cols,
+const ambientParticles = ref<AmbientParticle[]>([]);
+const fragments = ref<FragmentItem[]>([]);
+
+const generateAmbient = () => {
+  const arr: AmbientParticle[] = [];
+  for (let i = 0; i < 16; i++) {
+    arr.push({
+      id: i,
+      x: Math.random() * 100,
+      size: 1.2 + Math.random() * 2.2,
+      delay: Math.random() * 12,
+      duration: 6 + Math.random() * 9,
     });
   }
-};
+  ambientParticles.value = arr;
 
-const drawDataStreams = (canvas: HTMLCanvasElement) => {
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  const w = rect.width;
-  const h = rect.height;
-
-  if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.scale(dpr, dpr);
-    initDataStreams(w, h);
+  const frags: FragmentItem[] = [];
+  for (let i = 0; i < 6; i++) {
+    frags.push({
+      id: i,
+      x: Math.random() * 88,
+      y: Math.random() * 75,
+      delay: Math.random() * 5,
+      text: dataFragments[Math.floor(Math.random() * dataFragments.length)],
+    });
   }
-
-  ctx.clearRect(0, 0, w, h);
-
-  const scanProgress = (Date.now() % SCANLINE_PERIOD) / SCANLINE_PERIOD;
-  const scanY = scanProgress * h;
-  const scanBand = h * 0.15;
-
-  ctx.font = '10px Rajdhani, Consolas, monospace';
-  ctx.textAlign = 'center';
-
-  for (const s of streams) {
-    s.y += s.speed;
-    if (s.y - s.chars.length * 14 > h) {
-      s.y = -s.chars.length * 14 - Math.random() * h * 0.5;
-      for (let j = 0; j < s.chars.length; j++) {
-        s.chars[j] = DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)];
-      }
-    }
-
-    const distToScan = Math.abs(((s.y % h) + h) % h - scanY);
-    const scanBoost = distToScan < scanBand ? (1 - distToScan / scanBand) * 0.6 : 0;
-
-    for (let j = 0; j < s.chars.length; j++) {
-      const cy = s.y + j * 14;
-      if (cy < -14 || cy > h + 14) continue;
-
-      const isHead = j === s.chars.length - 1;
-      const fadeRatio = j / s.chars.length;
-      let alpha = s.baseAlpha + fadeRatio * 0.35 + scanBoost;
-
-      if (isHead) {
-        alpha = Math.min(1, 0.7 + scanBoost);
-        ctx.fillStyle = `rgba(180,240,255,${alpha})`;
-        ctx.shadowColor = 'rgba(94,196,230,0.8)';
-        ctx.shadowBlur = 8;
-      } else {
-        ctx.fillStyle = `rgba(94,196,230,${alpha})`;
-        ctx.shadowColor = 'rgba(94,196,230,0.3)';
-        ctx.shadowBlur = 3;
-      }
-
-      if (Math.random() < 0.005) {
-        s.chars[j] = DATA_CHARS[Math.floor(Math.random() * DATA_CHARS.length)];
-      }
-
-      ctx.fillText(s.chars[j], s.x, cy);
-    }
-  }
-  ctx.shadowBlur = 0;
-  canvasAnimId = requestAnimationFrame(() => drawDataStreams(canvas));
+  fragments.value = frags;
 };
 
 // Collapsible states
@@ -776,6 +734,45 @@ const specialsText = computed(() => {
   return record.impact.specials && record.impact.specials.length > 0 ? record.impact.specials.join('；') : '';
 });
 
+const reportRef = computed(() => {
+  return syncTimestamp.value.replace(/:/g, '');
+});
+
+const reportAssessment = computed(() => {
+  const findings: string[] = [];
+
+  const intensity = record.last.intensity;
+  if (intensity === '极危' || intensity === '致命') {
+    findings.push('强度危险，建议冷却');
+  } else if (intensity === '高强度') {
+    findings.push('强度偏高，负荷警戒');
+  } else if (record.last.target !== '—') {
+    findings.push('强度常规，指标可接受');
+  }
+
+  if (record.last.active === '强制随动') {
+    findings.push('主控丧失');
+  }
+
+  if (record.last.orgasmCount >= 5) {
+    findings.push('高频高潮，神经负荷显著');
+  } else if (record.last.orgasmCount >= 3) {
+    findings.push('高潮频次中等');
+  }
+
+  if (record.impact.sanityDelta <= -15) {
+    findings.push('理智急剧下降，防线严重冲击');
+  } else if (record.impact.sanityDelta <= -5) {
+    findings.push('理智小幅波动');
+  }
+
+  if (record.last.target === '—' && findings.length === 0) {
+    return '待机中，尚无接触记录';
+  }
+
+  return findings.join('；') + '。';
+});
+
 const pregnancyEntries = computed(() => {
   return Object.entries(preg.records).map(([id, r]: [string, any]) => {
     const stage = _.get(r, '_当前发育阶段', '刚着床');
@@ -979,13 +976,13 @@ const triggerGlitch = () => {
 };
 
 onMounted(() => {
+  generateAmbient();
   syncData();
   timer = window.setInterval(syncData, 2000);
   decoTimer = window.setInterval(updateDeco, 1000);
   ecgTimer = window.setInterval(updateEcg, 80);
   updateDeco();
   glitchTimer = window.setTimeout(triggerGlitch, 10000 + Math.random() * 15000);
-  if (dataCanvas.value) drawDataStreams(dataCanvas.value);
 });
 
 onUnmounted(() => {
@@ -993,7 +990,6 @@ onUnmounted(() => {
   clearInterval(decoTimer);
   clearInterval(ecgTimer);
   clearTimeout(glitchTimer);
-  cancelAnimationFrame(canvasAnimId);
 });
 </script>
 
@@ -1088,6 +1084,39 @@ onUnmounted(() => {
   right: 5px;
   border-bottom: 1px solid rgba(94, 196, 230, 0.5);
   border-right: 1px solid rgba(94, 196, 230, 0.5);
+}
+
+/* ═══════ Ambient Particles ═══════ */
+.ambient-dot {
+  position: absolute;
+  bottom: -5%;
+  border-radius: 50%;
+  background: rgba(94, 196, 230, 0.35);
+  box-shadow: 0 0 5px rgba(94, 196, 230, 0.2), 0 0 10px rgba(94, 196, 230, 0.08);
+  animation: ambient-drift linear infinite;
+}
+
+@keyframes ambient-drift {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  8% { opacity: 0.6; }
+  80% { opacity: 0.25; }
+  100% { transform: translateY(-115vh) scale(1.1); opacity: 0; }
+}
+
+/* ═══════ Data Fragments ═══════ */
+.data-fragment {
+  position: absolute;
+  font-family: 'Rajdhani', 'Consolas', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(94, 196, 230, 0.28);
+  text-shadow: 0 0 8px rgba(94, 196, 230, 0.2);
+  animation: fragment-breathe 5s ease-in-out infinite;
+  white-space: nowrap;
+}
+@keyframes fragment-breathe {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.4; }
 }
 
 
