@@ -51,12 +51,12 @@ $(() => {
     { timeOut: 5000, progressBar: true }
   );
 
-  appendInexistentScriptButtons([{ name: '异化体数据库', visible: true }]);
+  appendInexistentScriptButtons([{ name: '◈ 启动幽灵协议 ◈', visible: true }]);
 
   let app: ReturnType<typeof createApp> | null = null;
   let $app: JQuery<HTMLIFrameElement> | null = null;
 
-  eventOn(getButtonEvent('异化体数据库'), () => {
+  eventOn(getButtonEvent('◈ 启动幽灵协议 ◈'), () => {
     if ($app) {
       if ($app.is(':visible')) {
         $app.hide();
