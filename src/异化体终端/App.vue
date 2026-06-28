@@ -8,23 +8,6 @@
       <!-- Grid Background Pattern Overlay -->
       <div class="absolute inset-0 pointer-events-none opacity-25 z-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(94, 196, 230, 0.14) 3px, rgba(94, 196, 230, 0.14) 6px);"></div>
 
-      <!-- Ambient Particle Field -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-        <div v-for="p in ambientParticles" :key="p.id" class="ambient-dot"
-             :style="{ left: p.x + '%', width: p.size + 'px', height: p.size + 'px', animationDelay: p.delay + 's', animationDuration: p.duration + 's' }">
-        </div>
-      </div>
-
-      <!-- Scanline Overlay -->
-      <div class="absolute inset-0 pointer-events-none opacity-10 animate-scanline bg-[linear-gradient(to_bottom,transparent,rgba(94,196,230,0.5),transparent)] bg-[length:100%_4px] z-[2]"></div>
-
-      <!-- Data Fragments -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden z-[3]">
-        <div v-for="f in fragments" :key="f.id" class="data-fragment" :style="{ left: f.x + '%', top: f.y + '%', animationDelay: f.delay + 's' }">
-          {{ f.text }}
-        </div>
-      </div>
-
       <!-- Header -->
       <header class="relative z-10 flex justify-between items-center px-5 py-3.5 bg-gradient-to-r from-[#174257]/60 to-transparent border-b border-[#174257] cursor-pointer hover:from-[#174257]/80 transition-colors" @click="isCollapsed = !isCollapsed">
         <div class="flex items-center gap-3">
@@ -35,26 +18,10 @@
           <span class="text-[#5ec4e6] font-bold text-base tracking-[2px] drop-shadow-[0_0_10px_rgba(94,196,230,0.4)] uppercase terminal-title" :class="{ 'animate-glitch': glitchTrigger }">
             战术体能监控终端 <span class="text-xs text-[#5ec4e6]/60 tracking-widest ml-1 font-mono">v3.0</span>
           </span>
-          <div class="hidden sm:flex items-center gap-2 ml-4">
-            <span class="px-1.5 py-0.5 bg-[#5ec4e6]/20 border border-[#5ec4e6]/40 text-[#5ec4e6] text-[9px] font-mono tracking-widest rounded-sm">SYS.ON</span>
-            <span class="px-1.5 py-0.5 bg-[#4cd47a]/20 border border-[#4cd47a]/40 text-[#4cd47a] text-[9px] font-mono tracking-widest rounded-sm animate-pulse">LINK.STABLE</span>
-          </div>
         </div>
-        <div class="flex items-center gap-4">
-          <!-- Signal Strength -->
-          <div class="hidden md:flex items-center gap-[2px]">
-            <div v-for="i in 4" :key="'sig'+i" class="w-[3px] rounded-[1px] transition-all duration-300" :class="i <= signalBars ? 'bg-[#5ec4e6] shadow-[0_0_4px_#5ec4e6]' : 'bg-[#174257]'" :style="{ height: (4 + i * 3) + 'px' }"></div>
-          </div>
-          <!-- Encryption Badge -->
-          <span class="hidden lg:block text-[#3d6f82] text-[9px] font-mono tracking-widest bg-[#174257]/30 px-1.5 py-0.5 rounded-sm border border-[#174257]/50">{{ cipherText }}</span>
-          <!-- Live Clock -->
-          <span class="hidden sm:block font-mono text-[#5ec4e6] text-[12px] tracking-widest drop-shadow-[0_0_5px_rgba(94,196,230,0.3)]">{{ liveClock }}<span class="animate-blink">:</span><span class="text-[#7cb3c7]">{{ liveSeconds }}</span></span>
-          <div class="text-[#5ec4e6] text-sm transition-transform duration-300 flex items-center gap-3" :class="{ 'rotate-[-90deg]': isCollapsed }">
-            <div class="hidden sm:flex flex-col gap-[2px] items-end opacity-60">
-              <div class="w-8 h-[2px] bg-[#5ec4e6]"></div>
-              <div class="w-4 h-[2px] bg-[#5ec4e6]"></div>
-              <div class="w-6 h-[2px] bg-[#5ec4e6]"></div>
-            </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[#3d6f82] text-[9px] font-mono tracking-widest bg-[#174257]/30 px-1.5 py-0.5 rounded-sm border border-[#174257]/50">{{ cipherText }}</span>
+          <div class="text-[#5ec4e6] text-sm transition-transform duration-300" :class="{ 'rotate-[-90deg]': isCollapsed }">
             <i class="fas fa-chevron-down"></i>
           </div>
         </div>
@@ -93,9 +60,9 @@
                 <span class="text-[#5ec4e6] text-[11px] font-bold tracking-[3px] uppercase">核心读数 [CORE]</span>
                 <div class="flex-1 h-px bg-gradient-to-r from-[#5ec4e6]/40 to-transparent"></div>
                 <!-- Mini ECG Waveform -->
-                <div class="ecg-waveform shrink-0" :class="ecgClass">
-                  <svg viewBox="0 0 80 24" class="w-[80px] h-[24px]">
-                    <polyline :points="ecgPoints" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="ecg-line"/>
+                <div class="ecg-waveform shrink-0 w-[80px] h-[24px] overflow-hidden" :class="ecgClass">
+                  <svg viewBox="0 0 160 24" class="w-[160px] h-[24px] ecg-scroll">
+                    <polyline :points="ecgBasePoints" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
               </div>
@@ -437,68 +404,17 @@
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue';
 import _ from 'lodash';
 
-const dataFragments = ['0xA7F3', '0x3B2E', '0xF19C', '0x5D48', '0xE6A1', '0x8C0B'];
-
-interface AmbientParticle {
-  id: number;
-  x: number;
-  size: number;
-  delay: number;
-  duration: number;
-}
-
-interface FragmentItem {
-  id: number;
-  x: number;
-  y: number;
-  delay: number;
-  text: string;
-}
-
-const ambientParticles = ref<AmbientParticle[]>([]);
-const fragments = ref<FragmentItem[]>([]);
-
-const generateAmbient = () => {
-  const arr: AmbientParticle[] = [];
-  for (let i = 0; i < 8; i++) {
-    arr.push({
-      id: i,
-      x: Math.random() * 100,
-      size: 1.2 + Math.random() * 2.2,
-      delay: Math.random() * 12,
-      duration: 6 + Math.random() * 9,
-    });
-  }
-  ambientParticles.value = arr;
-
-  const frags: FragmentItem[] = [];
-  for (let i = 0; i < 4; i++) {
-    frags.push({
-      id: i,
-      x: Math.random() * 88,
-      y: Math.random() * 75,
-      delay: Math.random() * 5,
-      text: dataFragments[Math.floor(Math.random() * dataFragments.length)],
-    });
-  }
-  fragments.value = frags;
-};
-
 // Collapsible states
 const isCollapsed = ref(false);
 const isRecCollapsed = ref(true);
 const isPregCollapsed = ref(true);
 
 // UI decorative state
-const liveClock = ref('--:--');
-const liveSeconds = ref('--');
-const signalBars = ref(3);
 const cipherText = ref('AES-256-GCM');
 const glitchTrigger = ref(false);
 const syncTimestamp = ref('--:--:--');
 const dataBuffer = ref(100);
 const cmdText = ref('monitor --pid=LINHAO --continuous');
-const ecgPhase = ref(0);
 
 // Mock/Global state fallback
 const state = reactive({
@@ -618,6 +534,10 @@ const syncData = () => {
   } else {
     preg.lastBirth = null;
   }
+
+  // Update sync timestamp
+  const now = new Date();
+  syncTimestamp.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
 };
 
 // Computed Mappings
@@ -815,23 +735,26 @@ const ecgClass = computed(() => {
   return 'text-[#5ec4e6]';
 });
 
-const ecgPoints = computed(() => {
-  const phase = ecgPhase.value;
+// Pre-computed ECG waveform (2 cycles for seamless CSS scroll)
+const ecgBasePoints = (() => {
   const pts: string[] = [];
-  for (let x = 0; x <= 80; x += 2) {
-    let y = 12;
-    const t = (x + phase) % 80;
-    if (t < 8) y = 12 - (t / 8) * 4;
-    else if (t < 10) y = 8 + (t - 8) * 4;
-    else if (t < 12) y = 16 - (t - 10) * 8;
-    else if (t < 14) y = 0 + (t - 12) * 8;
-    else if (t < 16) y = 16 - (t - 14) * 4;
-    else if (t < 20) y = 12 + Math.sin((t - 16) * 2) * 1.5;
-    else y = 12 + Math.sin(t * 0.3) * 1.5;
-    pts.push(`${x},${Math.round(y)}`);
+  for (let cycle = 0; cycle < 2; cycle++) {
+    const offset = cycle * 80;
+    for (let x = 0; x <= 80; x += 2) {
+      let y = 12;
+      const t = x;
+      if (t < 8) y = 12 - (t / 8) * 4;
+      else if (t < 10) y = 8 + (t - 8) * 4;
+      else if (t < 12) y = 16 - (t - 10) * 8;
+      else if (t < 14) y = 0 + (t - 12) * 8;
+      else if (t < 16) y = 16 - (t - 14) * 4;
+      else if (t < 20) y = 12 + Math.sin((t - 16) * 2) * 1.5;
+      else y = 12 + Math.sin(t * 0.3) * 1.5;
+      pts.push(`${x + offset},${Math.round(y)}`);
+    }
   }
   return pts.join(' ');
-});
+})();
 
 // ── Dynamic System Logs ──
 
@@ -925,22 +848,9 @@ const sysLogs = computed(() => {
   return logs;
 });
 
-// ── Decorative Timers ──
+// ── Decorative ──
 
-let decoTimer: number;
-let ecgTimer: number;
 let glitchTimer: number;
-
-const updateDeco = () => {
-  const now = new Date();
-  liveClock.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-  liveSeconds.value = now.getSeconds().toString().padStart(2, '0');
-  syncTimestamp.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
-};
-
-const updateEcg = () => {
-  ecgPhase.value = (ecgPhase.value + 1) % 80;
-};
 
 const triggerGlitch = () => {
   glitchTrigger.value = true;
@@ -949,19 +859,13 @@ const triggerGlitch = () => {
 };
 
 onMounted(() => {
-  generateAmbient();
   syncData();
-  timer = window.setInterval(syncData, 2000);
-  decoTimer = window.setInterval(updateDeco, 1000);
-  ecgTimer = window.setInterval(updateEcg, 200);
-  updateDeco();
+  timer = window.setInterval(syncData, 5000);
   glitchTimer = window.setTimeout(triggerGlitch, 10000 + Math.random() * 15000);
 });
 
 onUnmounted(() => {
   clearInterval(timer);
-  clearInterval(decoTimer);
-  clearInterval(ecgTimer);
   clearTimeout(glitchTimer);
 });
 </script>
@@ -1001,16 +905,6 @@ onUnmounted(() => {
 @keyframes top-glow {
   0%, 100% { opacity: 0.8; }
   50% { opacity: 1; }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-.animate-scanline {
-  animation: scanline 8s linear infinite;
-  will-change: transform;
 }
 
 @keyframes radar-spin {
@@ -1062,48 +956,7 @@ onUnmounted(() => {
   border-right: 1px solid rgba(94, 196, 230, 0.5);
 }
 
-/* ═══════ Ambient Particles ═══════ */
-.ambient-dot {
-  position: absolute;
-  bottom: -5%;
-  border-radius: 50%;
-  background: rgba(94, 196, 230, 0.35);
-  box-shadow: 0 0 5px rgba(94, 196, 230, 0.2);
-  animation: ambient-drift linear infinite;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-@keyframes ambient-drift {
-  0% { transform: translateY(0) scale(0.5); opacity: 0; }
-  8% { opacity: 0.6; }
-  80% { opacity: 0.25; }
-  100% { transform: translateY(-115vh) scale(1.1); opacity: 0; }
-}
-
-/* ═══════ Data Fragments ═══════ */
-.data-fragment {
-  position: absolute;
-  font-family: 'Rajdhani', 'Consolas', monospace;
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: rgba(94, 196, 230, 0.28);
-  text-shadow: 0 0 8px rgba(94, 196, 230, 0.2);
-  animation: fragment-breathe 5s ease-in-out infinite;
-  white-space: nowrap;
-  will-change: opacity;
-  pointer-events: none;
-}
-@keyframes fragment-breathe {
-  0%, 100% { opacity: 0.18; }
-  50% { opacity: 0.4; }
-}
-
-
-/* ═══════ Blink Animations ═══════ */
-.animate-blink {
-  animation: blink-cursor 1s step-end infinite;
-}
+/* ═══════ Blink Animation ═══════ */
 .animate-blink-cursor {
   animation: blink-cursor 0.8s step-end infinite;
 }
@@ -1140,15 +993,22 @@ onUnmounted(() => {
 .ecg-waveform {
   opacity: 0.8;
 }
-.ecg-waveform .ecg-line {
+.ecg-waveform .ecg-scroll {
+  animation: ecg-scroll 3s linear infinite;
+  will-change: transform;
+}
+.ecg-waveform svg polyline {
   filter: drop-shadow(0 0 3px currentColor);
 }
-.ecg-flatline .ecg-line {
-  animation: ecg-flat 0.5s ease-in-out;
+.ecg-flatline .ecg-scroll {
+  animation: ecg-scroll 3s linear infinite, ecg-flat 1s ease-in-out infinite;
+}
+@keyframes ecg-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-80px); }
 }
 @keyframes ecg-flat {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.35; }
 }
 </style>
