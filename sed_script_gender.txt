@@ -1,0 +1,65 @@
+# ===== 阶段1: 特殊标记字替换 =====
+s/嫐/受攻受/g
+s/嬲/攻受攻/g
+s/百合/双受/g
+
+# ===== 阶段2: girl_ 复合键名（长优先）=====
+s/girl_watching:/受方观:/g
+s/girl_waiting:/受方等:/g
+s/girl_riding:/受方骑:/g
+s/girl_outer:/受方外:/g
+s/girl_mouth:/受方口:/g
+s/girl_inner:/受方内:/g
+s/girl_front:/受方前:/g
+s/girl_back:/受方后:/g
+s/girl_main:/受方主:/g
+s/girl_assist:/受方辅:/g
+s/girl_hand:/受方手:/g
+s/girl_breast:/受方乳:/g
+s/girl_left:/受方左:/g
+s/girl_right:/受方右:/g
+s/girl_A:/受方A:/g
+s/girl_B:/受方B:/g
+s/boy_weight:/攻方压:/g
+
+# ===== 阶段3: girl/boy 数字键 =====
+s/girl3:/受方3:/g
+s/girl2:/受方2:/g
+s/girl1:/受方1:/g
+s/boy3:/攻方3:/g
+s/boy2:/攻方2:/g
+s/boy1:/攻方1:/g
+
+# ===== 阶段4: girl/boy 基础键 =====
+s/girls:/受方们:/g
+s/girl:/受方:/g
+s/boy:/攻方:/g
+
+# ===== 阶段5: 性别复合词（在 男→攻/女→受 之前）=====
+s/雌竞/受竞/g
+s/雌性/受性/g
+s/雄性/攻性/g
+s/处女/处受/g
+s/处男/处攻/g
+s/男性/攻方/g
+s/女性/受方/g
+s/男方/攻方/g
+s/女方/受方/g
+s/双女/双受/g
+s/三男/三攻/g
+s/男女/攻受/g
+
+# ===== 阶段6: 家庭称谓替换 =====
+s/母亲/父亲/g
+s/姐妹/手足/g
+s/母女/亲子/g
+s/姐姐/哥哥/g
+s/妹妹/弟弟/g
+s/妻子/丈夫/g
+
+# ===== 阶段7: 基础单字替换（最后执行）=====
+s/她/他/g
+s/雌/受/g
+s/雄/攻/g
+s/男/攻/g
+s/女/受/g
