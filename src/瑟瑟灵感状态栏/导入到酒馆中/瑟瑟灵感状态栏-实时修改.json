@@ -1,0 +1,7 @@
+{
+  "id": "130c2491-7c26-4370-8944-ec6aa14c6d22",
+  "name": "瑟瑟灵感状态栏-实时修改",
+  "content": "import 'http://localhost:6621/dist/瑟瑟灵感状态栏/index.js'",
+  "info": "",
+  "buttons": []
+}
