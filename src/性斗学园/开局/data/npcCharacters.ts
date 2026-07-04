@@ -41,7 +41,7 @@ export type NpcCategory =
  * @param portraitKey 可选的头像文件名（用于特殊命名的角色）
  */
 export function getNpcPortraitUrl(name: string, portraitKey?: string): string {
-  const resourceName = CHIBI_RESOURCE_NAME_MAP[name] || portraitKey || name;
+  const resourceName = portraitKey || CHIBI_RESOURCE_NAME_MAP[name] || name;
   return `https://img.vinsimage.org/性斗学园/头像/${encodeURIComponent(resourceName)}.png`;
 }
 
