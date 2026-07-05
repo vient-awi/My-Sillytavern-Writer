@@ -763,10 +763,10 @@ const baiChuanQianXiaConfig: CharacterCGConfig = {
         description:
           '你被弟弟击败，作为惩罚，弟弟给你的肉棒套上贞操锁，并用玉足进行摩擦。弟弟扒开自己的嫩穴给你看，但你却因为枷锁而迟迟无法射精。',
         images: [
-          '弟弟-带锁足交事件1.png',
-          '弟弟-带锁足交事件2.png',
-          '弟弟-带锁足交事件3.png',
-          '弟弟-带锁足交事件4.png',
+          '妹妹-带锁足交事件1.png',
+          '妹妹-带锁足交事件2.png',
+          '妹妹-带锁足交事件3.png',
+          '妹妹-带锁足交事件4.png',
         ],
       },
       {
@@ -780,7 +780,7 @@ const baiChuanQianXiaConfig: CharacterCGConfig = {
         id: 'meimei_bondage_cowgirl_male',
         name: '弟弟-捆绑男上位事件',
         description: '你被弟弟击败，作为惩罚，弟弟把你完全捆了起来，随后坐在你的腿上并把肉棒放进小穴肉棒，开始强制榨精',
-        images: ['妹妹-捆绑男上位事件1.png', '妹妹-捆绑男上位事件2.png'],
+        images: ['妹妹-捆绑女上位事件1.png', '妹妹-捆绑女上位事件2.png'],
       },
       {
         id: 'meimei_meatus_tease_male',
@@ -832,7 +832,7 @@ const baiChuanQianXiaConfig: CharacterCGConfig = {
         id: 'meimei_victory_cowgirl_male',
         name: '弟弟-羞耻展示与男上位事件',
         description: '你战胜了弟弟，作为奖励，弟弟脱下他的内裤送给你，并用男上位的姿势与你做爱。',
-        images: ['妹妹-羞耻展示与男上位事件1.png', '妹妹-羞耻展示与男上位事件2.png'],
+        images: ['妹妹-羞耻展示与女上位事件1.png', '妹妹-羞耻展示与女上位事件2.png'],
       },
     ],
   },
@@ -887,10 +887,10 @@ const baiChuanQianXiaConfig: CharacterCGConfig = {
         name: '弟弟-假阳具后入事件',
         description: '你战胜弟弟，你穿戴假阳具，并且一边后入弟弟一边用手玩弄弟弟小穴，前后夹击。',
         images: [
-          '弟弟-假阳具后入事件1.png',
-          '弟弟-假阳具后入事件2.png',
-          '弟弟-假阳具后入事件3.png',
-          '弟弟-假阳具后入事件4.png',
+          '妹妹-假阳具后入事件1.png',
+          '妹妹-假阳具后入事件2.png',
+          '妹妹-假阳具后入事件3.png',
+          '妹妹-假阳具后入事件4.png',
         ],
       },
       {
