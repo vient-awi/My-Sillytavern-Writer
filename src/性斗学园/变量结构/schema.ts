@@ -102,9 +102,22 @@ const RelationshipSchema = z
       .number()
       .transform(n => clamp(n, 0, 100))
       .prefault(0),
+    支配度: z.coerce
+      .number()
+      .transform(n => clamp(n, -100, 100))
+      .prefault(0),
+    誓约: z.enum(['无', '支配型', '平等型', '被支配型']).catch('无').prefault('无'),
     关系类型: z.string().prefault('陌生人'),
   })
   .prefault({});
+
+const RaritySchema = z
+  .preprocess(
+    value => (typeof value === 'string' ? value.trim().toUpperCase() : value),
+    z.enum(['C', 'B', 'A', 'S', 'SS', 'SSS', 'EX']),
+  )
+  .catch('C')
+  .prefault('C');
 
 const SkillEffectSchema = z
   .object({
@@ -126,7 +139,7 @@ const ActiveSkillSchema = z.object({
         .number()
         .transform(n => clamp(n, 1, 5))
         .prefault(1),
-      稀有度: z.enum(['C', 'B', 'A', 'S', 'SS']).catch('C').prefault('C'),
+      稀有度: RaritySchema,
     })
     .prefault({}),
   冷却与消耗: z
@@ -165,14 +178,14 @@ const TalentSchema = z
 const EquippedItemSchema = z
   .object({
     名称: z.string().prefault(''),
-    等级: z.enum(['C', 'B', 'A', 'S', 'SS']).catch('C').prefault('C'),
+    等级: RaritySchema,
     加成属性: BonusSchema,
     描述: z.string().prefault(''),
   })
   .prefault({});
 
 const BaseItemSchema = z.object({
-  等级: z.enum(['C', 'B', 'A', 'S', 'SS']).catch('C').prefault('C'),
+  等级: RaritySchema,
   描述: z.string().prefault(''),
 });
 
