@@ -300,7 +300,7 @@ export function createChristinePhaseSideEffectActions(nextPhase: 1 | 2): BossPha
     },
     {
       kind: 'log',
-      message: '【女王觉醒】克莉丝汀的里人格觉醒！物品和投降被封印！',
+      message: '【女王觉醒】克里斯的里人格觉醒！物品和投降被封印！',
       source: 'system',
       type: 'critical',
     },
@@ -312,13 +312,13 @@ export function createChristinePhaseSideEffectActions(nextPhase: 1 | 2): BossPha
     },
     {
       kind: 'log',
-      message: '【敌人·暴怒】克莉丝汀暴怒觉醒！闪避率归零，所有攻击连击+1，必定暴击！',
+      message: '【敌人·暴怒】克里斯暴怒觉醒！闪避率归零，所有攻击连击+1，必定暴击！',
       source: 'system',
       type: 'critical',
     },
     {
       kind: 'log',
-      message: '【敌人·暴怒】若克莉丝汀本回合没有造成快感伤害，将因暴怒增加自身20%最大快感的快感！',
+      message: '【敌人·暴怒】若克里斯本回合没有造成快感伤害，将因暴怒增加自身20%最大快感的快感！',
       source: 'system',
       type: 'critical',
     },

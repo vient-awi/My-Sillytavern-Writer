@@ -28,7 +28,7 @@ export const VIRTUE_ITEMS: VirtueItem[] = [
   {
     id: 'virtue_patience',
     name: '忍耐之披风',
-    bossName: '克莉丝汀',
+    bossName: '克里斯',
     bossAliases: ['christine', '暴怒'],
     description: '曾经承受过最疯狂怒火的织物，如今能让穿戴者在狂澜中如磐石般稳固。它是防守流派的核心。',
     bonuses: {
@@ -39,7 +39,7 @@ export const VIRTUE_ITEMS: VirtueItem[] = [
   {
     id: 'virtue_kindness',
     name: '仁爱之吊坠',
-    bossName: '沐芯兰',
+    bossName: '沐心岚',
     bossAliases: ['muxinlan', '嫉妒'],
     description: '嫉妒的终点是理解与包容。这枚吊坠散发着令人心安的光芒，能让敌人的动作在温柔的氛围中变得迟疑。',
     bonuses: {
@@ -49,7 +49,7 @@ export const VIRTUE_ITEMS: VirtueItem[] = [
   {
     id: 'virtue_diligence',
     name: '勤勉之护腕',
-    bossName: '伊甸芙宁',
+    bossName: '伊登芙宁',
     bossAliases: ['eden', '芙宁', '懒惰'],
     description: '从永恒的停滞中提取的纯粹动能。它时刻督促着持有者，将每一分意志都转化为实打实的破坏力。',
     bonuses: {
@@ -61,7 +61,7 @@ export const VIRTUE_ITEMS: VirtueItem[] = [
     id: 'virtue_humility',
     name: '谦卑之冕',
     bossName: '伊丽莎白',
-    bossAliases: ['elizabeth', '夜羽', '伊丽莎白夜羽', '傲慢'],
+    bossAliases: ['elizabeth', '夜羽', '伊利亚斯夜羽', '傲慢'],
     description: '只有真正低下头颅的人，才能看清命运洒在土壤里的金砂。放弃了浮夸的辞藻，换来了冥冥中的眷顾。',
     bonuses: {
       幸运加成: 160,
@@ -92,7 +92,7 @@ export const VIRTUE_ITEMS: VirtueItem[] = [
   {
     id: 'virtue_temperance',
     name: '节制之王冠',
-    bossName: '艾格妮丝',
+    bossName: '艾格纳斯',
     bossAliases: ['agnes', '暴食', '蔷薇', '鼠族公主'],
     description:
       '曾经属于暴食公主的华丽王冠，如今被净化为自律的象征。它教导持有者：真正的富足不在于吞噬一切，而在于知足常乐。',

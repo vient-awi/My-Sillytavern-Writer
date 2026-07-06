@@ -200,7 +200,7 @@ export function createPlayerAttackPreparation(params: {
     critDamageBoost += 150;
     actions.push({
       kind: 'log',
-      message: '【懒惰·脆弱】对伊甸芙宁的暴击伤害固定为300%！',
+      message: '【懒惰·脆弱】对伊登芙宁的暴击伤害固定为300%！',
       source: 'system',
       type: 'critical',
     });

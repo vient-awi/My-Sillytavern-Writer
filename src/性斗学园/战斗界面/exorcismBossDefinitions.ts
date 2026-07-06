@@ -79,7 +79,7 @@ export const EXORCISM_REQUIRED_MECHANISMS: ExorcismRequiredMechanism[] = [
     label: '同行者门槛',
     purpose: '某些净化战必须由关系系统确认指定同行者在场。',
     implementation: 'companionMissing trigger + skipBattle/log；不新增副本变量。',
-    usedBy: ['薇尔'],
+    usedBy: ['威尔'],
   },
   {
     key: 'companionWakeup',
@@ -88,7 +88,7 @@ export const EXORCISM_REQUIRED_MECHANISMS: ExorcismRequiredMechanism[] = [
     purpose: '呼唤名字、好感捷径、同行 NPC 介入共同推进唤醒进度。',
     implementation:
       'playerDialogue / relationshipAtLeast / companionPresent trigger + addProgress / stun / setFlag action。',
-    usedBy: ['鬼樱', '灵樱', '克洛伊斯', '薇尔'],
+    usedBy: ['鬼樱', '灵樱', '克洛伊斯', '威尔'],
   },
   {
     key: 'relationshipShortcut',
@@ -137,7 +137,7 @@ export const EXORCISM_REQUIRED_MECHANISMS: ExorcismRequiredMechanism[] = [
     label: '净化仪式窗口',
     purpose: '击破后不直接结束，而是开启 1 到数回合的净化/封印保护流程。',
     implementation: 'startRitual action；任务系统记录仪式成功或失败。',
-    usedBy: ['僵尸天翔', '薇尔', '万魔之父', '鬼祝男椿'],
+    usedBy: ['僵尸天翔', '威尔', '万魔之父', '鬼祝男椿'],
   },
   {
     key: 'forcedUltimate',
@@ -750,7 +750,7 @@ export const EXORCISM_BOSS_DEFINITIONS: DeclarativeBossDefinition[] = [
     status: 'draft',
     phases: [
       { phase: 1, displayName: '堕落风雄', dataKey: '鬼樱', skillPoolKey: 'oni_sakura_single' },
-      { phase: 2, displayName: '双子堕落', dataKey: '鬼樱_铃音连锁', skillPoolKey: 'oni_sakura_twins' },
+      { phase: 2, displayName: '双子堕落', dataKey: '鬼樱_铃雄连锁', skillPoolKey: 'oni_sakura_twins' },
     ],
     mechanics: [
       aura({
@@ -1161,7 +1161,7 @@ export const EXORCISM_BOSS_DEFINITIONS: DeclarativeBossDefinition[] = [
     aliases: ['霜凝'],
     category: 'exorcism',
     status: 'draft',
-    phases: [{ phase: 1, displayName: '僵尸娘小 Boss', dataKey: '霜凝', skillPoolKey: 'shuangning' }],
+    phases: [{ phase: 1, displayName: '僵尸郎小 Boss', dataKey: '霜凝', skillPoolKey: 'shuangning' }],
     mechanics: [
       aura({
         id: 'shuangning_cold_aura',
@@ -1225,7 +1225,7 @@ export const EXORCISM_BOSS_DEFINITIONS: DeclarativeBossDefinition[] = [
     id: 'exorcism_mother_of_demons',
     sourceEntry: '驱魔_Boss_万魔之父.txt',
     displayName: '万魔之父',
-    aliases: ['万魔之父', '万魔母'],
+    aliases: ['万魔之父', '万魔父'],
     category: 'exorcism',
     status: 'draft',
     phases: [
@@ -1283,32 +1283,32 @@ export const EXORCISM_BOSS_DEFINITIONS: DeclarativeBossDefinition[] = [
   },
   {
     id: 'exorcism_veil',
-    sourceEntry: '驱魔_Boss_薇尔.txt',
-    displayName: '薇尔',
-    aliases: ['薇尔', '维斯艾尔'],
+    sourceEntry: '驱魔_Boss_威尔.txt',
+    displayName: '威尔',
+    aliases: ['威尔', '维斯艾尔'],
     category: 'exorcism',
     status: 'draft',
-    phases: [{ phase: 1, displayName: '初拥吸血姬', dataKey: '薇尔', skillPoolKey: 'veil' }],
+    phases: [{ phase: 1, displayName: '初拥吸血郎', dataKey: '威尔', skillPoolKey: 'veil' }],
     mechanics: [
       companionMissingRule({
         id: 'veil_requires_vesiel',
         label: '维斯艾尔同行门槛',
         companion: '维斯艾尔',
-        message: '缺少维斯艾尔在场，薇尔净化战应延后。',
+        message: '缺少维斯艾尔在场，威尔净化战应延后。',
       }),
       manualRule({
         id: 'veil_stat_source',
         kind: 'specialRule',
         label: '动态数值来源',
-        description: '薇尔数值应从维斯艾尔当前人物数据派生，不在前端硬编码固定范围。',
-        message: '薇尔需要读取维斯艾尔现有角色数据作为基础。',
+        description: '威尔数值应从维斯艾尔当前人物数据派生，不在前端硬编码固定范围。',
+        message: '威尔需要读取维斯艾尔现有角色数据作为基础。',
       }),
       dialogueStun({
         id: 'veil_true_name_stun',
         label: '呼唤原名',
         dialogueIncludes: ['维斯艾尔'],
         duration: 1,
-        message: '呼唤维斯艾尔原名造成薇尔 1 回合硬直。',
+        message: '呼唤维斯艾尔原名造成威尔 1 回合硬直。',
       }),
       {
         id: 'veil_purification_ritual',
@@ -1319,11 +1319,11 @@ export const EXORCISM_BOSS_DEFINITIONS: DeclarativeBossDefinition[] = [
         triggers: [{ type: 'manual' }],
         actions: [
           { type: 'startRitual', ritualKey: 'veil_blood_contract', requiredTurns: 1 },
-          logAction('薇尔击破后开启血契解除仪式。'),
+          logAction('威尔击破后开启血契解除仪式。'),
         ],
       },
     ],
-    taskHooks: { questName: '驱魔', objectiveKeys: ['B2_薇尔净化'], companionNames: ['维斯艾尔', '风雄'] },
+    taskHooks: { questName: '驱魔', objectiveKeys: ['B2_威尔净化'], companionNames: ['维斯艾尔', '风雄'] },
   },
   {
     id: 'exorcism_wuchang',

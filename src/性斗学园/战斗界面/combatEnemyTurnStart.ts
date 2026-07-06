@@ -404,7 +404,7 @@ function createAgnesItemEffectActions(params: {
         },
         {
           kind: 'log',
-          message: `【共餐】艾格妮丝恢复了 ${effect.value} 点耐力`,
+          message: `【共餐】艾格纳斯恢复了 ${effect.value} 点耐力`,
           source: 'system',
           type: 'buff',
         },
@@ -420,7 +420,7 @@ function createAgnesItemEffectActions(params: {
       if (effect.value < 0) {
         actions.push({
           kind: 'log',
-          message: `【共餐】艾格妮丝减少了 ${Math.abs(effect.value)} 点快感`,
+          message: `【共餐】艾格纳斯减少了 ${Math.abs(effect.value)} 点快感`,
           source: 'system',
           type: 'buff',
         });
@@ -440,7 +440,7 @@ function createAgnesItemEffectActions(params: {
         },
         {
           kind: 'log',
-          message: `【共餐】艾格妮丝获得了「${params.itemName}」的3倍效果（3回合）`,
+          message: `【共餐】艾格纳斯获得了「${params.itemName}」的3倍效果（3回合）`,
           source: 'system',
           type: 'buff',
         },
@@ -505,7 +505,7 @@ export function createAgnesFeastTurnStartActions(params: {
     actions.push(
       {
         kind: 'log',
-        message: `【发狂】艾格妮丝吃到了「${feastResult.itemName}」，陷入发狂状态！`,
+        message: `【发狂】艾格纳斯吃到了「${feastResult.itemName}」，陷入发狂状态！`,
         source: 'system',
         type: 'critical',
       },
@@ -591,7 +591,7 @@ export function createEdenTurnStartResult(params: {
     actions.push(
       {
         kind: 'log',
-        message: '【懒惰】伊甸芙宁的倒计时归零！',
+        message: '【懒惰】伊登芙宁的倒计时归零！',
         source: 'system',
         type: 'critical',
       },

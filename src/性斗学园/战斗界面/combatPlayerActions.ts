@@ -82,11 +82,11 @@ export function validateMuxinlanHonorMedalUse(state: MuxinlanHonorMedalState): {
   message?: string;
 } {
   if (!state.isBossFight || state.bossId !== 'muxinlan') {
-    return { allowed: false, message: '该道具只能在与沐芯兰的战斗中使用。' };
+    return { allowed: false, message: '该道具只能在与沐心岚的战斗中使用。' };
   }
 
   if (state.currentPhase !== 1) {
-    return { allowed: false, message: '该道具只能在沐芯兰第一阶段使用。' };
+    return { allowed: false, message: '该道具只能在沐心岚第一阶段使用。' };
   }
 
   if (state.hasUsedMedal) {

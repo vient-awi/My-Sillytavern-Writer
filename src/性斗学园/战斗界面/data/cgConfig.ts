@@ -26,7 +26,7 @@ export interface CharacterCGConfig {
   };
 }
 
-// 星野光的CG配置
+// 星野光太的CG配置
 const xingYeGuangConfig: CharacterCGConfig = {
   characterName: '星野光太',
   resourceName: '星野光',
@@ -132,7 +132,7 @@ const xingYeGuangConfig: CharacterCGConfig = {
   },
 };
 
-// 伊丽莎白夜羽的CG配置（无战胜CG）
+// 伊利亚斯夜羽的CG配置（无战胜CG）
 const yiLiShaBaiYeYuConfig: CharacterCGConfig = {
   characterName: '伊利亚斯夜羽',
   resourceName: '伊丽莎白夜羽',
@@ -335,7 +335,7 @@ const yiLiShaBaiYeYuConfig: CharacterCGConfig = {
   },
 };
 
-// 莎拉斯通的CG配置
+// 沙恩斯通的CG配置
 const shaLaSiTongConfig: CharacterCGConfig = {
   characterName: '沙恩斯通',
   resourceName: '莎拉斯通',
@@ -489,7 +489,7 @@ const shaLaSiTongConfig: CharacterCGConfig = {
   },
 };
 
-// 上杉亚衣的CG配置
+// 上杉亚树的CG配置
 const shangShanYaYiConfig: CharacterCGConfig = {
   characterName: '上杉亚树',
   resourceName: '上杉亚衣',
@@ -921,7 +921,7 @@ const baiChuanQianXiaConfig: CharacterCGConfig = {
   },
 };
 
-// 莉莉安的CG配置
+// 利安的CG配置
 const liLiAnConfig: CharacterCGConfig = {
   characterName: '利安',
   resourceName: '莉莉安',
@@ -1063,7 +1063,7 @@ const liLiAnConfig: CharacterCGConfig = {
   },
 };
 
-// 风音的CG配置
+// 风雄的CG配置
 const fengYinConfig: CharacterCGConfig = {
   characterName: '风雄',
   resourceName: '风音',
@@ -1266,7 +1266,7 @@ const fengYinConfig: CharacterCGConfig = {
   },
 };
 
-// 铃音的CG配置
+// 铃雄的CG配置
 const lingYinConfig: CharacterCGConfig = {
   characterName: '铃雄',
   resourceName: '铃音',
@@ -1444,7 +1444,7 @@ const lingYinConfig: CharacterCGConfig = {
   },
 };
 
-// 神崎凛的CG配置
+// 神崎凛司的CG配置
 const shenQiLinConfig: CharacterCGConfig = {
   characterName: '神崎凛司',
   resourceName: '神崎凛',
@@ -1636,7 +1636,7 @@ const shenQiLinConfig: CharacterCGConfig = {
   },
 };
 
-// 小鸟游雏子的CG配置
+// 小鸟游雏人的CG配置
 const xiaoNiaoYouChuZiConfig: CharacterCGConfig = {
   characterName: '小鸟游雏人',
   resourceName: '小鸟游雏子',
@@ -1783,7 +1783,7 @@ const xiaoNiaoYouChuZiConfig: CharacterCGConfig = {
   },
 };
 
-// 沐芯兰的CG配置
+// 沐心岚的CG配置
 const muXinLanConfig: CharacterCGConfig = {
   characterName: '沐心岚',
   resourceName: '沐芯兰',
@@ -1954,7 +1954,7 @@ const muXinLanConfig: CharacterCGConfig = {
   },
 };
 
-// 白石响子的CG配置
+// 白石响二的CG配置
 const baiShiXiangZiConfig: CharacterCGConfig = {
   characterName: '白石响二',
   resourceName: '白石响子',
@@ -2057,7 +2057,7 @@ const baiShiXiangZiConfig: CharacterCGConfig = {
   },
 };
 
-// 艾琳海德的CG配置
+// 艾伦海德的CG配置
 const aiLinHaiDeConfig: CharacterCGConfig = {
   characterName: '艾伦海德',
   resourceName: '艾琳海德',
@@ -2182,7 +2182,7 @@ const aiLinHaiDeConfig: CharacterCGConfig = {
   },
 };
 
-// 露娜拉克缇丝的CG配置
+// 卢纳拉克缇斯的CG配置
 const luNaLaKeDiSiConfig: CharacterCGConfig = {
   characterName: '卢纳拉克缇斯',
   resourceName: '露娜拉克缇丝',
@@ -2395,7 +2395,7 @@ const luNaLaKeDiSiConfig: CharacterCGConfig = {
   },
 };
 
-// 雪莉克里姆希尔德的CG配置
+// 谢尔盖克里姆希尔德的CG配置
 const xueLiKeLinMuXiErDeConfig: CharacterCGConfig = {
   characterName: '谢尔盖克里姆希尔德',
   resourceName: '雪莉克里姆希尔德',
@@ -2565,7 +2565,7 @@ const xueLiKeLinMuXiErDeConfig: CharacterCGConfig = {
   },
 };
 
-// 美咲绫的CG配置
+// 美崎绫的CG配置
 const meiSuiLingConfig: CharacterCGConfig = {
   characterName: '美崎绫',
   resourceName: '美咲绫',
@@ -2707,7 +2707,7 @@ const meiSuiLingConfig: CharacterCGConfig = {
   },
 };
 
-// 芙莲的CG配置
+// 弗林的CG配置
 const fuLianConfig: CharacterCGConfig = {
   characterName: '弗林',
   resourceName: '芙莲',
@@ -3180,7 +3180,7 @@ const heiQiQingWenConfig: CharacterCGConfig = {
   },
 };
 
-// 明日香的CG配置
+// 明日郎的CG配置
 const mingRiXiangConfig: CharacterCGConfig = {
   characterName: '明日郎',
   resourceName: '明日香',
@@ -3552,7 +3552,7 @@ const weiSiPeiLaConfig: CharacterCGConfig = {
   },
 };
 
-// 爱丽丝温特的CG配置
+// 阿尔伯特温特的CG配置
 const aiLiSiWenTeConfig: CharacterCGConfig = {
   characterName: '阿尔伯特温特',
   resourceName: '爱丽丝温特',
@@ -3740,7 +3740,7 @@ const aiLiSiWenTeConfig: CharacterCGConfig = {
   },
 };
 
-// 娜塔莎斯迈尔的CG配置
+// 纳塔利斯斯迈尔的CG配置
 const naTaShaSiMaiErConfig: CharacterCGConfig = {
   characterName: '纳塔利斯斯迈尔',
   resourceName: '娜塔莎斯迈尔',
@@ -3986,7 +3986,7 @@ export function getCGConfigByCharacter(characterName: string): CharacterCGConfig
     return exact;
   }
 
-  // 2) CG素材目录可能不带阶段后缀（例如“沐芯兰_1/_2”目录不存在，只有“沐芯兰”）
+  // 2) CG素材目录可能不带阶段后缀（例如“沐心岚_1/_2”目录不存在，只有“沐心岚”）
   //    这里仅做一次“去掉末尾 _数字” 的精确回退匹配，不使用任何 includes 模糊匹配。
   const withoutStageSuffix = resolvedName.replace(/_\d+$/g, '');
   if (withoutStageSuffix !== resolvedName) {
@@ -4067,10 +4067,11 @@ export function selectCGEvent(
   console.log('[CG选择] 图片列表:', selectedEvent.images);
   console.log('[CG选择] 选择图片 (索引', randomImageIndex, '):', randomImage);
 
-  // 构建图片URL
+  // 构建图片URL（resourceName保持原版女名用于CDN路径，未设置则降级使用characterName）
   const genderFolder = playerGender === '男' ? '男u' : '女u';
   const resultFolder = isVictory ? '战胜事件' : '战败事件';
-  const imageUrl = `https://img.vinsimage.org/性斗学园/cg/${config.characterName}/${genderFolder}/${resultFolder}/${randomImage}`;
+  const cgResourceName = config.resourceName || config.characterName;
+  const imageUrl = `https://img.vinsimage.org/性斗学园/cg/${cgResourceName}/${genderFolder}/${resultFolder}/${randomImage}`;
 
   console.log('[CG选择] 生成的图片URL:', imageUrl);
   console.log('[CG选择] 事件描述:', selectedEvent.description);

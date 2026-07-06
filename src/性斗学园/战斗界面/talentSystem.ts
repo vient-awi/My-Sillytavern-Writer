@@ -6,16 +6,16 @@ import type { TalentData } from '../性斗学园脚本/data/talentDatabase';
 // ==================== 敌人七宗罪天赋配置 ====================
 // 特定敌人拥有的七宗罪天赋（敌人名称 -> 七宗罪类型）
 export const ENEMY_SIN_TALENTS: Record<string, 'lust' | 'wrath' | 'envy' | 'sloth' | 'pride' | 'gluttony' | 'greed'> = {
-  // 沐芯兰BOSS - 嫉妒
-  沐芯兰_1: 'envy',
-  沐芯兰_2: 'envy',
-  沐芯兰_3: 'envy',
+  // 沐心岚BOSS - 嫉妒
+  沐心岚_1: 'envy',
+  沐心岚_2: 'envy',
+  沐心岚_3: 'envy',
   茉莉: 'envy',
-  沐芯兰: 'envy',
-  // 克莉丝汀BOSS - 暴怒（仅第二阶段触发，由bossSystem控制）
-  克莉丝汀_1: 'wrath',
-  克莉丝汀_2: 'wrath',
-  克莉丝汀: 'wrath',
+  沐心岚: 'envy',
+  // 克里斯BOSS - 暴怒（仅第二阶段触发，由bossSystem控制）
+  克里斯_1: 'wrath',
+  克里斯_2: 'wrath',
+  克里斯: 'wrath',
 };
 
 /**

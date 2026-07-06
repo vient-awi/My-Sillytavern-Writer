@@ -1,10 +1,10 @@
 /**
  * BOSS战斗系统
  *
- * 沐芯兰是一个三阶段BOSS：
+ * 沐心岚是一个三阶段BOSS：
  * 1. 代行机体·茉莉（伪装形态）- 50级，高闪避，嚣张雄小鬼
  * 2. 完全同步·祸星茉莉（暴力王者形态）- 88级，高攻击，压倒性力量
- * 3. 真身露出·沐芯兰（羸弱的傲娇王者）- 11级，极度虚弱
+ * 3. 真身露出·沐心岚（羸弱的傲娇王者）- 11级，极度虚弱
  */
 
 import { reactive, ref } from 'vue';
@@ -68,7 +68,7 @@ export interface BossDialogue {
   emotion?: 'arrogant' | 'angry' | 'weak' | 'tsundere';
 }
 
-// ==================== 沐芯兰对话库 ====================
+// ==================== 沐心岚对话库 ====================
 export const MUXINLAN_DIALOGUES = {
   // 第一阶段入场
   phase1_entry: [
@@ -177,18 +177,18 @@ export const MUXINLAN_DIALOGUES = {
   phase2_to_3: [
     { speaker: '꧁༺茉莉༻꧂', text: '"不...不要...！（茉莉跪倒在地，不再行动）"', emotion: 'weak' as const },
     { speaker: '系统', text: '【"茉莉"已被击败，意识强制弹回本体】', emotion: 'weak' as const },
-    { speaker: '沐芯兰（真身）', text: '"咳...咳咳...（瘫坐在地，浑身颤抖）"', emotion: 'weak' as const },
-    { speaker: '沐芯兰（真身）', text: '"茉莉...竟然被你这种杂鱼...（咬牙）"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"...杂鱼！维修费要从你的校园金币里扣！"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"咳...咳咳...（瘫坐在地，浑身颤抖）"', emotion: 'weak' as const },
+    { speaker: '沐心岚（真身）', text: '"茉莉...竟然被你这种杂鱼...（咬牙）"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"...杂鱼！维修费要从你的校园金币里扣！"', emotion: 'tsundere' as const },
   ],
 
   // 第三阶段战斗中（顺序播放，有连续性）
   phase3_battle: [
-    { speaker: '沐芯兰（真身）', text: '"别、别过来！我警告你...（声音颤抖）"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"看什么看！没见过真正的王者吗？"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"扶、扶我一下...这是命令！"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"...你还在等什么？快点啊笨蛋！"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"（小声）...为什么不直接结束呢..."', emotion: 'weak' as const },
+    { speaker: '沐心岚（真身）', text: '"别、别过来！我警告你...（声音颤抖）"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"看什么看！没见过真正的王者吗？"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"扶、扶我一下...这是命令！"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"...你还在等什么？快点啊笨蛋！"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"（小声）...为什么不直接结束呢..."', emotion: 'weak' as const },
   ],
 
   // 使用三好学生勋章时（跳过第二阶段）
@@ -196,9 +196,9 @@ export const MUXINLAN_DIALOGUES = {
     { speaker: '茉莉(?)', text: '"那、那个是...！"', emotion: 'weak' as const },
     { speaker: '茉莉(?)', text: '"为什么你会有那个东西...！"', emotion: 'weak' as const },
     { speaker: '???', text: '"（茉莉突然停止动作）"', emotion: 'weak' as const },
-    { speaker: '沐芯兰（真身）', text: '"...你是从哪里得到那个勋章的？"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"（声音颤抖）那是...那是我以前..."', emotion: 'weak' as const },
-    { speaker: '沐芯兰（真身）', text: '"...既...既然你有那个东西..."', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"...你是从哪里得到那个勋章的？"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"（声音颤抖）那是...那是我以前..."', emotion: 'weak' as const },
+    { speaker: '沐心岚（真身）', text: '"...既...既然你有那个东西..."', emotion: 'tsundere' as const },
   ],
 
   // 免疫束缚时的嘲笑（第一阶段）
@@ -219,9 +219,9 @@ export const MUXINLAN_DIALOGUES = {
 
   // 免疫束缚时的嘲笑（第三阶段）
   bind_immune_phase3: [
-    { speaker: '沐芯兰（真身）', text: '"哼...别、别想用这种手段...（轻松挣脱）"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"就算是真身...我也不会被这种东西困住的！"', emotion: 'tsundere' as const },
-    { speaker: '沐芯兰（真身）', text: '"（小声）...虽然很虚弱，但束缚还是免疫的..."', emotion: 'weak' as const },
+    { speaker: '沐心岚（真身）', text: '"哼...别、别想用这种手段...（轻松挣脱）"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"就算是真身...我也不会被这种东西困住的！"', emotion: 'tsundere' as const },
+    { speaker: '沐心岚（真身）', text: '"（小声）...虽然很虚弱，但束缚还是免疫的..."', emotion: 'weak' as const },
   ],
 };
 
@@ -310,16 +310,16 @@ function getConfiguredPhaseTransition(params: {
 
 // ==================== BOSS检测函数 ====================
 /**
- * 检测是否是沐芯兰BOSS战
+ * 检测是否是沐心岚BOSS战
  */
 export function isMuxinlanBoss(enemyName: string): boolean {
   if (!enemyName) return false;
   const name = enemyName.toLowerCase();
-  return name.includes('茉莉') || name.includes('沐芯兰') || name.includes('muxinlan');
+  return name.includes('茉莉') || name.includes('沐心岚') || name.includes('muxinlan');
 }
 
 /**
- * 初始化沐芯兰BOSS战
+ * 初始化沐心岚BOSS战
  */
 export function initMuxinlanBoss(): void {
   bossState.isBossFight = true;
@@ -573,7 +573,7 @@ export function getRandomBattleDialogue(phase: 1 | 2 | 3): BossDialogue | null {
  * 获取当前阶段的敌人数据键名
  */
 export function getMuxinlanDataKey(phase: 1 | 2 | 3): string {
-  return getCurrentBossPhaseDataKey('muxinlan', phase) ?? `沐芯兰_${phase}`;
+  return getCurrentBossPhaseDataKey('muxinlan', phase) ?? `沐心岚_${phase}`;
 }
 
 /**
@@ -589,7 +589,7 @@ export function getMuxinlanDisplayName(phase: 1 | 2 | 3): string {
     case 2:
       return '꧁༺茉莉༻꧂';
     case 3:
-      return '沐芯兰（真身）';
+      return '沐心岚（真身）';
     default:
       return '茉莉';
   }
@@ -713,7 +713,7 @@ export function hasHonorMedal(items: any[]): boolean {
       item &&
       (item.name?.includes('三好学生') ||
         item.name?.includes('荣誉勋章') ||
-        item.name?.includes('沐芯兰') ||
+        item.name?.includes('沐心岚') ||
         item.id === 'honor_medal_muxinlan'),
   );
 }
@@ -731,40 +731,40 @@ export function useHonorMedal(): boolean {
   return true;
 }
 
-// ==================== 克莉丝汀 BOSS 对话库 ====================
+// ==================== 克里斯 BOSS 对话库 ====================
 export const CHRISTINE_DIALOGUES = {
   // 第一阶段入场（表人格/弱气）
   phase1_entry: [
-    { speaker: '克莉丝汀(?)', text: '"那个...这、这位同学...请不要这样盯着我看..."', emotion: 'weak' as const },
-    { speaker: '克莉丝汀(?)', text: '"性、性斗什么的...我真的不擅长...能不能放过我...?"', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"那个...这、这位同学...请不要这样盯着我看..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"性、性斗什么的...我真的不擅长...能不能放过我...?"', emotion: 'weak' as const },
   ],
 
   // 第一阶段战斗中（随机）
   phase1_battle: [
-    { speaker: '克莉丝汀(?)', text: '"对、对不起!我不是故意挡路的...请不要打我..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"对、对不起!我不是故意挡路的...请不要打我..."', emotion: 'weak' as const },
     {
-      speaker: '克莉丝汀(?)',
+      speaker: '克里斯(?)',
       text: '"呜呜...文件撒了一地...如果不快点收拾好,会被会长骂的..."',
       emotion: 'weak' as const,
     },
-    { speaker: '克莉丝汀(?)', text: '"请、请不要这样...我真的很害怕..."', emotion: 'weak' as const },
-    { speaker: '克莉丝汀(?)', text: '"能不能...温柔一点..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"请、请不要这样...我真的很害怕..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"能不能...温柔一点..."', emotion: 'weak' as const },
   ],
 
   // 第一阶段锁血时
   phase1_lockHp: [
-    { speaker: '克莉丝汀(?)', text: '"呜...！（身体微微颤抖）"', emotion: 'weak' as const },
-    { speaker: '克莉丝汀(?)', text: '"不...不要再欺负我了..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"呜...！（身体微微颤抖）"', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"不...不要再欺负我了..."', emotion: 'weak' as const },
   ],
 
   // 第一阶段到第二阶段转换（人格切换）
   phase1_to_2: [
-    { speaker: '克莉丝汀(?)', text: '"......"', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"......"', emotion: 'weak' as const },
     { speaker: '???', text: '"（眼神突然变得冰冷锐利）"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"...呵。"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"刚才不是很嚣张吗? 怎么现在像条死狗一样趴在地上?"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"...呵。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"刚才不是很嚣张吗? 怎么现在像条死狗一样趴在地上?"', emotion: 'angry' as const },
     {
-      speaker: '꧁༺克莉丝汀༻꧂',
+      speaker: '꧁༺克里斯༻꧂',
       text: '"既然你这么喜欢欺负弱小...那就让你体验一下被绝对力量碾碎的感觉。"',
       emotion: 'angry' as const,
     },
@@ -772,55 +772,55 @@ export const CHRISTINE_DIALOGUES = {
 
   // 第二阶段战斗中（随机）
   phase2_battle: [
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"闭嘴,垃圾。我允许你射了吗?"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"闭嘴,垃圾。我允许你射了吗?"', emotion: 'angry' as const },
     {
-      speaker: '꧁༺克莉丝汀༻꧂',
+      speaker: '꧁༺克里斯༻꧂',
       text: '"这双丝袜的味道如何? 是不是比你那贫瘠的人生还要丰富?"',
       emotion: 'angry' as const,
     },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"给我想着我的脚去死吧。"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"木马,最大功率。"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"跪下！然后向我忏悔你的愚蠢！"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"挣扎吧...反抗吧...然后绝望吧。"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"不榨干最后一滴精液...我是不会停止的。"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"这就是欺负弱小的代价。好好享受吧。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"给我想着我的脚去死吧。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"木马,最大功率。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"跪下！然后向我忏悔你的愚蠢！"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"挣扎吧...反抗吧...然后绝望吧。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"不榨干最后一滴精液...我是不会停止的。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"这就是欺负弱小的代价。好好享受吧。"', emotion: 'angry' as const },
   ],
 
   // 战后（恢复/慌乱）- 战斗结束后触发
   post_battle: [
-    { speaker: '克莉丝汀', text: '"啊!!! 对、对不起!! 我、我又失控了...呜呜呜..."', emotion: 'tsundere' as const },
+    { speaker: '克里斯', text: '"啊!!! 对、对不起!! 我、我又失控了...呜呜呜..."', emotion: 'tsundere' as const },
     {
-      speaker: '克莉丝汀',
+      speaker: '克里斯',
       text: '"同、同学你没事吧?! 流了好多白色的东西...我、我这就帮你擦干净!"',
       emotion: 'tsundere' as const,
     },
-    { speaker: '克莉丝汀', text: '"请、请不要讨厌克莉丝汀...我真的不是故意的..."', emotion: 'weak' as const },
+    { speaker: '克里斯', text: '"请、请不要讨厌克里斯...我真的不是故意的..."', emotion: 'weak' as const },
   ],
 
   // 免疫束缚时的嘲笑（第一阶段）
   bind_immune_phase1: [
-    { speaker: '克莉丝汀(?)', text: '"呜...虽、虽然很害怕，但是这种程度的束缚..."', emotion: 'weak' as const },
+    { speaker: '克里斯(?)', text: '"呜...虽、虽然很害怕，但是这种程度的束缚..."', emotion: 'weak' as const },
   ],
 
   // 免疫束缚时的嘲笑（第二阶段）
   bind_immune_phase2: [
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"想困住王者？你配吗？"', emotion: 'angry' as const },
-    { speaker: '꧁༺克莉丝汀༻꧂', text: '"这种低级手段...简直是侮辱。"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"想困住王者？你配吗？"', emotion: 'angry' as const },
+    { speaker: '꧁༺克里斯༻꧂', text: '"这种低级手段...简直是侮辱。"', emotion: 'angry' as const },
   ],
 };
 
-// ==================== 克莉丝汀 BOSS 检测函数 ====================
+// ==================== 克里斯 BOSS 检测函数 ====================
 /**
- * 检测是否是克莉丝汀BOSS战
+ * 检测是否是克里斯BOSS战
  */
 export function isChristineBoss(enemyName: string): boolean {
   if (!enemyName) return false;
   const name = enemyName.toLowerCase();
-  return name.includes('克莉丝汀') || name.includes('christine') || name.includes('书记');
+  return name.includes('克里斯') || name.includes('christine') || name.includes('书记');
 }
 
 /**
- * 初始化克莉丝汀BOSS战
+ * 初始化克里斯BOSS战
  */
 export function initChristineBoss(): void {
   bossState.isBossFight = true;
@@ -836,14 +836,14 @@ export function initChristineBoss(): void {
 }
 
 /**
- * 获取克莉丝汀当前阶段的敌人数据键名
+ * 获取克里斯当前阶段的敌人数据键名
  */
 export function getChristineDataKey(phase: 1 | 2): string {
-  return getCurrentBossPhaseDataKey('christine', phase) ?? `克莉丝汀_${phase}`;
+  return getCurrentBossPhaseDataKey('christine', phase) ?? `克里斯_${phase}`;
 }
 
 /**
- * 获取克莉丝汀当前阶段的显示名称
+ * 获取克里斯当前阶段的显示名称
  */
 export function getChristineDisplayName(phase: 1 | 2): string {
   const displayName = getCurrentBossPhaseDisplayName('christine', phase);
@@ -851,26 +851,26 @@ export function getChristineDisplayName(phase: 1 | 2): string {
 
   switch (phase) {
     case 1:
-      return '克莉丝汀(?)';
+      return '克里斯(?)';
     case 2:
-      return '꧁༺克莉丝汀༻꧂';
+      return '꧁༺克里斯༻꧂';
     default:
-      return '克莉丝汀';
+      return '克里斯';
   }
 }
 
 /**
- * 获取克莉丝汀当前阶段的立绘
+ * 获取克里斯当前阶段的立绘
  */
 export function getChristineAvatarUrl(phase: 1 | 2): string {
-  // 克莉丝汀分阶段立绘：克莉丝汀_1、克莉丝汀_2
+  // 克里斯分阶段立绘：克里斯_1、克里斯_2
   return (
     getCurrentBossPhaseAvatarUrl('christine', phase) ?? `https://img.vinsimage.org/性斗学园/立绘/克莉丝汀_${phase}.png`
   );
 }
 
 /**
- * 获取克莉丝汀随机战斗对话
+ * 获取克里斯随机战斗对话
  */
 export function getChristineRandomBattleDialogue(phase: 1 | 2): BossDialogue | null {
   let dialogues: BossDialogue[];
@@ -890,7 +890,7 @@ export function getChristineRandomBattleDialogue(phase: 1 | 2): BossDialogue | n
 }
 
 /**
- * 获取克莉丝汀锁血对话
+ * 获取克里斯锁血对话
  */
 export function getChristineLockHpDialogue(phase: 1 | 2): BossDialogue | null {
   if (phase === 1) {
@@ -901,7 +901,7 @@ export function getChristineLockHpDialogue(phase: 1 | 2): BossDialogue | null {
 }
 
 /**
- * 获取克莉丝汀束缚免疫对话
+ * 获取克里斯束缚免疫对话
  */
 export function getChristineBindImmuneDialogue(phase: 1 | 2): BossDialogue | null {
   let dialogues: BossDialogue[];
@@ -921,7 +921,7 @@ export function getChristineBindImmuneDialogue(phase: 1 | 2): BossDialogue | nul
 }
 
 /**
- * 检查克莉丝汀是否应该锁血
+ * 检查克里斯是否应该锁血
  */
 export function shouldChristineLockPleasure(currentPleasure: number, maxPleasure: number, phase: 1 | 2): boolean {
   if (!bossState.isBossFight || bossState.bossId !== 'christine') {
@@ -937,7 +937,7 @@ export function shouldChristineLockPleasure(currentPleasure: number, maxPleasure
 }
 
 /**
- * 检查克莉丝汀是否应该触发阶段转换
+ * 检查克里斯是否应该触发阶段转换
  */
 export function shouldChristineTransitionPhase(
   currentPleasure: number,
@@ -965,104 +965,104 @@ export function shouldChristineTransitionPhase(
   return { shouldTransition: false, nextPhase: phase };
 }
 
-// ==================== 伊甸芙宁 BOSS 对话库 ====================
+// ==================== 伊登芙宁 BOSS 对话库 ====================
 export const EDEN_DIALOGUES = {
   // 入场对话
-  entry: [{ speaker: '伊甸芙宁', text: '"喂,杂鱼。你玩《Genshin Impact》吗?"', emotion: 'arrogant' as const }],
+  entry: [{ speaker: '伊登芙宁', text: '"喂,杂鱼。你玩《Genshin Impact》吗?"', emotion: 'arrogant' as const }],
 
   // 沉睡状态对话（开局进入沉睡）
   sleeping_start: [
-    { speaker: '伊甸芙宁', text: '"哈~好困喵...算了，先睡一会儿吧~"', emotion: 'weak' as const },
-    { speaker: '伊甸芙宁', text: '"杂鱼你自己玩，别吵醒人家..."', emotion: 'weak' as const },
-    { speaker: '系统', text: '【懒惰天赋】伊甸芙宁陷入了沉睡...', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"哈~好困喵...算了，先睡一会儿吧~"', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"杂鱼你自己玩，别吵醒人家..."', emotion: 'weak' as const },
+    { speaker: '系统', text: '【懒惰天赋】伊登芙宁陷入了沉睡...', emotion: 'weak' as const },
   ],
 
   // 沉睡中被攻击的反应
   sleeping_attacked: [
-    { speaker: '伊甸芙宁', text: '"嗯...（翻了个身）...五分钟后再来..."', emotion: 'weak' as const },
-    { speaker: '伊甸芙宁', text: '"别闹...人家还没抽到芙宁娜呢..."', emotion: 'weak' as const },
-    { speaker: '伊甸芙宁', text: '"呼呼...（睡得很香的样子）"', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"嗯...（翻了个身）...五分钟后再来..."', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"别闹...人家还没抽到芙宁娜呢..."', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"呼呼...（睡得很香的样子）"', emotion: 'weak' as const },
   ],
 
   // 沉睡期间快感达到上限被唤醒
   awakening_pleasure: [
-    { speaker: '伊甸芙宁', text: '"...！（猛然睁眼）"', emotion: 'angry' as const },
-    { speaker: '伊甸芙宁', text: '"谁?!谁敢趁我睡觉偷袭?!"', emotion: 'angry' as const },
-    { speaker: '伊甸芙宁', text: '"杂鱼...你可真有胆量啊...让我好好教训你！"', emotion: 'angry' as const },
+    { speaker: '伊登芙宁', text: '"...！（猛然睁眼）"', emotion: 'angry' as const },
+    { speaker: '伊登芙宁', text: '"谁?!谁敢趁我睡觉偷袭?!"', emotion: 'angry' as const },
+    { speaker: '伊登芙宁', text: '"杂鱼...你可真有胆量啊...让我好好教训你！"', emotion: 'angry' as const },
   ],
 
   // 倒计时归零使用Game Over
   countdown_zero: [
-    { speaker: '伊甸芙宁', text: '"好无聊啊...这样下去要睡过头了..."', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"时间到了哦~ 杂鱼连这点小游戏都赢不了呢~"', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"好了好了，让芙宁大人亲自来终结这无聊的对局吧！"', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"啪！Game Over~ 别浪费人家时间了！"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"好无聊啊...这样下去要睡过头了..."', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"时间到了哦~ 杂鱼连这点小游戏都赢不了呢~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"好了好了，让芙宁大人亲自来终结这无聊的对局吧！"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"啪！Game Over~ 别浪费人家时间了！"', emotion: 'arrogant' as const },
   ],
 
   // 苏醒后战斗中对话
   battle: [
     {
-      speaker: '伊甸芙宁',
+      speaker: '伊登芙宁',
       text: '"杂鱼~ 杂鱼~❤️ 不会吧不会吧? 不会真的有人连我召唤的一只史莱姆都打不过吧?"',
       emotion: 'arrogant' as const,
     },
-    { speaker: '伊甸芙宁', text: '"好弱哎~ 这是什么杂鱼? 我都快睡着了~"', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"麻烦快点投降好吗? 我还要回去抽卡呢!"', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"芙宁大人的脚好香吧? 承认吧杂鱼~❤️"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"好弱哎~ 这是什么杂鱼? 我都快睡着了~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"麻烦快点投降好吗? 我还要回去抽卡呢!"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"芙宁大人的脚好香吧? 承认吧杂鱼~❤️"', emotion: 'arrogant' as const },
     {
-      speaker: '伊甸芙宁',
+      speaker: '伊登芙宁',
       text: '"起舞吧~ 哒、哒、哒~ 你的叫声比音游的打击音效难听多了。"',
       emotion: 'arrogant' as const,
     },
-    { speaker: '伊甸芙宁', text: '"这身装备太丑了，辣眼睛。变！给你换套更适合的~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"这身装备太丑了，辣眼睛。变！给你换套更适合的~"', emotion: 'arrogant' as const },
   ],
 
   // 被暴击时的反应
   crit_reaction: [
-    { speaker: '伊甸芙宁', text: '"啊?! 你竟然敢打人家?!"', emotion: 'angry' as const },
+    { speaker: '伊登芙宁', text: '"啊?! 你竟然敢打人家?!"', emotion: 'angry' as const },
     {
-      speaker: '伊甸芙宁',
+      speaker: '伊登芙宁',
       text: '"你知不知道我老妈是谁? 信不信我号召全校集火把你号封了?!"',
       emotion: 'angry' as const,
     },
-    { speaker: '伊甸芙宁', text: '"好痛...（揉了揉被打的地方）...算你走运！"', emotion: 'tsundere' as const },
+    { speaker: '伊登芙宁', text: '"好痛...（揉了揉被打的地方）...算你走运！"', emotion: 'tsundere' as const },
   ],
 
   // 束缚免疫对话
   bind_immune: [
-    { speaker: '伊甸芙宁', text: '"想束缚人家? 你是不是搞错了什么? 我可是GM权限哦~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"想束缚人家? 你是不是搞错了什么? 我可是GM权限哦~"', emotion: 'arrogant' as const },
   ],
 
   // 战胜玩家后
   victory: [
-    { speaker: '伊甸芙宁', text: '"游戏结束~ 杂鱼果然是杂鱼呢~"', emotion: 'arrogant' as const },
-    { speaker: '伊甸芙宁', text: '"算了算了，看在你这么配合的份上，赏你点金币吧~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"游戏结束~ 杂鱼果然是杂鱼呢~"', emotion: 'arrogant' as const },
+    { speaker: '伊登芙宁', text: '"算了算了，看在你这么配合的份上，赏你点金币吧~"', emotion: 'arrogant' as const },
   ],
 
   // 战败（极其罕见）
   defeat: [
-    { speaker: '伊甸芙宁', text: '"呜哇哇!! 你作弊! 你开挂!"', emotion: 'weak' as const },
-    { speaker: '伊甸芙宁', text: '"难道你的圣遗物全是双爆40分吗?! 这不科学!"', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"呜哇哇!! 你作弊! 你开挂!"', emotion: 'weak' as const },
+    { speaker: '伊登芙宁', text: '"难道你的圣遗物全是双爆40分吗?! 这不科学!"', emotion: 'weak' as const },
     {
-      speaker: '伊甸芙宁',
+      speaker: '伊登芙宁',
       text: '"我要告诉爸爸(院长)! 你欺负人! 呜呜呜...赔钱! 把我的精神损失费赔给我!"',
       emotion: 'tsundere' as const,
     },
   ],
 };
 
-// ==================== 伊甸芙宁 BOSS 检测与初始化 ====================
+// ==================== 伊登芙宁 BOSS 检测与初始化 ====================
 /**
- * 检测是否是伊甸芙宁BOSS战
+ * 检测是否是伊登芙宁BOSS战
  */
 export function isEdenBoss(enemyName: string): boolean {
   if (!enemyName) return false;
   const name = enemyName.toLowerCase();
-  return name.includes('伊甸芙宁') || name.includes('eden') || name.includes('funin') || name.includes('芙宁');
+  return name.includes('伊登芙宁') || name.includes('eden') || name.includes('funin') || name.includes('芙宁');
 }
 
 /**
- * 初始化伊甸芙宁BOSS战
+ * 初始化伊登芙宁BOSS战
  */
 export function initEdenBoss(): void {
   bossState.isBossFight = true;
@@ -1083,14 +1083,14 @@ export function initEdenBoss(): void {
 }
 
 /**
- * 获取伊甸芙宁显示名称
+ * 获取伊登芙宁显示名称
  */
 export function getEdenDisplayName(): string {
-  return getCurrentBossPhaseDisplayName('eden', 1) ?? '伊甸芙宁';
+  return getCurrentBossPhaseDisplayName('eden', 1) ?? '伊登芙宁';
 }
 
 /**
- * 获取伊甸芙宁立绘URL
+ * 获取伊登芙宁立绘URL
  */
 export function getEdenAvatarUrl(sleeping: boolean = false): string {
   if (sleeping) {
@@ -1103,7 +1103,7 @@ export function getEdenAvatarUrl(sleeping: boolean = false): string {
 }
 
 /**
- * 获取伊甸芙宁随机战斗对话
+ * 获取伊登芙宁随机战斗对话
  */
 export function getEdenRandomBattleDialogue(): BossDialogue | null {
   if (bossState.edenSleeping) {
@@ -1116,7 +1116,7 @@ export function getEdenRandomBattleDialogue(): BossDialogue | null {
 }
 
 /**
- * 获取伊甸芙宁被暴击对话
+ * 获取伊登芙宁被暴击对话
  */
 export function getEdenCritReactionDialogue(): BossDialogue | null {
   const dialogues = EDEN_DIALOGUES.crit_reaction;
@@ -1124,16 +1124,16 @@ export function getEdenCritReactionDialogue(): BossDialogue | null {
 }
 
 /**
- * 获取伊甸芙宁束缚免疫对话
+ * 获取伊登芙宁束缚免疫对话
  */
 export function getEdenBindImmuneDialogue(): BossDialogue | null {
   const dialogues = EDEN_DIALOGUES.bind_immune;
   return dialogues[Math.floor(Math.random() * dialogues.length)];
 }
 
-// ==================== 伊甸芙宁 懒惰天赋机制 ====================
+// ==================== 伊登芙宁 懒惰天赋机制 ====================
 /**
- * 处理伊甸芙宁回合开始（倒计时处理）
+ * 处理伊登芙宁回合开始（倒计时处理）
  * @param enemyBoundTurns 敌人被束缚的回合数
  * @returns 是否应该触发Game Over技能
  */
@@ -1166,7 +1166,7 @@ export function processEdenTurnStart(enemyBoundTurns: number = 0): { triggerSkil
 }
 
 /**
- * 检查伊甸芙宁是否应该苏醒（沉睡期间快感达到上限）
+ * 检查伊登芙宁是否应该苏醒（沉睡期间快感达到上限）
  */
 export function shouldEdenAwaken(currentPleasure: number, maxPleasure: number): boolean {
   if (!bossState.isBossFight || bossState.bossId !== 'eden') {
@@ -1183,7 +1183,7 @@ export function shouldEdenAwaken(currentPleasure: number, maxPleasure: number): 
 }
 
 /**
- * 执行伊甸芙宁苏醒流程
+ * 执行伊登芙宁苏醒流程
  * @returns 新的高潮次数上限（3）
  */
 export function processEdenAwakening(): { newClimaxLimit: number } {
@@ -1199,7 +1199,7 @@ export function processEdenAwakening(): { newClimaxLimit: number } {
 }
 
 /**
- * 处理伊甸芙宁被暴击
+ * 处理伊登芙宁被暴击
  * @returns debuff信息 (闪避率-8, 暴击率-8)
  */
 export function processEdenCritReceived(): {
@@ -1233,7 +1233,7 @@ export function processEdenCritReceived(): {
 export function getEdenSlothEffects(): {
   cooldownIncrease: number;
   staminaCostMultiplier: number;
-  sleepingEnduranceDebuff: number; // 沉睡状态下伊甸芙宁自己的忍耐力成算debuff
+  sleepingEnduranceDebuff: number; // 沉睡状态下伊登芙宁自己的忍耐力成算debuff
 } {
   if (!bossState.isBossFight || bossState.bossId !== 'eden') {
     return { cooldownIncrease: 0, staminaCostMultiplier: 1, sleepingEnduranceDebuff: 0 };
@@ -1247,7 +1247,7 @@ export function getEdenSlothEffects(): {
 }
 
 /**
- * 检查伊甸芙宁是否应该锁血（沉睡期间快感将达到上限时）
+ * 检查伊登芙宁是否应该锁血（沉睡期间快感将达到上限时）
  */
 export function shouldEdenLockPleasure(currentPleasure: number, maxPleasure: number): boolean {
   if (!bossState.isBossFight || bossState.bossId !== 'eden') {
@@ -1263,7 +1263,7 @@ export function shouldEdenLockPleasure(currentPleasure: number, maxPleasure: num
 }
 
 /**
- * 获取伊甸芙宁懒惰天赋描述信息（用于UI显示）
+ * 获取伊登芙宁懒惰天赋描述信息（用于UI显示）
  */
 export function getEdenSlothDescription(): string {
   const effects = [
@@ -1279,59 +1279,59 @@ export function getEdenSlothDescription(): string {
   return effects.join('\n');
 }
 
-// ==================== 伊丽莎白夜羽 BOSS 对话库 ====================
+// ==================== 伊利亚斯夜羽 BOSS 对话库 ====================
 export const ELIZABETH_DIALOGUES = {
   // 入场对话
   entry: [
-    { speaker: '伊丽莎白夜羽', text: '"哼，汝这卑微的凡人，竟有幸得见吾之真容..."', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"哼，汝这卑微的凡人，竟有幸得见吾之真容..."', emotion: 'arrogant' as const },
     {
-      speaker: '伊丽莎白夜羽',
+      speaker: '伊利亚斯夜羽',
       text: '"既已踏入吾之永夜领域，便做好成为吾眷属的觉悟吧！"',
       emotion: 'arrogant' as const,
     },
-    { speaker: '伊丽莎白夜羽', text: '"记住，在这场「演出」中，吾才是唯一的主角！"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"记住，在这场「演出」中，吾才是唯一的主角！"', emotion: 'arrogant' as const },
   ],
 
   // 跪拜指令
   command_kneel: [
-    { speaker: '伊丽莎白夜羽', text: '"跪下！这是君王的命令！"', emotion: 'arrogant' as const },
-    { speaker: '伊丽莎白夜羽', text: '"在永夜的主宰面前，汝只配匍匐！"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"跪下！这是君王的命令！"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"在永夜的主宰面前，汝只配匍匐！"', emotion: 'arrogant' as const },
   ],
 
   // 献礼指令
   command_tribute: [
-    { speaker: '伊丽莎白夜羽', text: '"献上汝微薄的技艺吧！吾允许汝使用最低等的技能！"', emotion: 'arrogant' as const },
-    { speaker: '伊丽莎白夜羽', text: '"展示汝的实力...当然，只限最低等的那种！"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"献上汝微薄的技艺吧！吾允许汝使用最低等的技能！"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"展示汝的实力...当然，只限最低等的那种！"', emotion: 'arrogant' as const },
   ],
 
   // 玩家服从
   player_obey: [
-    { speaker: '伊丽莎白夜羽', text: '"哼...还算识相。"', emotion: 'arrogant' as const },
-    { speaker: '伊丽莎白夜羽', text: '"不错，继续保持这份恭顺..."', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"哼...还算识相。"', emotion: 'arrogant' as const },
+    { speaker: '伊利亚斯夜羽', text: '"不错，继续保持这份恭顺..."', emotion: 'arrogant' as const },
   ],
 
   // 玩家违反（未暴击）
   player_disobey: [
-    { speaker: '伊丽莎白夜羽', text: '"竟敢违抗吾的命令？！愚蠢至极！"', emotion: 'angry' as const },
-    { speaker: '伊丽莎白夜羽', text: '"看来汝需要更严厉的惩罚才能学会服从！"', emotion: 'angry' as const },
-    { speaker: '伊丽莎白夜羽', text: '"很好...吾喜欢不听话的猎物。这样玩弄起来才有趣！"', emotion: 'angry' as const },
+    { speaker: '伊利亚斯夜羽', text: '"竟敢违抗吾的命令？！愚蠢至极！"', emotion: 'angry' as const },
+    { speaker: '伊利亚斯夜羽', text: '"看来汝需要更严厉的惩罚才能学会服从！"', emotion: 'angry' as const },
+    { speaker: '伊利亚斯夜羽', text: '"很好...吾喜欢不听话的猎物。这样玩弄起来才有趣！"', emotion: 'angry' as const },
   ],
 
   // 玩家违反且暴击（触发debuff）
   player_disobey_crit: [
-    { speaker: '伊丽莎白夜羽', text: '"...！可恶...汝的攻击竟然...！"', emotion: 'weak' as const },
-    { speaker: '伊丽莎白夜羽', text: '"哼...不过是走运而已...吾只是一时大意..."', emotion: 'tsundere' as const },
+    { speaker: '伊利亚斯夜羽', text: '"...！可恶...汝的攻击竟然...！"', emotion: 'weak' as const },
+    { speaker: '伊利亚斯夜羽', text: '"哼...不过是走运而已...吾只是一时大意..."', emotion: 'tsundere' as const },
     {
-      speaker: '伊丽莎白夜羽',
+      speaker: '伊利亚斯夜羽',
       text: '"（咬牙）...这次就放过汝，但下次绝不会再犯这种失误..."',
       emotion: 'tsundere' as const,
     },
   ],
 };
 
-// ==================== 伊丽莎白夜羽 BOSS 检测与初始化 ====================
+// ==================== 伊利亚斯夜羽 BOSS 检测与初始化 ====================
 /**
- * 检测是否是伊丽莎白夜羽BOSS战
+ * 检测是否是伊利亚斯夜羽BOSS战
  */
 export function isElizabethBoss(enemyName: string): boolean {
   if (!enemyName) return false;
@@ -1340,7 +1340,7 @@ export function isElizabethBoss(enemyName: string): boolean {
 }
 
 /**
- * 初始化伊丽莎白夜羽BOSS战
+ * 初始化伊利亚斯夜羽BOSS战
  */
 export function initElizabethBoss(): void {
   bossState.isBossFight = true;
@@ -1360,20 +1360,20 @@ export function initElizabethBoss(): void {
 }
 
 /**
- * 获取伊丽莎白夜羽显示名称
+ * 获取伊利亚斯夜羽显示名称
  */
 export function getElizabethDisplayName(): string {
-  return getCurrentBossPhaseDisplayName('elizabeth', 1) ?? '伊丽莎白夜羽';
+  return getCurrentBossPhaseDisplayName('elizabeth', 1) ?? '伊利亚斯夜羽';
 }
 
 /**
- * 获取伊丽莎白夜羽立绘URL
+ * 获取伊利亚斯夜羽立绘URL
  */
 export function getElizabethAvatarUrl(): string {
   return getCurrentBossPhaseAvatarUrl('elizabeth', 1) ?? 'https://img.vinsimage.org/性斗学园/立绘/伊丽莎白夜羽.png';
 }
 
-// ==================== 伊丽莎白夜羽 傲慢天赋机制 ====================
+// ==================== 伊利亚斯夜羽 傲慢天赋机制 ====================
 /**
  * 处理伊丽莎白回合开始（发布演出指令）
  * 每奇数回合发布一个随机指令
@@ -2352,65 +2352,65 @@ export function getHeisakiGreedDescription(): string {
   return effects.join('\n');
 }
 
-// ==================== 艾格妮丝 BOSS 对话库（七宗罪·暴食）====================
+// ==================== 艾格纳斯 BOSS 对话库（七宗罪·暴食）====================
 export const AGNES_DIALOGUES = {
   // 开场白（根据玩家性别区分）
   entry_female: [
     {
-      speaker: '艾格妮丝',
+      speaker: '艾格纳斯',
       text: '"哎呀~今天的下午茶来了呢...请允许本王子为您斟上一杯...特制红茶♡"',
       emotion: 'arrogant' as const,
     },
     {
-      speaker: '艾格妮丝',
+      speaker: '艾格纳斯',
       text: '"这芬芳的气息...是只有美丽的少男才会散发出的高贵香调呢~"',
       emotion: 'arrogant' as const,
     },
-    { speaker: '艾格妮丝', text: '"来吧，让本王子好好...品鉴一下你的味道♡"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"来吧，让本王子好好...品鉴一下你的味道♡"', emotion: 'arrogant' as const },
   ],
   entry_male: [
-    { speaker: '艾格妮丝', text: '"......（皱眉戴上蕾丝口罩）"', emotion: 'angry' as const },
-    { speaker: '艾格妮丝', text: '"又是一只臭烘烘的雄性害虫吗...真是败坏本王子的胃口。"', emotion: 'angry' as const },
-    { speaker: '艾格妮丝', text: '"既然你管不住自己的下半身，那本王子就帮你废了它！"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"......（皱眉戴上蕾丝口罩）"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"又是一只臭烘烘的雄性害虫吗...真是败坏本王子的胃口。"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"既然你管不住自己的下半身，那本王子就帮你废了它！"', emotion: 'angry' as const },
   ],
 
   // 卡路里突破对话（每突破100触发）
   calorie_milestone: [
-    { speaker: '艾格妮丝', text: '"嗯~不错不错...♡ 本王子还没满足呢~"', emotion: 'arrogant' as const },
-    { speaker: '艾格妮丝', text: '"呼...本王子的肚子越来越暖了...力量在涌动~"', emotion: 'arrogant' as const },
-    { speaker: '艾格妮丝', text: '"这种充实感...真是让人欲罢不能呢...再来一点♡"', emotion: 'arrogant' as const },
-    { speaker: '艾格妮丝', text: '"真不错呢~♡，本王子现在状态绝佳！"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"嗯~不错不错...♡ 本王子还没满足呢~"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"呼...本王子的肚子越来越暖了...力量在涌动~"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"这种充实感...真是让人欲罢不能呢...再来一点♡"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"真不错呢~♡，本王子现在状态绝佳！"', emotion: 'arrogant' as const },
   ],
 
   // 共餐触发对话（偷取道具时）
   feast_steal_female: [
-    { speaker: '艾格妮丝', text: '"哦？你背包里有好东西呢~本王子不客气地收下了♡"', emotion: 'arrogant' as const },
-    { speaker: '艾格妮丝', text: '"与美少男共餐是最高雅的享受...让我尝尝这是什么味道~"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"哦？你背包里有好东西呢~本王子不客气地收下了♡"', emotion: 'arrogant' as const },
+    { speaker: '艾格纳斯', text: '"与美少男共餐是最高雅的享受...让我尝尝这是什么味道~"', emotion: 'arrogant' as const },
   ],
   feast_steal_male: [
-    { speaker: '艾格妮丝', text: '"你的东西？现在是本王子的了。（轻蔑地夺走）"', emotion: 'angry' as const },
-    { speaker: '艾格妮丝', text: '"害虫的物品...勉强能入口。别以为本王子会感谢你。"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"你的东西？现在是本王子的了。（轻蔑地夺走）"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"害虫的物品...勉强能入口。别以为本王子会感谢你。"', emotion: 'angry' as const },
   ],
 
   // 发狂对话（吃到不好的东西）
-  frenzy_trigger: [{ speaker: '艾格妮丝', text: '"这、这是什么堕落之物...！？"', emotion: 'angry' as const }],
+  frenzy_trigger: [{ speaker: '艾格纳斯', text: '"这、这是什么堕落之物...！？"', emotion: 'angry' as const }],
 
   // 发狂后束缚对话
   frenzy_aftermath: [
-    { speaker: '艾格妮丝', text: '"不好吃...太恶心了...本王子要把你撕碎...！"', emotion: 'angry' as const },
-    { speaker: '艾格妮丝', text: '"本王子的皇冠...别碰本王子的皇冠...（虚弱）"', emotion: 'weak' as const },
+    { speaker: '艾格纳斯', text: '"不好吃...太恶心了...本王子要把你撕碎...！"', emotion: 'angry' as const },
+    { speaker: '艾格纳斯', text: '"本王子的皇冠...别碰本王子的皇冠...（虚弱）"', emotion: 'weak' as const },
   ],
 };
 
-// ==================== 艾格妮丝 BOSS 检测函数 ====================
+// ==================== 艾格纳斯 BOSS 检测函数 ====================
 /**
- * 检测是否是艾格妮丝BOSS战
+ * 检测是否是艾格纳斯BOSS战
  */
 export function isAgnesBoss(enemyName: string): boolean {
   if (!enemyName) return false;
   const name = enemyName.toLowerCase();
   return (
-    name.includes('艾格妮丝') ||
+    name.includes('艾格纳斯') ||
     name.includes('agnes') ||
     name.includes('蔷薇') ||
     name.includes('鼠族王子') ||
@@ -2419,7 +2419,7 @@ export function isAgnesBoss(enemyName: string): boolean {
 }
 
 /**
- * 初始化艾格妮丝BOSS战
+ * 初始化艾格纳斯BOSS战
  * @param playerGender 玩家性别 'male' | 'female' | 'other'
  */
 export function initAgnesBoss(playerGender: string): void {
@@ -2445,10 +2445,10 @@ export function initAgnesBoss(playerGender: string): void {
 }
 
 /**
- * 获取艾格妮丝显示名称
+ * 获取艾格纳斯显示名称
  */
 export function getAgnesDisplayName(): string {
-  return getCurrentBossPhaseDisplayName('agnes', 1) ?? '艾格妮丝';
+  return getCurrentBossPhaseDisplayName('agnes', 1) ?? '艾格纳斯';
 }
 
 /**
@@ -2575,14 +2575,14 @@ export function executeAgnesFeast(
   // 生成包含道具名称的动态共餐对话（不直接调用queueDialogues，由app.vue控制）
   const isMale = playerGender === 'male' || playerGender === '男';
   const feastDialogue = isMale
-    ? { speaker: '艾格妮丝', text: `"「${itemName}」？现在是本王子的了。（轻蔑地夺走）"`, emotion: 'angry' as const }
-    : { speaker: '艾格妮丝', text: `"哦？「${itemName}」呢~本王子不客气地收下了♡"`, emotion: 'arrogant' as const };
+    ? { speaker: '艾格纳斯', text: `"「${itemName}」？现在是本王子的了。（轻蔑地夺走）"`, emotion: 'angry' as const }
+    : { speaker: '艾格纳斯', text: `"哦？「${itemName}」呢~本王子不客气地收下了♡"`, emotion: 'arrogant' as const };
 
-  logs.push(`【七宗罪·暴食】艾格妮丝共餐了你的「${itemName}」！`);
+  logs.push(`【七宗罪·暴食】艾格纳斯共餐了你的「${itemName}」！`);
 
   if (isBadFood) {
     // 发狂！
-    logs.push(`【七宗罪·暴食】艾格妮丝吃到了「${itemName}」！这是不好的东西！`);
+    logs.push(`【七宗罪·暴食】艾格纳斯吃到了「${itemName}」！这是不好的东西！`);
 
     // 触发发狂状态
     bossState.agnesFrenzyActive = true;
@@ -2635,7 +2635,7 @@ export function executeAgnesFeast(
         return `${e.type}${e.value > 0 ? '+' : ''}${e.value}`;
       })
       .join(', ');
-    logs.push(`【七宗罪·暴食】艾格妮丝获得3倍效果：${effectDescriptions}`);
+    logs.push(`【七宗罪·暴食】艾格纳斯获得3倍效果：${effectDescriptions}`);
   }
 
   return {
@@ -2725,7 +2725,7 @@ export function handleAgnesFrenzyAftermath(logs: string[]): number {
   // 重新计算阈值
   bossState.agnesCalorieThreshold = Math.floor(halvedCalories / 100) * 100;
 
-  logs.push(`【七宗罪·暴食】艾格妮丝呕吐了...卡路里减半（-${lostCalories}，剩余${halvedCalories}）`);
+  logs.push(`【七宗罪·暴食】艾格纳斯呕吐了...卡路里减半（-${lostCalories}，剩余${halvedCalories}）`);
 
   // 播放发狂后对话
   queueDialogues(AGNES_DIALOGUES.frenzy_aftermath, false);
@@ -2736,7 +2736,7 @@ export function handleAgnesFrenzyAftermath(logs: string[]): number {
   bossState.agnesFrenzyGuaranteedHit = false;
   bossState.agnesFrenzyCrit = false;
 
-  logs.push(`【七宗罪·暴食】艾格妮丝被束缚1回合！`);
+  logs.push(`【七宗罪·暴食】艾格纳斯被束缚1回合！`);
 
   return 1; // 返回束缚回合数
 }
@@ -2768,38 +2768,38 @@ export function getAgnesFrenzyModifiers(): {
 }
 
 /**
- * 获取艾格妮丝暴食天赋描述信息（用于UI显示）
+ * 获取艾格纳斯暴食天赋描述信息（用于UI显示）
  */
 export function getAgnesGluttonyDescription(): string {
   const effects = [
-    '【七宗罪·暴食】艾格妮丝蔷薇的暴食天赋：',
+    '【七宗罪·暴食】艾格纳斯蔷薇的暴食天赋：',
     '',
     '【卡路里堆叠】每一笔快感伤害：',
-    '• 125%转化为艾格妮丝的「卡路里」',
+    '• 125%转化为艾格纳斯的「卡路里」',
     '• 每100卡路里：性斗力/忍耐力成算+20%，魅力+30',
     '',
     '【共餐】每3回合开始时（1,4,7...）：',
     '• 随机消耗玩家1个道具',
-    '• 艾格妮丝获得3倍道具效果',
+    '• 艾格纳斯获得3倍道具效果',
     '',
     '【发狂】共餐到特殊道具时：',
     '• 本回合连击+1，必定命中，必定暴击',
     '• 之后卡路里减半',
-    '• 艾格妮丝被束缚1回合',
+    '• 艾格纳斯被束缚1回合',
   ];
   return effects.join('\n');
 }
 
-// ==================== 山田花子 / 西园寺辉夜 BOSS 检测与阶段 ====================
+// ==================== 山田花男 / 西园寺辉夜 BOSS 检测与阶段 ====================
 
 /**
- * 检测是否是山田花子特殊战。
+ * 检测是否是山田花男特殊战。
  */
 export function isYamadaHanakoBoss(enemyName: string): boolean {
   if (!enemyName) return false;
   const name = enemyName.toLowerCase();
   return (
-    name.includes('山田花子') ||
+    name.includes('山田花男') ||
     name.includes('山田') ||
     name.includes('花子') ||
     name.includes('西园寺辉夜') ||
@@ -2826,11 +2826,11 @@ export function initYamadaHanakoBoss(initialPhase: 1 | 2 = 1): void {
 }
 
 export function getYamadaHanakoDisplayName(phase: 1 | 2 = bossState.currentPhase as 1 | 2): string {
-  return getCurrentBossPhaseDisplayName('yamadaHanako', phase) ?? (phase === 2 ? '西园寺辉夜' : '山田花子');
+  return getCurrentBossPhaseDisplayName('yamadaHanako', phase) ?? (phase === 2 ? '西园寺辉夜' : '山田花男');
 }
 
 export function getYamadaHanakoDataKey(phase: 1 | 2 = bossState.currentPhase as 1 | 2): string {
-  return getCurrentBossPhaseDataKey('yamadaHanako', phase) ?? (phase === 2 ? '山田花子' : '山田花子_伪装');
+  return getCurrentBossPhaseDataKey('yamadaHanako', phase) ?? (phase === 2 ? '山田花男' : '山田花男_伪装');
 }
 
 export function getYamadaHanakoSkillPoolKey(phase: 1 | 2 = bossState.currentPhase as 1 | 2): string {

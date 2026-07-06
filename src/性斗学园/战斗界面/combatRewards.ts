@@ -159,7 +159,7 @@ async function syncSevenSinsBossReward(enemyName: string, resolvedEnemyName: str
 
 function isExorcismFinalBoss(enemyName: string, resolvedEnemyName: string): boolean {
   const text = `${enemyName} ${resolvedEnemyName}`.toLowerCase();
-  return text.includes('万魔之母') || text.includes('万魔母') || text.includes('mother_demon');
+  return text.includes('万魔之父') || text.includes('万魔父') || text.includes('mother_demon');
 }
 
 export async function grantVictoryRewards(enemyName: string, isVictory: boolean): Promise<RewardLog[]> {
@@ -218,23 +218,23 @@ export async function grantVictoryRewards(enemyName: string, isVictory: boolean)
   }
 
   try {
-    if (resolvedEnemyName === '沐芯兰' || resolvedEnemyName.toLowerCase().includes('muxinlan')) {
-      const granted = await grantBackpackItemIfMissing('沐芯兰的权限卡', {
+    if (resolvedEnemyName === '沐心岚' || resolvedEnemyName.toLowerCase().includes('muxinlan')) {
+      const granted = await grantBackpackItemIfMissing('沐心岚的权限卡', {
         等级: 'SS',
-        描述: '沐芯兰战败后获得的战利品，作用未知',
+        描述: '沐心岚战败后获得的战利品，作用未知',
         类型: '其他',
         数量: 1,
       });
 
       if (granted) {
         logs.push({
-          message: '获得道具：沐芯兰的权限卡 ×1',
+          message: '获得道具：沐心岚的权限卡 ×1',
           type: 'info',
         });
       }
     }
   } catch (error) {
-    console.warn('[战斗界面] 发放沐芯兰权限卡失败', error);
+    console.warn('[战斗界面] 发放沐心岚权限卡失败', error);
   }
 
   return logs;

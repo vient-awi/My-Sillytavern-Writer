@@ -56,7 +56,7 @@
         :resource-popups="enemyResourcePopups"
       />
 
-      <!-- 伊甸芙宁沉睡图标 (只保留zzz图标) -->
+      <!-- 伊登芙宁沉睡图标 (只保留zzz图标) -->
       <div
         v-if="
           BossSystem.bossState.isBossFight &&
@@ -84,7 +84,7 @@
         </div>
       </div>
 
-      <!-- 艾格妮丝卡路里显示 -->
+      <!-- 艾格纳斯卡路里显示 -->
       <div
         v-if="BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'agnes'"
         class="agnes-calorie-display"
@@ -963,10 +963,10 @@ const playerPortraitInput = ref<HTMLInputElement | null>(null);
 
 const PLAYER_GALLERY_PORTRAIT_OVERRIDES: Record<string, string> = {
   [XIAOYEYUE_MAGIC_GIRL_REQUIRED_NAME]: XIAOYEYUE_MAGIC_GIRL_REQUIRED_NAME,
-  沐芯兰: '沐芯兰_2',
-  克莉丝汀: '克莉丝汀_2',
-  艾格妮丝蔷薇: '艾格妮丝',
-  伊甸芙宁: '伊甸芙宁_2',
+  沐心岚: '沐心岚_2',
+  克里斯: '克里斯_2',
+  艾格纳斯蔷薇: '艾格纳斯',
+  伊登芙宁: '伊登芙宁_2',
 };
 
 // CG相关状态
@@ -1731,11 +1731,11 @@ function applyEnemySnapshotToRuntime(
 
 function getEnemySkillLookupName(enemyName: string, data: any): string {
   const playerGender = getPlayerGenderFromData(data);
-  if (enemyName === '艾格妮丝' || enemyName.includes('艾格妮丝') || enemyName === '艾格纳斯' || enemyName.includes('艾格纳斯')) {
-    return playerGender === '女' ? '艾格妮丝_男' : '艾格妮丝';
+  if (enemyName === '艾格纳斯' || enemyName.includes('艾格纳斯') || enemyName === '艾格纳斯' || enemyName.includes('艾格纳斯')) {
+    return playerGender === '女' ? '艾格纳斯_男' : '艾格纳斯';
   }
-  if (enemyName === '芙莲' || enemyName.includes('芙莲') || enemyName === '弗林' || enemyName.includes('弗林')) {
-    return playerGender === '女' ? '芙莲_男' : '芙莲';
+  if (enemyName === '弗林' || enemyName.includes('弗林') || enemyName === '弗林' || enemyName.includes('弗林')) {
+    return playerGender === '女' ? '弗林_男' : '弗林';
   }
   if (enemyName === '薇丝佩菈' || enemyName.includes('薇丝佩菈') || enemyName === '维斯佩罗' || enemyName.includes('维斯佩罗')) {
     return playerGender === '女' ? '薇丝佩菈_男' : '薇丝佩菈';
@@ -1868,11 +1868,11 @@ async function loadEnemyRuntimeData(data: any, maxClimaxCount: number) {
     const phaseConfig = getYamadaHanakoPhaseConfig(initialPhase);
     const loaded = await loadAndApplyBossPhaseRuntime(phaseConfig, {
       updateAvatar: true,
-      skillLogLabel: '[战斗界面] 山田花子阶段技能池:',
+      skillLogLabel: '[战斗界面] 山田花男阶段技能池:',
     });
 
     if (loaded) {
-      console.info('[战斗界面] 山田花子特殊战运行态已初始化:', {
+      console.info('[战斗界面] 山田花男特殊战运行态已初始化:', {
         displayName: enemy.value.name,
         dataName: phaseConfig.dataKey,
         skillPoolName: phaseConfig.skillPoolKey,
@@ -3695,14 +3695,14 @@ async function applyCombatSkillEffects(skillId: string, isPlayerSkill: boolean):
             logs.push(`${player.value.name} 被束缚了 ${finalDuration} 回合，无法行动！`);
             console.info(`[束缚] ★★★ 设置玩家束缚: playerBoundTurns=${playerBoundTurns.value}`);
           } else {
-            // 检查是否是沐芯兰BOSS战，如果是则免疫束缚
+            // 检查是否是沐心岚BOSS战，如果是则免疫束缚
             if (BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'muxinlan') {
               const immuneDialogue = BossSystem.getBindImmuneDialogue(BossSystem.bossState.currentPhase);
               if (immuneDialogue) {
                 BossSystem.queueDialogues([immuneDialogue]);
               }
               logs.push(`${enemy.value.name} 免疫了束缚效果！`);
-              console.info(`[束缚] 沐芯兰BOSS免疫束缚`);
+              console.info(`[束缚] 沐心岚BOSS免疫束缚`);
               continue;
             }
 
@@ -4878,7 +4878,7 @@ async function handlePlayerSkill(skill: Skill) {
   if (skillIndex !== -1) {
     let finalCooldown = skill.cooldown || 0;
 
-    // ========== 伊甸芙宁BOSS：懒惰天赋 - 玩家技能冷却+2（所有技能） ==========
+    // ========== 伊登芙宁BOSS：懒惰天赋 - 玩家技能冷却+2（所有技能） ==========
     if (BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'eden') {
       const slothEffects = BossSystem.getEdenSlothEffects();
       const originalCooldown = finalCooldown;
@@ -5287,7 +5287,7 @@ async function handlePlayerItem(item: Item) {
     }
   }
 
-  // ==================== 特殊道具：三好学生勋章（跳过沐芯兰第二阶段） ====================
+  // ==================== 特殊道具：三好学生勋章（跳过沐心岚第二阶段） ====================
   if (item.id === 'honor_medal_muxinlan') {
     const validation = validateMuxinlanHonorMedalUse(BossSystem.bossState);
     if (!validation.allowed) {
@@ -5299,7 +5299,7 @@ async function handlePlayerItem(item: Item) {
 
     const ok = BossSystem.useHonorMedal();
     if (ok) {
-      addLog('你使用了【三好学生荣誉勋章】！沐芯兰的第二阶段将被跳过。', 'system', 'critical');
+      addLog('你使用了【三好学生荣誉勋章】！沐心岚的第二阶段将被跳过。', 'system', 'critical');
     } else {
       addLog('该道具使用失败。', 'system', 'info');
     }
@@ -5393,7 +5393,7 @@ async function runEdenGameOverSequence() {
     return;
   }
 
-  addLog(`【Game Over】伊甸芙宁发动了终极技能！`, 'system', 'critical');
+  addLog(`【Game Over】伊登芙宁发动了终极技能！`, 'system', 'critical');
   addLog(`【Game Over】造成500%性斗力伤害，必定暴击，5连击！`, 'system', 'damage');
 
   const gameOverDamage = Math.floor(enemy.value.stats.sexPower * 5.0 * 5);
@@ -5694,7 +5694,7 @@ async function handleEnemyTurn() {
     }),
   );
 
-  // ========== 艾格妮丝BOSS：共餐机制（每3回合触发：1,4,7,10...） ==========
+  // ========== 艾格纳斯BOSS：共餐机制（每3回合触发：1,4,7,10...） ==========
   if (BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'agnes') {
     const agnesFeastContext = await readAgnesFeastContext();
     await applyEnemyTurnStartActions(
@@ -6246,7 +6246,7 @@ async function handleSendCombatLogToLLM() {
 }
 
 // ==================== BOSS阶段切换处理 ====================
-// 步骤1：锁血并立即换图（沐芯兰）
+// 步骤1：锁血并立即换图（沐心岚）
 function lockHealthAndChangeAvatar(nextPhase: 1 | 2 | 3) {
   const currentPhase = BossSystem.bossState.currentPhase;
   const phaseConfig = getMuxinlanPhaseConfig(nextPhase);
@@ -6273,18 +6273,18 @@ function lockHealthAndChangeAvatar(nextPhase: 1 | 2 | 3) {
   console.info(`[战斗界面] 已锁血并更换立绘: ${phaseConfig.displayName}`);
 }
 
-// 克莉丝汀BOSS：锁血并换名换立绘
+// 克里斯BOSS：锁血并换名换立绘
 function lockHealthAndChangeAvatarChristine(nextPhase: 1 | 2) {
   const currentPhase = BossSystem.bossState.currentPhase;
   const phaseConfig = getChristinePhaseConfig(nextPhase);
-  console.info(`[战斗界面] 克莉丝汀BOSS阶段切换开始: ${currentPhase} -> ${nextPhase}`);
+  console.info(`[战斗界面] 克里斯BOSS阶段切换开始: ${currentPhase} -> ${nextPhase}`);
 
   // 锁血：快感设为最大值-1，防止触发高潮
   enemy.value.stats.currentPleasure = enemy.value.stats.maxPleasure - 1;
 
   // 立即更换名称和立绘
   enemy.value.name = phaseConfig.displayName;
-  // 更换立绘：克莉丝汀_1 或 克莉丝汀_2
+  // 更换立绘：克里斯_1 或 克里斯_2
   if (phaseConfig.avatarUrl) {
     enemy.value.avatarUrl = phaseConfig.avatarUrl;
   }
@@ -6298,7 +6298,7 @@ function lockHealthAndChangeAvatarChristine(nextPhase: 1 | 2) {
     phaseTransitionEffect.value = null;
   }, 1500);
 
-  console.info(`[战斗界面] 克莉丝汀已锁血并更换名称: ${phaseConfig.displayName}`);
+  console.info(`[战斗界面] 克里斯已锁血并更换名称: ${phaseConfig.displayName}`);
 }
 
 async function loadAndApplyBossPhaseRuntime(
@@ -6401,7 +6401,7 @@ async function executePhaseTransitionLogic(nextPhase: 1 | 2 | 3) {
   addLog(`阶段切换完成，继续战斗...`, 'system', 'info');
 }
 
-// 完整的阶段转换流程（协调三个步骤）- 沐芯兰
+// 完整的阶段转换流程（协调三个步骤）- 沐心岚
 async function handleBossPhaseTransition(nextPhase: 1 | 2 | 3) {
   const currentPhase = BossSystem.bossState.currentPhase;
 
@@ -6428,7 +6428,7 @@ async function handleBossPhaseTransition(nextPhase: 1 | 2 | 3) {
   }, waitTime);
 }
 
-// 克莉丝汀BOSS阶段转换流程
+// 克里斯BOSS阶段转换流程
 async function handleChristinePhaseTransition(nextPhase: 1 | 2) {
   const currentPhase = BossSystem.bossState.currentPhase;
 
@@ -6453,14 +6453,14 @@ async function handleChristinePhaseTransition(nextPhase: 1 | 2) {
   }, waitTime);
 }
 
-// 克莉丝汀BOSS阶段转换逻辑
+// 克里斯BOSS阶段转换逻辑
 async function executeChristinePhaseTransitionLogic(nextPhase: 1 | 2) {
   if (isBattleFlowLocked()) {
     return;
   }
 
   const currentPhase = BossSystem.bossState.currentPhase;
-  console.info(`[战斗界面] 克莉丝汀执行阶段转换逻辑: ${currentPhase} -> ${nextPhase}`);
+  console.info(`[战斗界面] 克里斯执行阶段转换逻辑: ${currentPhase} -> ${nextPhase}`);
 
   // 更新BOSS状态
   BossSystem.bossState.currentPhase = nextPhase;
@@ -6476,14 +6476,14 @@ async function executeChristinePhaseTransitionLogic(nextPhase: 1 | 2) {
   try {
     const newEnemyData = await loadAndApplyBossPhaseRuntime(phaseConfig, {
       updateAvatar: false,
-      skillLogLabel: '[战斗界面] 克莉丝汀加载新阶段技能:',
+      skillLogLabel: '[战斗界面] 克里斯加载新阶段技能:',
     });
 
     if (newEnemyData) {
       await applyBossPhaseSideEffectActions(createChristinePhaseSideEffectActions(nextPhase));
     }
   } catch (e) {
-    console.error('[战斗界面] 克莉丝汀阶段转换数据加载失败', e);
+    console.error('[战斗界面] 克里斯阶段转换数据加载失败', e);
   }
 
   // 清除转换状态
@@ -6511,13 +6511,13 @@ async function maybeTriggerYamadaHanakoTrueNameRelease(nextPlayer: Character, ne
   isPhaseTransitioning.value = true;
   phaseTransitionEffect.value = phaseConfig.transitionEffect;
 
-  addLog('【真名解放】山田花子的伪装被击碎，月下真名「西园寺辉夜」显现！', 'system', 'critical');
+  addLog('【真名解放】山田花男的伪装被击碎，月下真名「西园寺辉夜」显现！', 'system', 'critical');
   addLog('【规则变更】快感清空，战斗数据切换为Lv75，技能池切换为真名形态。', 'system', 'critical');
 
   try {
     const newEnemyData = await loadAndApplyBossPhaseRuntime(phaseConfig, {
       updateAvatar: true,
-      skillLogLabel: '[战斗界面] 山田花子真名解放技能池:',
+      skillLogLabel: '[战斗界面] 山田花男真名解放技能池:',
       targetEnemy: nextEnemy,
     });
 
@@ -6526,8 +6526,8 @@ async function maybeTriggerYamadaHanakoTrueNameRelease(nextPlayer: Character, ne
       nextPlayer.stats.climaxCount = 0;
     }
   } catch (e) {
-    console.error('[战斗界面] 山田花子真名解放失败', e);
-    addLog('【真名解放】阶段数据加载失败，请检查山田花子数据配置。', 'system', 'critical');
+    console.error('[战斗界面] 山田花男真名解放失败', e);
+    addLog('【真名解放】阶段数据加载失败，请检查山田花男数据配置。', 'system', 'critical');
   }
 
   turnState.climaxTarget = null;
@@ -6582,7 +6582,7 @@ async function processClimaxAfterLLM(targetIsEnemy: boolean) {
     return;
   }
 
-  // ==================== 伊甸芙宁BOSS：沉睡状态高潮触发苏醒 ====================
+  // ==================== 伊登芙宁BOSS：沉睡状态高潮触发苏醒 ====================
   const edenAwakeningActions = createEdenAwakeningActions({
     targetIsEnemy,
     bossState: BossSystem.bossState,
@@ -7166,7 +7166,7 @@ onMounted(async () => {
   // ========== 敌人七宗罪天赋处理 ==========
   const enemySinType = TalentSystem.getEnemySinTalentType(enemy.value.name);
   if (enemySinType) {
-    // 克莉丝汀是隐藏BOSS，不显示敌人天赋日志
+    // 克里斯是隐藏BOSS，不显示敌人天赋日志
     const isChristineHiddenBoss = BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'christine';
     if (!isChristineHiddenBoss) {
       addLog(
@@ -7209,11 +7209,11 @@ onMounted(async () => {
       }
     }
 
-    // 暴怒：克莉丝汀专属（仅第二阶段触发）
+    // 暴怒：克里斯专属（仅第二阶段触发）
     // 第一阶段不触发暴怒效果，第二阶段才激活
-    // 克莉丝汀是隐藏BOSS，第一阶段不显示任何暴怒相关日志
+    // 克里斯是隐藏BOSS，第一阶段不显示任何暴怒相关日志
     if (enemySinType === 'wrath') {
-      // 克莉丝汀BOSS战：第一阶段不激活暴怒，第二阶段才激活
+      // 克里斯BOSS战：第一阶段不激活暴怒，第二阶段才激活
       if (BossSystem.bossState.isBossFight && BossSystem.bossState.bossId === 'christine') {
         if (BossSystem.bossState.currentPhase === 1) {
           // 隐藏BOSS第一阶段，不显示任何天赋相关日志
@@ -8525,7 +8525,7 @@ function getSinTalentDisplayName(sinType: string): string {
 .boss-text-overlay.boss-text-christine {
   font-size: 40px;
   letter-spacing: 4px;
-  color: #c084fc; // 紫色调，符合克莉丝汀的女王形象
+  color: #c084fc; // 紫色调，符合克里斯的女王形象
   text-shadow:
     0 0 20px rgba(192, 132, 252, 0.8),
     0 0 40px rgba(192, 132, 252, 0.4);
@@ -8534,7 +8534,7 @@ function getSinTalentDisplayName(sinType: string): string {
 .boss-text-overlay.boss-text-eden {
   font-size: 38px;
   letter-spacing: 5px;
-  color: #60a5fa; // 水蓝色调，符合伊甸芙宁的水系形象
+  color: #60a5fa; // 水蓝色调，符合伊登芙宁的水系形象
   text-shadow:
     0 0 20px rgba(96, 165, 250, 0.8),
     0 0 40px rgba(96, 165, 250, 0.4),
@@ -9119,7 +9119,7 @@ function getSinTalentDisplayName(sinType: string): string {
   }
 }
 
-// ========== 伊甸芙宁沉睡图标 (只显示zzz) ==========
+// ========== 伊登芙宁沉睡图标 (只显示zzz) ==========
 .eden-sleep-icon {
   position: absolute;
   top: 80px;
@@ -9253,7 +9253,7 @@ function getSinTalentDisplayName(sinType: string): string {
   }
 }
 
-// ========== 艾格妮丝卡路里显示 ==========
+// ========== 艾格纳斯卡路里显示 ==========
 .agnes-calorie-display {
   position: absolute;
   top: 50%;
@@ -9464,7 +9464,7 @@ function getSinTalentDisplayName(sinType: string): string {
   }
 }
 
-// ========== 伊甸芙宁倒计时显示 (响应式缩放) ==========
+// ========== 伊登芙宁倒计时显示 (响应式缩放) ==========
 .eden-countdown {
   position: absolute;
   // 移动端定位

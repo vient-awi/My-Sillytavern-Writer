@@ -59,7 +59,7 @@ export function createBossRuntimeSetup(params: {
       1,
       BossSystem.BOSS_CONFIG.muxinlan.climaxLimits[0],
     );
-    actions.push({ kind: 'log', message: '【特殊战斗】沐芯兰BOSS战开始！', source: 'system', type: 'critical' });
+    actions.push({ kind: 'log', message: '【特殊战斗】沐心岚BOSS战开始！', source: 'system', type: 'critical' });
   } else if (BossSystem.isChristineBoss(params.enemyName)) {
     BossSystem.initChristineBoss();
     displayName = BossSystem.getChristineDisplayName(1);
@@ -87,7 +87,7 @@ export function createBossRuntimeSetup(params: {
       },
       {
         kind: 'log',
-        message: '【七宗罪·懒惰】伊甸芙宁的懒惰天赋正在影响战场...',
+        message: '【七宗罪·懒惰】伊登芙宁的懒惰天赋正在影响战场...',
         source: 'system',
         type: 'critical',
       },
@@ -102,7 +102,7 @@ export function createBossRuntimeSetup(params: {
     actions.push(
       {
         kind: 'log',
-        message: '【七宗罪·傲慢】伊丽莎白夜羽的傲慢天赋正在影响战场...',
+        message: '【七宗罪·傲慢】伊利亚斯夜羽的傲慢天赋正在影响战场...',
         source: 'system',
         type: 'critical',
       },
@@ -171,13 +171,13 @@ export function createBossRuntimeSetup(params: {
       { kind: 'setSurrenderDisabled', disabled: true },
       {
         kind: 'log',
-        message: '【七宗罪·暴食】艾格妮丝蔷薇的暴食天赋正在影响战场...',
+        message: '【七宗罪·暴食】艾格纳斯蔷薇的暴食天赋正在影响战场...',
         source: 'system',
         type: 'critical',
       },
       {
         kind: 'log',
-        message: '【卡路里堆叠】每一笔快感伤害的125%转化为艾格妮丝的卡路里',
+        message: '【卡路里堆叠】每一笔快感伤害的125%转化为艾格纳斯的卡路里',
         source: 'system',
         type: 'info',
       },
@@ -189,7 +189,7 @@ export function createBossRuntimeSetup(params: {
       },
       {
         kind: 'log',
-        message: '【共餐机制】每3回合开始时（1,4,7...），艾格妮丝会偷取你的一个道具',
+        message: '【共餐机制】每3回合开始时（1,4,7...），艾格纳斯会偷取你的一个道具',
         source: 'system',
         type: 'debuff',
       },
@@ -209,7 +209,7 @@ export function createBossRuntimeSetup(params: {
         message:
           initialPhase === 2
             ? '【真名解放】西园寺辉夜以真实姿态参战，使用Lv75数据与真名技能池。'
-            : '【伪装状态】山田花子暂时隐藏真名，使用Lv12数据与伪装技能池。',
+            : '【伪装状态】山田花男暂时隐藏真名，使用Lv12数据与伪装技能池。',
         source: 'system',
         type: 'critical',
       },

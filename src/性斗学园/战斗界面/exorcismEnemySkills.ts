@@ -475,8 +475,8 @@ const EXORCISM_GROUPS: Record<string, ExorcismSkillGroup> = {
     ['强制射精诅咒', '兄弟契约', '强制发情诅咒'].map(name => spec(name)),
     { baseTags: ['vampire', 'curse', 'assimilation', 'domination'], power: 1.95 },
   ),
-  薇尔: createExorcismGroup(
-    '驱魔_薇尔',
+  威尔: createExorcismGroup(
+    '驱魔_威尔',
     [
       '血乳喷射',
       '强制哺乳',
@@ -542,8 +542,8 @@ const EXORCISM_GROUPS: Record<string, ExorcismSkillGroup> = {
     ].map(name => spec(name)),
     { baseTags: ['corruption', 'oni', 'brainwash'], power: 1.65 },
   ),
-  鬼樱_铃音连锁: createExorcismGroup(
-    '驱魔_鬼樱_铃音连锁',
+  鬼樱_铃雄连锁: createExorcismGroup(
+    '驱魔_鬼樱_铃雄连锁',
     ['双子足臭焖绝', '双重假阳具插入', '双重堕落ASMR乳首开发', '兄弟生殖腔献祭'].map(name => spec(name)),
     { baseTags: ['corruption', 'twins', 'brainwash'], power: 1.85 },
   ),
@@ -688,7 +688,7 @@ export const EXORCISM_ENEMY_SKILL_MAP: Record<string, string[]> = {
   淫虎郎: pool('淫虎郎'),
   男吊: pool('男吊'),
   夜叉郎: pool('夜叉郎'),
-  鬼童子: pool('夜叉郎'),
+  夜叉郎: pool('夜叉郎'),
   恶灵郎: pool('恶灵郎'),
   南瓜头郎: pool('南瓜头郎'),
   堕落人偶: pool('堕落人偶'),
@@ -700,7 +700,7 @@ export const EXORCISM_ENEMY_SKILL_MAP: Record<string, string[]> = {
   dark_elf_charm: pool('暗精灵郎'),
   石像鬼郎: ['gargoyle_ambush', ...pool('石像鬼郎')],
   gargoyle: ['gargoyle_ambush', ...pool('石像鬼郎')],
-  黑暗史莱姆郎: pool('黑暗史莱姆郎'),
+  黑暗史莱姆: pool('黑暗史莱姆郎'),
   黑暗史莱姆郎: pool('黑暗史莱姆郎'),
   dark_slime: pool('黑暗史莱姆郎'),
   雪男: pool('雪男'),
@@ -743,8 +743,8 @@ export const EXORCISM_ENEMY_SKILL_MAP: Record<string, string[]> = {
   希思_三阶段: combinedPool('希思_一阶段', '希思_二阶段', '希思_三阶段'),
   heath_assimilation: combinedPool('希思_一阶段', '希思_二阶段', '希思_三阶段'),
 
-  薇尔: pool('薇尔'),
-  veil: pool('薇尔'),
+  威尔: pool('威尔'),
+  veil: pool('威尔'),
 
   鬼祝男椿: pool('鬼祝男椿_一阶段'),
   椿: pool('鬼祝男椿_一阶段'),
@@ -754,8 +754,8 @@ export const EXORCISM_ENEMY_SKILL_MAP: Record<string, string[]> = {
   tsubaki_fox_wife: pool('鬼祝男椿_二阶段'),
   鬼樱: pool('鬼樱'),
   oni_sakura_single: pool('鬼樱'),
-  鬼樱_铃音连锁: combinedPool('鬼樱', '鬼樱_铃音连锁'),
-  oni_sakura_twins: combinedPool('鬼樱', '鬼樱_铃音连锁'),
+  鬼樱_铃雄连锁: combinedPool('鬼樱', '鬼樱_铃雄连锁'),
+  oni_sakura_twins: combinedPool('鬼樱', '鬼樱_铃雄连锁'),
   灵樱: pool('灵樱'),
   spirit_sakura: pool('灵樱'),
 
@@ -782,7 +782,7 @@ export const EXORCISM_ENEMY_SKILL_MAP: Record<string, string[]> = {
   tamamo_phase2: pool('玉藻_二阶段'),
 
   万魔之父: pool('万魔之父_一阶段'),
-  万魔母: pool('万魔之父_一阶段'),
+  万魔父: pool('万魔之父_一阶段'),
   万魔之父_一阶段: pool('万魔之父_一阶段'),
   mother_demon_child: pool('万魔之父_一阶段'),
   万魔之父_二阶段: pool('万魔之父_二阶段'),

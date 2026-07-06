@@ -152,7 +152,7 @@ export function createEdenAwakeningActions(params: {
     },
     {
       kind: 'log',
-      message: '【苏醒】伊甸芙宁从沉睡中醒来，沉睡debuff已消除！',
+      message: '【苏醒】伊登芙宁从沉睡中醒来，沉睡debuff已消除！',
       source: 'system',
       type: 'critical',
     },

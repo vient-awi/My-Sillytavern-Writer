@@ -193,7 +193,7 @@ const AGNES_MECHANICS: BossMechanicDefinition[] = [
     label: '性别特化技能池',
     description: '根据玩家性别选择对应的艾格纳斯技能池。女性玩家使用特化池。',
     triggers: [{ type: 'playerGenderIs', gender: '女' }],
-    actions: [{ type: 'setSkillPool', skillPoolKey: '艾格妮丝_男' }],
+    actions: [{ type: 'setSkillPool', skillPoolKey: '艾格纳斯_男' }],
   },
 ];
 
@@ -226,8 +226,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '茉荆(?)',
-        dataKey: '沐芯兰_1',
-        skillPoolKey: '沐芯兰_1',
+        dataKey: '沐心岚_1',
+        skillPoolKey: '沐心岚_1',
         level: 50,
         climaxLimit: 1,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/沐芯兰_1.png',
@@ -235,8 +235,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 2,
         displayName: '꧁༺茉荆༻꧂',
-        dataKey: '沐芯兰_2',
-        skillPoolKey: '沐芯兰_2',
+        dataKey: '沐心岚_2',
+        skillPoolKey: '沐心岚_2',
         level: 88,
         climaxLimit: 3,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/沐芯兰_2.png',
@@ -244,8 +244,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 3,
         displayName: '沐心岚（真身）',
-        dataKey: '沐芯兰_3',
-        skillPoolKey: '沐芯兰_3',
+        dataKey: '沐心岚_3',
+        skillPoolKey: '沐心岚_3',
         level: 11,
         climaxLimit: 1,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/沐芯兰_3.png',
@@ -267,8 +267,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '克里斯(?)',
-        dataKey: '克莉丝汀_1',
-        skillPoolKey: '克莉丝汀_1',
+        dataKey: '克里斯_1',
+        skillPoolKey: '克里斯_1',
         level: 55,
         climaxLimit: 1,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/克莉丝汀_1.png',
@@ -276,8 +276,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 2,
         displayName: '꧁༺克里斯༻꧂',
-        dataKey: '克莉丝汀_2',
-        skillPoolKey: '克莉丝汀_2',
+        dataKey: '克里斯_2',
+        skillPoolKey: '克里斯_2',
         level: 88,
         climaxLimit: 3,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/克莉丝汀_2.png',
@@ -296,8 +296,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '伊登芙宁',
-        dataKey: '伊甸芙宁',
-        skillPoolKey: '伊甸芙宁',
+        dataKey: '伊登芙宁',
+        skillPoolKey: '伊登芙宁',
         level: 99,
         climaxLimit: 1,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/伊甸芙宁_2.png',
@@ -306,7 +306,7 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
     mechanics: EDEN_MECHANICS,
     legacy: {
       sinType: 'sloth',
-      gameOverSkillId: '伊甸芙宁_16',
+      gameOverSkillId: '伊登芙宁_16',
       sleepingAvatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/伊甸芙宁_1.png',
     },
   },
@@ -321,8 +321,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '伊利亚斯夜羽',
-        dataKey: '伊丽莎白夜羽',
-        skillPoolKey: '伊丽莎白夜羽',
+        dataKey: '伊利亚斯夜羽',
+        skillPoolKey: '伊利亚斯夜羽',
         level: 80,
         climaxLimit: 3,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/伊丽莎白夜羽.png',
@@ -391,8 +391,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '艾格纳斯',
-        dataKey: '艾格妮丝',
-        skillPoolKey: '艾格妮丝',
+        dataKey: '艾格纳斯',
+        skillPoolKey: '艾格纳斯',
         level: 42,
         climaxLimit: 5,
       },
@@ -413,8 +413,8 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 1,
         displayName: '山田花男',
-        dataKey: '山田花子_伪装',
-        skillPoolKey: '山田花子_伪装',
+        dataKey: '山田花男_伪装',
+        skillPoolKey: '山田花男_伪装',
         level: 12,
         climaxLimit: 1,
         avatarUrl: 'https://img.vinsimage.org/性斗学园/立绘/山田花子.png',
@@ -422,7 +422,7 @@ export const CURRENT_BOSS_DEFINITIONS: CurrentBossDefinition[] = [
       {
         phase: 2,
         displayName: '西园寺辉夜',
-        dataKey: '山田花子',
+        dataKey: '山田花男',
         skillPoolKey: '西园寺辉夜',
         level: 75,
         climaxLimit: 1,

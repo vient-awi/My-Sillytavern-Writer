@@ -130,7 +130,7 @@ export function buildEnemyAttackOptions(params: {
   if (params.bossState.isBossFight && params.bossState.bossId === 'christine' && params.bossState.currentPhase === 2) {
     guaranteedCrit = true;
     extraHitCount += 1;
-    logs.push('【敌人·暴怒】克莉丝汀的攻击必定暴击，连击+1！');
+    logs.push('【敌人·暴怒】克里斯的攻击必定暴击，连击+1！');
   }
 
   if (params.bossState.isBossFight && params.bossState.bossId === 'vespera') {
@@ -147,7 +147,7 @@ export function buildEnemyAttackOptions(params: {
     guaranteedHit = guaranteedHit || frenzyMods.guaranteedHit;
     guaranteedCrit = guaranteedCrit || frenzyMods.guaranteedCrit;
     extraHitCount += frenzyMods.extraHits;
-    logs.push('【发狂】艾格妮丝发狂模式：连击+1，必定命中，必定暴击！');
+    logs.push('【发狂】艾格纳斯发狂模式：连击+1，必定命中，必定暴击！');
   }
 
   return {
@@ -406,7 +406,7 @@ export function createEnemyPostDamageBossActions(params: {
       { kind: 'bindEnemy', turns: 1, bindSource: 'enemy' },
       {
         kind: 'log',
-        message: '【发狂代价】艾格妮丝陷入虚脱，被束缚1回合！',
+        message: '【发狂代价】艾格纳斯陷入虚脱，被束缚1回合！',
         source: 'system',
         type: 'critical',
       },
@@ -439,7 +439,7 @@ export function createEnemyPostDamageBossActions(params: {
       params.enemy.stats.currentPleasure = Math.max(0, params.enemy.stats.currentPleasure - vampireHeal);
       actions.push({
         kind: 'log',
-        message: `【吸血】伊丽莎白夜羽吸取了生命精髓使自己冷静了下来，快感-${vampireHeal}`,
+        message: `【吸血】伊利亚斯夜羽吸取了生命精髓使自己冷静了下来，快感-${vampireHeal}`,
         source: 'system',
         type: 'info',
       });
