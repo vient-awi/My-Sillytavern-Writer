@@ -8,5 +8,8 @@
 @.cursor/rules/脚本.mdc
 @.cursor/rules/mvu变量框架.mdc
 @.cursor/rules/mvu角色卡.mdc
+<<<<<<< HEAD
 
 请使用中文回答所有问题和交流与用户的所有互动都应使用中文，包括代码解释、错误消息和建议。
+=======
+>>>>>>> f24091c9a91d583dafdb4867d858268ebc487545
