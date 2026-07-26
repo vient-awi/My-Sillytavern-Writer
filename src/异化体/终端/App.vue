@@ -370,13 +370,13 @@
 
       <!-- Environment Footer -->
       <div class="relative z-10 bg-[#06090e]/90 border-t border-[#174257]">
-        <!-- System Log Ticker -->
-        <div class="px-5 py-1.5 border-b border-[#174257]/40 overflow-hidden">
-          <div class="syslog-track flex gap-8 whitespace-nowrap">
-            <span v-for="(log, i) in sysLogs" :key="i" class="text-[#3d6f82] text-[10px] font-mono tracking-wide shrink-0">
-              <span class="text-[#174257]">[{{ log.time }}]</span> {{ log.msg }}
+        <!-- System Log Ticker (rotating) -->
+        <div class="px-5 py-1.5 border-b border-[#174257]/40 overflow-hidden h-[26px] flex items-center">
+          <Transition name="syslog-fade" mode="out-in">
+            <span :key="currentLogIndex" class="block w-full truncate text-[#3d6f82] text-[10px] font-mono tracking-wide">
+              <span class="text-[#174257]">[{{ currentLog.time }}]</span> {{ currentLog.msg }}
             </span>
-          </div>
+          </Transition>
         </div>
         <!-- Terminal Prompt -->
         <div class="px-5 py-1 border-b border-[#174257]/40 flex items-center gap-2">
@@ -848,6 +848,23 @@ const sysLogs = computed(() => {
   return logs;
 });
 
+// ── System Log Rotation ──
+// 改为轮换显示：每隔一段时间切换到下一条日志，替代持续滚动动画以降低性能消耗
+const currentLogIndex = ref(0);
+const currentLog = computed(() => {
+  const logs = sysLogs.value;
+  if (logs.length === 0) return { time: syncTimestamp.value.slice(0, 5), msg: '系统待机' };
+  return logs[currentLogIndex.value % logs.length];
+});
+
+let logRotateTimer: number;
+const rotateLog = () => {
+  const len = sysLogs.value.length;
+  if (len > 0) {
+    currentLogIndex.value = (currentLogIndex.value + 1) % len;
+  }
+};
+
 // ── Decorative ──
 
 let glitchTimer: number;
@@ -862,11 +879,13 @@ onMounted(() => {
   syncData();
   timer = window.setInterval(syncData, 5000);
   glitchTimer = window.setTimeout(triggerGlitch, 10000 + Math.random() * 15000);
+  logRotateTimer = window.setInterval(rotateLog, 4500);
 });
 
 onUnmounted(() => {
   clearInterval(timer);
   clearTimeout(glitchTimer);
+  clearInterval(logRotateTimer);
 });
 </script>
 
@@ -978,15 +997,15 @@ onUnmounted(() => {
   100% { transform: translate(0); text-shadow: 0 0 10px rgba(94,196,230,0.4); }
 }
 
-/* ═══════ Syslog Ticker ═══════ */
-.syslog-track {
-  display: inline-flex;
-  animation: ticker-scroll 45s linear infinite;
-  will-change: transform;
+/* ═══════ Syslog Rotation (fade) ═══════ */
+/* 轮换切换：仅在换条目时做一次淡入淡出，无持续动画，性能开销远低于滚动 */
+.syslog-fade-enter-active,
+.syslog-fade-leave-active {
+  transition: opacity 0.4s ease;
 }
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.syslog-fade-enter-from,
+.syslog-fade-leave-to {
+  opacity: 0;
 }
 
 /* ═══════ ECG Waveform ═══════ */
