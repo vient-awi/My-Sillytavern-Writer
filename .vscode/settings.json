@@ -49,8 +49,12 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+<<<<<<< HEAD
   "typescript.tsdk": "node_modules/typescript/lib",
   "yaml.schemas": {
     "https://testingcf.jsdelivr.net/gh/StageDog/tavern_sync/dist/schema/settings.zh.json": "file:///d%3A/My%20Sillytavern%20Writer/tavern_sync.yaml"
   }
+=======
+  "typescript.tsdk": "node_modules/typescript/lib"
+>>>>>>> 457044c57ea6141e665c88603ea84d7542da64a4
 }
