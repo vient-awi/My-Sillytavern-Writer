@@ -3,10 +3,13 @@ import JSON5 from 'json5';
 import { jsonrepair } from 'jsonrepair';
 import { toDotPath } from 'zod/v4/core';
 
+<<<<<<< HEAD
 export const get: typeof _.get = _.get.bind(_);
 export const set: typeof _.set = _.set.bind(_);
 export const isEqual: typeof _.isEqual = _.isEqual.bind(_);
 
+=======
+>>>>>>> c3dda85b40baa6188b2eff4e263cb20fedabcecf
 export function assignInplace<T>(destination: T[], new_array: T[]): T[] {
   destination.length = 0;
   destination.push(...new_array);
